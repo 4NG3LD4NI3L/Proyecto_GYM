@@ -3,16 +3,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Imagenes {
+
+public class Imagen {
 	private String ruta = "Resources/";
 	
-    public Imagenes(String nombre, JPanel pantalla) {
+    public Imagen(String nombre, JPanel pantalla) {
         ImageIcon imagen = new ImageIcon(ruta + nombre);
         JLabel carga = new JLabel(imagen);
         pantalla.add(carga);
     }
 
-    public Imagenes(String nombre, int ancho, int alto, JPanel pantalla) {
+    public Imagen(String nombre, int ancho, int alto, JPanel pantalla) {
         ImageIcon imagen = new ImageIcon(ruta + nombre);
         Image imagenGif = imagen.getImage();
 

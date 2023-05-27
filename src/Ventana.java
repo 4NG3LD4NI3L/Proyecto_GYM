@@ -10,11 +10,15 @@ public class Ventana extends JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mostrarLogin();
+        repaint();
+        revalidate();
     }
 
     public void mostrarLogin(){
         login = new Login(this); 
         login.agregar();
+        repaint();
+        revalidate();
     }
 
 
