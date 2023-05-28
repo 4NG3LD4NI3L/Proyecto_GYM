@@ -7,6 +7,7 @@ public class Login {
     private JFrame frame;
     private JPanel fondo;
     private JPanel panel;
+    public JButton inicio;
     
     public Login(JFrame frame) {
         this.frame = frame;
@@ -23,7 +24,7 @@ public class Login {
        fondo.add(fondo1);
 
        
-       JButton inicio = new JButton("LOGIN");
+       inicio = new JButton("LOGIN");
        inicio.setSize(75, 34);
        inicio.setLocation(305, 417);
        inicio.setBackground(new Color(255,144,21));
