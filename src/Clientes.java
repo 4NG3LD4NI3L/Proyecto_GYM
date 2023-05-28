@@ -51,7 +51,7 @@ public class Clientes {
         clientes.setSize(80, 23);
         clientes.setBackground(new Color(61,61,61));
         clientes.setLocation(90, 60);
-        clientes.setForeground(Color.white);
+        clientes.setForeground(Color.yellow);
         clientes.setBorderPainted(false);
         arriba.add(clientes);
         
