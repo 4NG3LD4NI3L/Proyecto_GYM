@@ -24,6 +24,11 @@ class ShapedButtonUI extends BasicButtonUI {
 
   public void setShape(ButtonShape shape, JButton button, Color colores){
    button.setBorderPainted(false);
+   button.setOpaque(false);
+   button.setRolloverEnabled(false);//
+   button.setRolloverEnabled(false);//RECUERDA AGREGAR ESTO MAMON /////////////////////////////////////////////////////////////////////////
+   button.setContentAreaFilled(false);
+   button.setFocusPainted(false);
    this.shape = shape;
    this.color=colores;
   }

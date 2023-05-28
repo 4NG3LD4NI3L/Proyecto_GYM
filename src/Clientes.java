@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.*;
 
@@ -96,17 +97,21 @@ public class Clientes {
         panel.add(regresar);
 
         JButton buscar = new JButton("Buscar");
+        ShapedButtonUI roundUI = new ShapedButtonUI();//CLASE PARA REDONDEAR BOTONES
         buscar.setSize(87, 34);
         buscar.setLocation(164, 151);
-        buscar.setBackground(Color.decode("#ff9015"));
-        buscar.setBorderPainted(false);
+        roundUI.setShape(ButtonShape.ROUND, buscar,new Color(255,144,21));//AQUI SE AGREGA: (LA FORMA DESEADA, EL NOMBRE DEL BOTON, EL COLOR)
+        buscar.setUI(roundUI);//
+        buscar.setPreferredSize(new Dimension(87,34));//
         panel.add(buscar);
 
         JButton nuevoCliente = new JButton("Nuevo Cliente");
         nuevoCliente.setSize(123, 27);
         nuevoCliente.setLocation(85, 214);
-        nuevoCliente.setBackground(Color.decode("#01ff57"));
-        nuevoCliente.setBorderPainted(false);
+        ShapedButtonUI roundUI_dos = new ShapedButtonUI();
+        roundUI_dos.setShape(ButtonShape.ROUND, nuevoCliente,Color.decode("#01ff57"));
+        nuevoCliente.setUI(roundUI_dos);
+        nuevoCliente.setPreferredSize(new Dimension(87,34));
         panel.add(nuevoCliente);
         
         frame.repaint();
@@ -115,7 +120,7 @@ public class Clientes {
     }
 
     public void mostrar(){
-        frame.add(panel);
+        //frame.add(panel); ESTE PANEL NO ESTA INICIALIZADO Y MANDA NULL
         frame.add(fondo);
 		frame.repaint();
 		frame.revalidate();
