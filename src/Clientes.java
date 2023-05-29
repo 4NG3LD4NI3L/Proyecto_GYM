@@ -67,6 +67,7 @@ public class Clientes {
         nombre.setSize(208, 25);
         nombre.setLocation(241, 190);
         nombre.setBackground(Color.decode("#404040"));
+        nombre.setForeground(Color.white);
         nombre.setBorder(null);
         fondo.add(nombre);
 
@@ -75,6 +76,7 @@ public class Clientes {
         iD.setLocation(241, 245);
         iD.setBorder(null);
         iD.setBackground(Color.decode("#404040"));
+        iD.setForeground(Color.white);
         fondo.add(iD);
 
         JLabel nombreCliente = new JLabel("Nombre del cliente");
@@ -94,6 +96,8 @@ public class Clientes {
         regresar.setLocation(42, 151);
         regresar.setBackground(Color.decode("#ff4343"));
         regresar.setBorderPainted(false);
+       
+        regresar.setOpaque(true);
         panel.add(regresar);
 
         JButton buscar = new JButton("Buscar");

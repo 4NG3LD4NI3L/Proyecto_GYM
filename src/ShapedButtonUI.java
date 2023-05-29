@@ -20,6 +20,7 @@ class ShapedButtonUI extends BasicButtonUI {
 
   public ShapedButtonUI() {
    super();
+    
   }
 
   public void setShape(ButtonShape shape, JButton button, Color colores){
@@ -29,8 +30,11 @@ class ShapedButtonUI extends BasicButtonUI {
    button.setRolloverEnabled(false);//RECUERDA AGREGAR ESTO MAMON /////////////////////////////////////////////////////////////////////////
    button.setContentAreaFilled(false);
    button.setFocusPainted(false);
+   button.repaint();
+   button.revalidate();
    this.shape = shape;
    this.color=colores;
+   
   }
 
   @Override
@@ -41,7 +45,7 @@ class ShapedButtonUI extends BasicButtonUI {
    Shape buttonShape = null;
    switch (shape) {
     case ROUND:
-     buttonShape = new RoundRectangle2D.Double(0, 0, c.getWidth() - 1, c.getHeight() - 1, 20, 20);
+     buttonShape = new RoundRectangle2D.Double(0, 0, c.getWidth() + 0, c.getHeight() + 0, 15, 15);
      break;
     case SQUARE:
      buttonShape = new Rectangle(0, 0, c.getWidth(), c.getHeight());
@@ -52,7 +56,7 @@ class ShapedButtonUI extends BasicButtonUI {
      buttonShape = new Polygon(xPoints, yPoints, 6);
      break;
    }
-   g2d.setColor(color);
+   g2d.setColor(color); // recibe el color del boton
    g2d.fill(buttonShape);
    super.paint(g2d, c);
 
@@ -65,7 +69,7 @@ class ShapedButtonUI extends BasicButtonUI {
    Shape buttonShape = null;
    switch (shape) {
     case ROUND:
-     buttonShape = new RoundRectangle2D.Double(0, 0, b.getWidth() - 1, b.getHeight() - 1, 20, 20);
+     buttonShape = new RoundRectangle2D.Double(0, 0, b.getWidth() + 0, b.getHeight() + 0, 0, 0);
      break;
     case SQUARE:
      buttonShape = new Rectangle(0, 0, b.getWidth(), b.getHeight());
@@ -76,7 +80,7 @@ class ShapedButtonUI extends BasicButtonUI {
      buttonShape = new Polygon(xPoints, yPoints, 6);
      break;
    }
-   g2d.setColor(new Color(186,105,15));
+   g2d.setColor(new Color(255,255,255));//color Cuando se le hace click
    g2d.fill(buttonShape);
   }
  }
