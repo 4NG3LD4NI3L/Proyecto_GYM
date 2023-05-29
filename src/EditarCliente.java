@@ -3,14 +3,14 @@ import java.awt.Font;
 
 import javax.swing.*;
 
-public class NuevoCliente {
+public class EditarCliente {
 
     private JFrame frame;
     private JPanel fondo;
     private JPanel panel;
     private JPanel arriba;
 
-    public NuevoCliente(JFrame frame){
+    public EditarCliente(JFrame frame){
         this.frame = frame;
         
         JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
@@ -66,14 +66,30 @@ public class NuevoCliente {
         separador2.setForeground(Color.white);
         arriba.add(separador2);
         
-        JButton datos = new JButton("Nuevo Cliente");
+        JButton datos = new JButton("Datos Clientes");
         datos.setSize(140, 23);
         datos.setBackground(new Color(61,61,61));
         datos.setLocation(212, 60);
         datos.setFont(new Font("", Font.BOLD, 15));
-        datos.setForeground(Color.yellow);
+        datos.setForeground(Color.white);
         datos.setBorderPainted(false);
         arriba.add(datos);
+
+        JLabel separador3 = new JLabel("/");
+        separador3.setLocation(354, 67);
+        separador3.setSize(10, 10);
+        separador3.setForeground(Color.white);
+        separador3.setFont(new Font("", Font.BOLD, 15));
+        arriba.add(separador3);
+
+        JButton crd = new JButton("Editar Cliente");
+        crd.setSize(150, 23);
+        crd.setBackground(new Color(61,61,61));
+        crd.setLocation(360, 60);
+        crd.setForeground(Color.yellow);
+        crd.setBorderPainted(false);
+        crd.setFont(new Font("", Font.BOLD, 15));
+        arriba.add(crd);
         
         RoundedPanel panel = new RoundedPanel(15);
         panel.setLayout(null);
@@ -91,7 +107,7 @@ public class NuevoCliente {
         nombrenuevo.setForeground(Color.black);
         panel.add(nombrenuevo);
         
-        JTextField nombreN = new JTextField();
+        JTextField nombreN = new JTextField("Lalo");
         nombreN.setSize(300, 27);
         nombreN.setLocation(30, 45);
         nombreN.setBorder(null);
@@ -104,7 +120,7 @@ public class NuevoCliente {
         apellidoNuevo.setForeground(Color.black);
         panel.add(apellidoNuevo);
 
-        JTextField Apellido = new JTextField();
+        JTextField Apellido = new JTextField("Suares");
         Apellido.setSize(300, 27);
         Apellido.setLocation(30, 90);
         Apellido.setBorder(null);
@@ -116,7 +132,7 @@ public class NuevoCliente {
         edadNuevo.setForeground(Color.black);
         panel.add(edadNuevo);
 
-        JTextField edad = new JTextField();
+        JTextField edad = new JTextField("18");
         edad.setSize(300, 27);
         edad.setLocation(30, 135);
         edad.setBorder(null);
@@ -128,7 +144,7 @@ public class NuevoCliente {
         correoNuevo.setForeground(Color.black);
         panel.add(correoNuevo);
         
-        JTextField CorreoN = new JTextField();
+        JTextField CorreoN = new JTextField("lalitoFutbol@gmail.com");
         CorreoN.setSize(300, 27);
         CorreoN.setLocation(30, 180);
         CorreoN.setBorder(null);
@@ -140,7 +156,7 @@ public class NuevoCliente {
         telefonoNuevo.setForeground(Color.black);
         panel.add(telefonoNuevo);
 
-        JTextField telefonoN = new JTextField();
+        JTextField telefonoN = new JTextField("6121578941");
         telefonoN.setSize(300, 27);
         telefonoN.setLocation(30, 225);
         telefonoN.setBorder(null);
@@ -152,7 +168,7 @@ public class NuevoCliente {
         telefonoNuevoEme.setForeground(Color.black);
         panel.add(telefonoNuevoEme);
 
-        JTextField telefonoNewEme = new JTextField();
+        JTextField telefonoNewEme = new JTextField("6121578421");
         telefonoNewEme.setSize(300, 27);
         telefonoNewEme.setLocation(30, 270);
         telefonoNewEme.setBorder(null);
@@ -178,7 +194,7 @@ public class NuevoCliente {
         panel.add(cancelar);
 
         
-        JButton ingresarFoto = new JButton("Ingresa una foto");
+        JButton ingresarFoto = new JButton("Cambiar la foto");
         ingresarFoto.setSize(126, 16);
         ingresarFoto.setLocation(440, 180);
         ingresarFoto.setBackground(Color.decode("#797979"));
@@ -205,4 +221,3 @@ public class NuevoCliente {
 		frame.revalidate();
     }
 }
-

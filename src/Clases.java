@@ -153,4 +153,10 @@ public class Clases extends JPanel {
 	    this.add(fondo1);
 	}
 
+    public void mostrar(){
+        //frame.add(panel); ESTE PANEL NO ESTA INICIALIZADO Y MANDA NULL
+        frame.add(frame);
+		frame.repaint();
+		frame.revalidate();
+    }
 }

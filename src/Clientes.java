@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.*;
 
@@ -35,23 +36,26 @@ public class Clientes {
         arriba.add(lofomini);
 
         JButton menu = new JButton("Menú");
-        menu.setSize(65, 23);
+        menu.setSize(80, 23);
         menu.setBackground(new Color(61,61,61));
         menu.setLocation(20, 60);
+        menu.setFont(new Font("", Font.BOLD, 15));
         menu.setForeground(Color.white);
         menu.setBorderPainted(false);
         arriba.add(menu);
 
         JLabel separador = new JLabel("/");
-        separador.setLocation(85, 67);
+        separador.setLocation(100, 67);
+        separador.setFont(new Font("", Font.BOLD, 15));
         separador.setSize(10, 10);
         separador.setForeground(Color.white);
         arriba.add(separador);
 
         JButton clientes = new JButton("Clientes");
-        clientes.setSize(80, 23);
+        clientes.setSize(100, 23);
         clientes.setBackground(new Color(61,61,61));
-        clientes.setLocation(90, 60);
+        clientes.setLocation(105, 60);
+        clientes.setFont(new Font("", Font.BOLD, 15));
         clientes.setForeground(Color.yellow);
         clientes.setBorderPainted(false);
         arriba.add(clientes);
