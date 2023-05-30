@@ -27,19 +27,22 @@ public class Ventana extends JFrame {
 
         //mostrarLogin();
 
-        //
+        //Clientes
+
         //mostrarConsultaCliente();
         // mostrarPanelCliente();
         //NuevoCliente();
         //EditarCliente();
         //mostarEliminarCliente();
         //mostrarConsultaCliente();
+
+        //Instructor
         //mostrarPanelInstructor();
-        // mostrarConsultarInstructor();
+        //mostrarConsultarInstructor();
         //mostrarClases();
         //NuevoInstructor();
-        //EditarInstructor();
-        mostarEliminarInstructor();
+        EditarInstructor();
+        //mostarEliminarInstructor();
         ////////////////////////////////
 
 
