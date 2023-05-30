@@ -16,6 +16,7 @@ public class Ventana extends JFrame {
     NuevoInstructor newInstructor;
     EditarInstructor editInstructor;
     EliminarInstructor eliminarInstructor;
+    Tarifas tarifa;
     
     
     public Ventana(){
@@ -37,7 +38,7 @@ public class Ventana extends JFrame {
         //mostrarConsultaCliente();
 
         //Instructor
-        mostrarPanelInstructor();
+        //mostrarPanelInstructor();
         //mostrarConsultarInstructor();
         //NuevoInstructor();
         //EditarInstructor();
@@ -45,6 +46,8 @@ public class Ventana extends JFrame {
         ////////////////////////////////
         //mostrarClases();
 
+        //Tarifas
+        mostrarTarifas();
 
         repaint();
         revalidate();
@@ -126,6 +129,13 @@ public class Ventana extends JFrame {
     public void mostarEliminarInstructor(){
         eliminarInstructor = new EliminarInstructor(this);
         eliminarInstructor.mostrar();
+        repaint();
+        revalidate();
+    }
+
+    public void mostrarTarifas(){
+        tarifa = new Tarifas(this);
+        tarifa.mostrar();
         repaint();
         revalidate();
     }
