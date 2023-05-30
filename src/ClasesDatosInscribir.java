@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 public class ClasesDatosInscribir extends JPanel {
 	
 	private JFrame frame;
+	private ClasesDatos clase_datos;
 	
 	public ClasesDatosInscribir(JFrame ventana) {
 		this.frame=ventana;
@@ -115,7 +116,7 @@ public class ClasesDatosInscribir extends JPanel {
         ingreID.setLocation(28, 80);
         ingreID.setFont(new Font("Arial",Font.PLAIN,17));
         ingreID.setForeground(Color.white);
-        ingreID.setBackground(new Color(0,0,0,100));
+        ingreID.setBackground(new Color(0,0,0));
         ingreID.setBorder(null);
         panel.add(ingreID);
 
@@ -145,6 +146,10 @@ public class ClasesDatosInscribir extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) { 
+				clase_datos = new ClasesDatos(frame);
+				cerrarEstaVentana();
+				frame.add(clase_datos);
+				
 				frame.requestFocus();
 				frame.repaint();
 				frame.revalidate();
@@ -164,6 +169,10 @@ public class ClasesDatosInscribir extends JPanel {
         
         repaint();
 		revalidate();
+	}
+	
+	public void cerrarEstaVentana() {
+		frame.remove(this);
 	}
 
 }

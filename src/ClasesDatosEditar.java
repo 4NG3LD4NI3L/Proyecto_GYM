@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 public class ClasesDatosEditar extends JPanel {
 	
 	private JFrame frame;
+	private ClasesDatos clase_datos;
 	
 	public ClasesDatosEditar(JFrame ventana) {
 		this.frame=ventana;
@@ -263,6 +264,10 @@ public class ClasesDatosEditar extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) { 
+				clase_datos = new ClasesDatos(frame);
+				cerrarEstaVentana();
+				frame.add(clase_datos);
+				
 				frame.requestFocus();
 				frame.repaint();
 				frame.revalidate();
@@ -282,6 +287,10 @@ public class ClasesDatosEditar extends JPanel {
         
         repaint();
 		revalidate();
+	}
+	
+	public void cerrarEstaVentana() {
+		frame.remove(this);
 	}
 
 }
