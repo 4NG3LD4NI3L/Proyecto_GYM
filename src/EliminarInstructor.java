@@ -42,6 +42,7 @@ public class EliminarInstructor {
         menu.setSize(80, 23);
         menu.setBackground(new Color(61,61,61));
         menu.setLocation(20, 60);
+        menu.setLocation(0, 60);
         menu.setFont(new Font("", Font.BOLD, 15));
         menu.setForeground(Color.white);
         menu.setBorderPainted(false);
@@ -64,7 +65,7 @@ public class EliminarInstructor {
         arriba.add(clientes);
 
         JLabel separador2 = new JLabel("/");
-        separador2.setLocation(207, 67);
+        separador2.setLocation(205, 67);
         separador2.setSize(10, 10);
         separador2.setFont(new Font("", Font.BOLD, 15));
         separador2.setForeground(Color.white);
@@ -74,13 +75,16 @@ public class EliminarInstructor {
         datos.setSize(140, 23);
         datos.setBackground(new Color(61,61,61));
         datos.setLocation(212, 60);
+        datos.setSize(150, 23);
+        datos.setBackground(new Color(61,61,61));
+        datos.setLocation(210, 60);
         datos.setFont(new Font("", Font.BOLD, 15));
         datos.setForeground(Color.white);
         datos.setBorderPainted(false);
         arriba.add(datos);
 
         JLabel separador3 = new JLabel("/");
-        separador3.setLocation(354, 67);
+        separador3.setLocation(360, 67);
         separador3.setSize(10, 10);
         separador3.setForeground(Color.white);
         separador3.setFont(new Font("", Font.BOLD, 15));
@@ -88,8 +92,9 @@ public class EliminarInstructor {
 
         JButton crd = new JButton("Editar Cliente");
         crd.setSize(150, 23);
+        crd.setSize(180, 23);
         crd.setBackground(new Color(61,61,61));
-        crd.setLocation(360, 60);
+        crd.setLocation(365, 60);
         crd.setForeground(Color.yellow);
         crd.setBorderPainted(false);
         crd.setFont(new Font("", Font.BOLD, 15));
@@ -128,7 +133,7 @@ public class EliminarInstructor {
         nId.setForeground(Color.black);
         panel.add(nId);
 
-        JLabel nameCliente = new JLabel("Lalo suares");
+        JLabel nameCliente = new JLabel("Ricardo Montana");
         nameCliente.setSize(120, 15);
         nameCliente.setLocation(150, 100);
         nameCliente.setFont(new Font("",Font.BOLD,13));
@@ -137,7 +142,7 @@ public class EliminarInstructor {
         nameCliente.setForeground(Color.black);
         panel.add(nameCliente);
 
-        JLabel idCliente = new JLabel("106015");
+        JLabel idCliente = new JLabel("254015");
         idCliente.setSize(120, 15);
         idCliente.setLocation(350, 100);
         idCliente.setFont(new Font("",Font.BOLD,13));
