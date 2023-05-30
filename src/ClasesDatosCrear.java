@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 public class ClasesDatosCrear extends JPanel {
 	
 	private JFrame frame;
+	private Clases clase;
 	
 	public ClasesDatosCrear(JFrame ventana) {
 		this.frame=ventana;
@@ -68,27 +69,13 @@ public class ClasesDatosCrear extends JPanel {
         separador_2.setForeground(Color.white);
         arriba.add(separador_2);
         
-        JButton datos = new JButton("Datos");
-        datos.setSize(80, 23);
+        JButton datos = new JButton("Crear Una Clase");
+        datos.setSize(150, 23);
         datos.setBackground(new Color(61,61,61));
         datos.setLocation(175, 60);
-        datos.setForeground(Color.white);
+        datos.setForeground(Color.yellow);
         datos.setBorderPainted(false);
         arriba.add(datos);
-        
-        JLabel separador_3 = new JLabel("/");
-        separador_3.setLocation(255, 67);
-        separador_3.setSize(10, 10);
-        separador_3.setForeground(Color.white);
-        arriba.add(separador_3);
-        
-        JButton crear_Clase = new JButton("Crear Una Clase");
-        crear_Clase.setSize(130, 23);
-        crear_Clase.setBackground(new Color(61,61,61));
-        crear_Clase.setLocation(260, 60);
-        crear_Clase.setForeground(Color.yellow);
-        crear_Clase.setBorderPainted(false);
-        arriba.add(crear_Clase);
         
         RoundedPanel panel = new RoundedPanel(15);
         panel.setLayout(null);
@@ -253,6 +240,10 @@ public class ClasesDatosCrear extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) { 
+				clase = new Clases(frame);
+				cerrarEstaVentana();
+				frame.add(clase);
+				
 				frame.requestFocus();
 				frame.repaint();
 				frame.revalidate();
@@ -272,6 +263,10 @@ public class ClasesDatosCrear extends JPanel {
         
         repaint();
 		revalidate();
+	}
+	
+	public void cerrarEstaVentana() {
+		frame.remove(this);
 	}
 
 }

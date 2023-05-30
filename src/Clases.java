@@ -18,6 +18,8 @@ public class Clases extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
+	private ClasesDatos clase_datos;
+	private ClasesDatosCrear clase_crear;
 	
 	public Clases(JFrame ventana) {
 		this.frame=ventana;
@@ -68,7 +70,7 @@ public class Clases extends JPanel {
         panel.setLayout(null);
         panel.setSize(493, 133);
         panel.setLocation(99, 227);
-        panel.setBackground(new Color(0,0,0,85));
+        panel.setBackground(new Color(0,0,0,100));
         this.add(panel);
 
         JLabel nombreClase = new JLabel("Clase:");
@@ -111,7 +113,7 @@ public class Clases extends JPanel {
         buscar.setFocusPainted(false);
         panel.add(buscar);	
 
-        JButton nuevoCliente = new JButton("Nuevo Cliente");
+        JButton nuevoCliente = new JButton("Nueva Clase");
         ShapedButtonUI roundUI_2 = new ShapedButtonUI();
         roundUI_2.setShape(ButtonShape.ROUND, nuevoCliente,Color.decode("#01ff57"));
         nuevoCliente.setSize(123, 34);
@@ -125,6 +127,10 @@ public class Clases extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				clase_datos = new ClasesDatos(frame);
+				cerrarEstaVentana();
+				frame.add(clase_datos);
+				
 				frame.requestFocus();
 				frame.repaint();
 				frame.revalidate();
@@ -134,7 +140,9 @@ public class Clases extends JPanel {
         regresar.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) { 
+			public void actionPerformed(ActionEvent e) {
+				//Aqui debe mandar al menu
+				
 				frame.requestFocus();
 				frame.repaint();
 				frame.revalidate();
@@ -144,7 +152,11 @@ public class Clases extends JPanel {
         nuevoCliente.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) { 
+			public void actionPerformed(ActionEvent e) {
+				clase_crear = new ClasesDatosCrear(frame);
+				cerrarEstaVentana();
+				frame.add(clase_crear);
+				
 				frame.requestFocus();
 				frame.repaint();
 				frame.revalidate();
@@ -155,10 +167,14 @@ public class Clases extends JPanel {
 		revalidate();
 	    this.add(fondo1);
 	}
+	
+	public void cerrarEstaVentana() {
+		frame.remove(this);
+	}
 
     public void mostrar(){
         //frame.add(panel); ESTE PANEL NO ESTA INICIALIZADO Y MANDA NULL
-        frame.add(frame);
+        frame.add(this);
 		frame.repaint();
 		frame.revalidate();
     }

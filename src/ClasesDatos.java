@@ -21,6 +21,9 @@ public class ClasesDatos extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private JFrame frame;
+	private Clases clase;
+	private ClasesDatosEditar clase_editar;
+	private ClasesDatosInscribir clase_inscribir;
 	
 	String[] columnas = {"Instructor: Yahir Hernandez Soto"};
 	String[] horario = {"Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"};
@@ -129,6 +132,14 @@ public class ClasesDatos extends JPanel {
         panel.setBackground(new Color(0,0,0,85));
         this.add(panel);
         
+        JLabel etiqueClase = new JLabel("Clase: Zumba");
+        etiqueClase.setSize(369, 20);
+        etiqueClase.setLocation(11, 10);
+        etiqueClase.setForeground(Color.black);
+        etiqueClase.setBackground(Color.yellow);
+        etiqueClase.setOpaque(true);
+        panel.add(etiqueClase);
+        
         try {
 			tabladeDatos();
 		} catch (IOException e) {
@@ -159,7 +170,7 @@ public class ClasesDatos extends JPanel {
         regresar.setFocusPainted(false);
         regresar.setFont(new Font("Arial",Font.BOLD,12));
         regresar.setSize(87, 34);
-        regresar.setLocation(230, 280);
+        regresar.setLocation(230, 290);
         regresar.setPreferredSize(new Dimension(87,34));
         panel.add(regresar);
 
@@ -173,7 +184,7 @@ public class ClasesDatos extends JPanel {
         buscar.setFocusPainted(false);
         panel.add(buscar);	
 
-        JButton nuevoCliente = new JButton("Nuevo Cliente");
+        JButton nuevoCliente = new JButton("Inscribir cliente");
         ShapedButtonUI roundUI_2 = new ShapedButtonUI();
         roundUI_2.setShape(ButtonShape.ROUND, nuevoCliente,Color.decode("#01ff57"));
         nuevoCliente.setSize(123, 34);
@@ -187,6 +198,11 @@ public class ClasesDatos extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				clase_editar = new ClasesDatosEditar(frame);
+				cerrarEstaVentana();
+				frame.add(clase_editar);
+				
+				
 				frame.requestFocus();
 				frame.repaint();
 				frame.revalidate();
@@ -197,6 +213,10 @@ public class ClasesDatos extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) { 
+				clase = new Clases(frame);
+				cerrarEstaVentana();
+				frame.add(clase);
+				
 				frame.requestFocus();
 				frame.repaint();
 				frame.revalidate();
@@ -207,6 +227,10 @@ public class ClasesDatos extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) { 
+				clase_inscribir = new ClasesDatosInscribir(frame);
+				cerrarEstaVentana();
+				frame.add(clase_inscribir);
+				
 				frame.requestFocus();
 				frame.repaint();
 				frame.revalidate();
@@ -218,15 +242,19 @@ public class ClasesDatos extends JPanel {
 	    this.add(fondo1);
 	}
 	
+	public void cerrarEstaVentana() {
+		frame.remove(this);
+	}
+	
 	public void tabladeDatos() throws IOException {
 		panelScroll.setSize(370,39);
-		panelScroll.setLocation(10,10);
+		panelScroll.setLocation(10,30);
 		panelScroll_horario.setSize(370,40);
-		panelScroll_horario.setLocation(10,46);
+		panelScroll_horario.setLocation(10,66);
 		panelScroll_tituloCliente.setSize(370,20);
-		panelScroll_tituloCliente.setLocation(10,80);
+		panelScroll_tituloCliente.setLocation(10,100);
 		panelScroll_clientes.setSize(370,160);
-		panelScroll_clientes.setLocation(10,100);
+		panelScroll_clientes.setLocation(10,120);
 		
 		String[] datosNew = {"Horario"};
 		String[] datos_horas = {"7-9 PM","5-9 PM","7-9 PM","7-9 PM","8-10 PM","9-11 PM","9-11 PM",};
