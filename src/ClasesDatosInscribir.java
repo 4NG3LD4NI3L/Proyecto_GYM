@@ -53,13 +53,41 @@ public class ClasesDatosInscribir extends JPanel {
         separador.setForeground(Color.white);
         arriba.add(separador);
 
-        JButton clientes = new JButton("Clases");
-        clientes.setSize(80, 23);
-        clientes.setBackground(new Color(61,61,61));
-        clientes.setLocation(90, 60);
-        clientes.setForeground(Color.yellow);
-        clientes.setBorderPainted(false);
-        arriba.add(clientes);
+        JButton clases = new JButton("Clases");
+        clases.setSize(80, 23);
+        clases.setBackground(new Color(61,61,61));
+        clases.setLocation(90, 60);
+        clases.setForeground(Color.white);
+        clases.setBorderPainted(false);
+        arriba.add(clases);
+        
+        JLabel separador_2 = new JLabel("/");
+        separador_2.setLocation(170, 67);
+        separador_2.setSize(10, 10);
+        separador_2.setForeground(Color.white);
+        arriba.add(separador_2);
+        
+        JButton datos = new JButton("Datos");
+        datos.setSize(80, 23);
+        datos.setBackground(new Color(61,61,61));
+        datos.setLocation(175, 60);
+        datos.setForeground(Color.white);
+        datos.setBorderPainted(false);
+        arriba.add(datos);
+        
+        JLabel separador_3 = new JLabel("/");
+        separador_3.setLocation(255, 67);
+        separador_3.setSize(10, 10);
+        separador_3.setForeground(Color.white);
+        arriba.add(separador_3);
+        
+        JButton crear_Clase = new JButton("Inscribir Un Cliente");
+        crear_Clase.setSize(150, 23);
+        crear_Clase.setBackground(new Color(61,61,61));
+        crear_Clase.setLocation(260, 60);
+        crear_Clase.setForeground(Color.yellow);
+        crear_Clase.setBorderPainted(false);
+        arriba.add(crear_Clase);
         
         RoundedPanel panel = new RoundedPanel(15);
         panel.setLayout(null);
@@ -103,15 +131,15 @@ public class ClasesDatosInscribir extends JPanel {
         panel.add(regresar);
 
 
-        JButton nuevoCliente = new JButton("Nuevo Cliente");
+        JButton inscribirCliente = new JButton("Inscribir");
         ShapedButtonUI roundUI_2 = new ShapedButtonUI();
-        roundUI_2.setShape(ButtonShape.ROUND, nuevoCliente,Color.decode("#01ff57"));
-        nuevoCliente.setSize(123, 34);
-        nuevoCliente.setLocation(200, 130);
-        nuevoCliente.setUI(roundUI_2);
-        nuevoCliente.setPreferredSize(new Dimension(123,34));
-        nuevoCliente.setFocusPainted(false);
-        panel.add(nuevoCliente);
+        roundUI_2.setShape(ButtonShape.ROUND, inscribirCliente,Color.decode("#01ff57"));
+        inscribirCliente.setSize(123, 34);
+        inscribirCliente.setLocation(200, 130);
+        inscribirCliente.setUI(roundUI_2);
+        inscribirCliente.setPreferredSize(new Dimension(123,34));
+        inscribirCliente.setFocusPainted(false);
+        panel.add(inscribirCliente);
         
         regresar.addActionListener(new ActionListener() {
 			
@@ -123,7 +151,7 @@ public class ClasesDatosInscribir extends JPanel {
 			}
 		});
         
-        nuevoCliente.addActionListener(new ActionListener() {
+        inscribirCliente.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) { 
