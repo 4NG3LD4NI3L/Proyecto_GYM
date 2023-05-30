@@ -41,58 +41,58 @@ public class EliminarInstructor {
         JButton menu = new JButton("Menú");
         menu.setSize(80, 23);
         menu.setBackground(new Color(61,61,61));
-        menu.setLocation(20, 60);
-        menu.setFont(new Font("", Font.BOLD, 12));
+        menu.setLocation(0, 60);
+        menu.setFont(new Font("", Font.BOLD, 15));
         menu.setForeground(Color.white);
         menu.setBorderPainted(false);
         arriba.add(menu);
 
         JLabel separador = new JLabel("/");
-        separador.setLocation(100, 67);
-        separador.setFont(new Font("", Font.BOLD, 12));
+        separador.setLocation(80, 67);
+        separador.setFont(new Font("", Font.BOLD, 15));
         separador.setSize(10, 10);
         separador.setForeground(Color.white);
         arriba.add(separador);
 
         JButton clientes = new JButton("Instructores");
-        clientes.setSize(100, 23);
+        clientes.setSize(120, 23);
         clientes.setBackground(new Color(61,61,61));
-        clientes.setLocation(105, 60);
-        clientes.setFont(new Font("", Font.BOLD, 12));
+        clientes.setLocation(85, 60);
+        clientes.setFont(new Font("", Font.BOLD, 15));
         clientes.setForeground(Color.white);
         clientes.setBorderPainted(false);
         arriba.add(clientes);
 
         JLabel separador2 = new JLabel("/");
-        separador2.setLocation(207, 67);
+        separador2.setLocation(205, 67);
         separador2.setSize(10, 10);
-        separador2.setFont(new Font("", Font.BOLD, 12));
+        separador2.setFont(new Font("", Font.BOLD, 15));
         separador2.setForeground(Color.white);
         arriba.add(separador2);
         
-        JButton datos = new JButton("Datos Instructores");
-        datos.setSize(140, 23);
+        JButton datos = new JButton("Datos Instructor");
+        datos.setSize(150, 23);
         datos.setBackground(new Color(61,61,61));
-        datos.setLocation(212, 60);
-        datos.setFont(new Font("", Font.BOLD, 12));
+        datos.setLocation(210, 60);
+        datos.setFont(new Font("", Font.BOLD, 15));
         datos.setForeground(Color.white);
         datos.setBorderPainted(false);
         arriba.add(datos);
 
         JLabel separador3 = new JLabel("/");
-        separador3.setLocation(354, 67);
+        separador3.setLocation(360, 67);
         separador3.setSize(10, 10);
         separador3.setForeground(Color.white);
-        separador3.setFont(new Font("", Font.BOLD, 12));
+        separador3.setFont(new Font("", Font.BOLD, 15));
         arriba.add(separador3);
 
-        JButton crd = new JButton("Eliminar Instructores");
-        crd.setSize(150, 23);
+        JButton crd = new JButton("Eliminar Instructor");
+        crd.setSize(180, 23);
         crd.setBackground(new Color(61,61,61));
-        crd.setLocation(360, 60);
+        crd.setLocation(365, 60);
         crd.setForeground(Color.yellow);
         crd.setBorderPainted(false);
-        crd.setFont(new Font("", Font.BOLD, 12));
+        crd.setFont(new Font("", Font.BOLD, 15));
         arriba.add(crd);
         
         RoundedPanel panel = new RoundedPanel(15);
@@ -128,7 +128,7 @@ public class EliminarInstructor {
         nId.setForeground(Color.black);
         panel.add(nId);
 
-        JLabel nameCliente = new JLabel("Lalo suares");
+        JLabel nameCliente = new JLabel("Ricardo Montana");
         nameCliente.setSize(120, 15);
         nameCliente.setLocation(150, 100);
         nameCliente.setFont(new Font("",Font.BOLD,13));
@@ -137,7 +137,7 @@ public class EliminarInstructor {
         nameCliente.setForeground(Color.black);
         panel.add(nameCliente);
 
-        JLabel idCliente = new JLabel("106015");
+        JLabel idCliente = new JLabel("254015");
         idCliente.setSize(120, 15);
         idCliente.setLocation(350, 100);
         idCliente.setFont(new Font("",Font.BOLD,13));

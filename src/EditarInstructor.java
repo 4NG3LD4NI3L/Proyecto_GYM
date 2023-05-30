@@ -42,58 +42,58 @@ public class EditarInstructor {
         JButton menu = new JButton("Menú");
         menu.setSize(80, 23);
         menu.setBackground(new Color(61,61,61));
-        menu.setLocation(20, 60);
-        menu.setFont(new Font("", Font.BOLD, 12));
+        menu.setLocation(0, 60);
+        menu.setFont(new Font("", Font.BOLD, 15));
         menu.setForeground(Color.white);
         menu.setBorderPainted(false);
         arriba.add(menu);
 
         JLabel separador = new JLabel("/");
-        separador.setLocation(100, 67);
-        separador.setFont(new Font("", Font.BOLD, 12));
+        separador.setLocation(80, 67);
+        separador.setFont(new Font("", Font.BOLD, 15));
         separador.setSize(10, 10);
         separador.setForeground(Color.white);
         arriba.add(separador);
 
-        JButton clientes = new JButton("Instructores");
-        clientes.setSize(100, 23);
+        JButton clientes = new JButton("Instructor");
+        clientes.setSize(120, 23);
         clientes.setBackground(new Color(61,61,61));
-        clientes.setLocation(105, 60);
-        clientes.setFont(new Font("", Font.BOLD, 12));
+        clientes.setLocation(85, 60);
+        clientes.setFont(new Font("", Font.BOLD, 15));
         clientes.setForeground(Color.white);
         clientes.setBorderPainted(false);
         arriba.add(clientes);
 
         JLabel separador2 = new JLabel("/");
-        separador2.setLocation(207, 67);
+        separador2.setLocation(205, 67);
         separador2.setSize(10, 10);
-        separador2.setFont(new Font("", Font.BOLD, 12));
+        separador2.setFont(new Font("", Font.BOLD, 15));
         separador2.setForeground(Color.white);
         arriba.add(separador2);
         
-        JButton datos = new JButton("Datos Instructores");
-        datos.setSize(140, 23);
+        JButton datos = new JButton("Datos Instructor");
+        datos.setSize(150, 23);
         datos.setBackground(new Color(61,61,61));
-        datos.setLocation(212, 60);
-        datos.setFont(new Font("", Font.BOLD, 12));
+        datos.setLocation(210, 60);
+        datos.setFont(new Font("", Font.BOLD, 15));
         datos.setForeground(Color.white);
         datos.setBorderPainted(false);
         arriba.add(datos);
 
         JLabel separador3 = new JLabel("/");
-        separador3.setLocation(354, 67);
+        separador3.setLocation(360, 67);
         separador3.setSize(10, 10);
         separador3.setForeground(Color.white);
-        separador3.setFont(new Font("", Font.BOLD, 12));
+        separador3.setFont(new Font("", Font.BOLD, 15));
         arriba.add(separador3);
 
         JButton crd = new JButton("Editar Instructor");
-        crd.setSize(150, 23);
+        crd.setSize(180, 23);
         crd.setBackground(new Color(61,61,61));
-        crd.setLocation(360, 60);
+        crd.setLocation(365, 60);
         crd.setForeground(Color.yellow);
         crd.setBorderPainted(false);
-        crd.setFont(new Font("", Font.BOLD, 12));
+        crd.setFont(new Font("", Font.BOLD, 15));
         arriba.add(crd);
         
         RoundedPanel panel = new RoundedPanel(15);
@@ -112,7 +112,7 @@ public class EditarInstructor {
         nombrenuevo.setForeground(Color.black);
         panel.add(nombrenuevo);
         
-        JTextField nombreN = new JTextField("Lalo");
+        JTextField nombreN = new JTextField("Ricardo");
         nombreN.setSize(300, 27);
         nombreN.setLocation(30, 45);
         nombreN.setBorder(null);
@@ -125,7 +125,7 @@ public class EditarInstructor {
         apellidoNuevo.setForeground(Color.black);
         panel.add(apellidoNuevo);
 
-        JTextField Apellido = new JTextField("Suares");
+        JTextField Apellido = new JTextField("Montana");
         Apellido.setSize(300, 27);
         Apellido.setLocation(30, 90);
         Apellido.setBorder(null);
@@ -137,7 +137,7 @@ public class EditarInstructor {
         edadNuevo.setForeground(Color.black);
         panel.add(edadNuevo);
 
-        JTextField edad = new JTextField("18");
+        JTextField edad = new JTextField("25");
         edad.setSize(300, 27);
         edad.setLocation(30, 135);
         edad.setBorder(null);
@@ -149,7 +149,7 @@ public class EditarInstructor {
         correoNuevo.setForeground(Color.black);
         panel.add(correoNuevo);
         
-        JTextField CorreoN = new JTextField("lalitoFutbol@gmail.com");
+        JTextField CorreoN = new JTextField("Richard_Mont@gmail.com");
         CorreoN.setSize(300, 27);
         CorreoN.setLocation(30, 180);
         CorreoN.setBorder(null);
@@ -161,7 +161,7 @@ public class EditarInstructor {
         telefonoNuevo.setForeground(Color.black);
         panel.add(telefonoNuevo);
 
-        JTextField telefonoN = new JTextField("6121578941");
+        JTextField telefonoN = new JTextField("612-132-8257");
         telefonoN.setSize(300, 27);
         telefonoN.setLocation(30, 225);
         telefonoN.setBorder(null);
@@ -173,7 +173,7 @@ public class EditarInstructor {
         telefonoNuevoEme.setForeground(Color.black);
         panel.add(telefonoNuevoEme);
 
-        JTextField telefonoNewEme = new JTextField("6121578421");
+        JTextField telefonoNewEme = new JTextField("612-145-7811");
         telefonoNewEme.setSize(300, 27);
         telefonoNewEme.setLocation(30, 270);
         telefonoNewEme.setBorder(null);
