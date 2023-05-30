@@ -2,7 +2,8 @@ import javax.swing.JFrame;
 
 
 public class Ventana extends JFrame {
-    Login login;
+    private static final long serialVersionUID = 1L;
+	Login login;
     Clientes clientes;
     NuevoCliente newcliente;
     EditarCliente editCliente;
@@ -10,7 +11,13 @@ public class Ventana extends JFrame {
     EliminarCliente eliminarCliente;
     ConsultarCliente consultaCliente;
     Menu menu;
-
+    Instructor instructor;
+    ConsultarInstructor consultarInstructor;
+    NuevoInstructor newInstructor;
+    EditarInstructor editInstructor;
+    EliminarInstructor eliminarInstructor;
+    
+    
     public Ventana(){
         this.setVisible(true);
         this.setLayout(null);
@@ -20,18 +27,19 @@ public class Ventana extends JFrame {
 
         //mostrarLogin();
 
-        //Cliente
+        //
         //mostrarConsultaCliente();
-        //mostrarPanelCliente();
+        // mostrarPanelCliente();
         //NuevoCliente();
         //EditarCliente();
         //mostarEliminarCliente();
         //mostrarConsultaCliente();
-
-
-        //Clases
+        //mostrarPanelInstructor();
+        // mostrarConsultarInstructor();
         //mostrarClases();
-
+        //NuevoInstructor();
+        //EditarInstructor();
+        mostarEliminarInstructor();
         ////////////////////////////////
 
 
@@ -49,7 +57,8 @@ public class Ventana extends JFrame {
         clientes.mostrar();
 
     }
-
+    
+    
     public void NuevoCliente(){
         newcliente = new NuevoCliente(this);
         newcliente.mostrar();
@@ -91,6 +100,30 @@ public class Ventana extends JFrame {
         repaint();
         revalidate();
     }
-
-
+    public void mostrarPanelInstructor(){
+    	instructor = new Instructor(this);
+    	instructor.mostrar();
+    }
+    public void mostrarConsultarInstructor(){
+    	consultarInstructor = new ConsultarInstructor(this);
+    	consultarInstructor.mostrar();
+    }
+    public void NuevoInstructor(){
+        newInstructor = new NuevoInstructor(this);
+        newInstructor.mostrar();
+        repaint();
+        revalidate();
+    }
+    public void EditarInstructor(){
+        editInstructor = new EditarInstructor(this);
+        editInstructor.mostrar();
+        repaint();
+        revalidate();
+    }
+    public void mostarEliminarInstructor(){
+        eliminarInstructor = new EliminarInstructor(this);
+        eliminarInstructor.mostrar();
+        repaint();
+        revalidate();
+    }
 }
