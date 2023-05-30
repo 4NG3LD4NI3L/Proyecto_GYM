@@ -17,9 +17,9 @@ public class Ventana extends JFrame {
     EditarInstructor editInstructor;
     EliminarInstructor eliminarInstructor;
     Tarifas tarifa;
-    TarifasEditar tarifas_editar;
-    TarifasCrear tarifas_crear;
-    TarifasEliminar tarifas_eliminar;
+    EditarTarifa tarifas_editar;
+    CrearTarifa tarifas_crear;
+    EliminarTarifa tarifas_eliminar;
     
     
     public Ventana(){
@@ -30,6 +30,7 @@ public class Ventana extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //mostrarLogin();
+        mostrarMenu();
 
         //Clientes
 
@@ -50,7 +51,10 @@ public class Ventana extends JFrame {
         //mostrarClases();
 
         //Tarifas
-        mostrarTarifas();
+        //mostrarTarifas();
+        //mostrarTarifasEditar();
+        //mostrarTarifasCrear();
+        //mostrarTarifasEliminar();
 
         repaint();
         revalidate();
@@ -143,20 +147,20 @@ public class Ventana extends JFrame {
         revalidate();
     }
     public void mostrarTarifasEditar() {
-    	tarifas_editar = new TarifasEditar(this);
-    	this.add(tarifas_editar);
+    	tarifas_editar = new EditarTarifa(this);
+    	tarifas_editar.mostrar();
     	repaint();
         revalidate();
     }
     public void mostrarTarifasCrear() {
-    	tarifas_crear = new TarifasCrear(this);
-    	this.add(tarifas_crear);
+    	tarifas_crear = new CrearTarifa(this);
+    	tarifas_crear.mostrar();
     	repaint();
         revalidate();
     }
     public void mostrarTarifasEliminar() {
-    	tarifas_eliminar = new TarifasEliminar(this);
-    	this.add(tarifas_eliminar);
+    	tarifas_eliminar = new EliminarTarifa(this);
+    	tarifas_eliminar.mostrar();
     	repaint();
         revalidate();
     }
