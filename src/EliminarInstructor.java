@@ -55,8 +55,8 @@ public class EliminarInstructor {
         separador.setForeground(Color.white);
         arriba.add(separador);
 
-        JButton clientes = new JButton("Clientes");
-        clientes.setSize(100, 23);
+        JButton clientes = new JButton("Instructor");
+        clientes.setSize(105, 23);
         clientes.setBackground(new Color(61,61,61));
         clientes.setLocation(105, 60);
         clientes.setFont(new Font("", Font.BOLD, 15));
@@ -65,13 +65,13 @@ public class EliminarInstructor {
         arriba.add(clientes);
 
         JLabel separador2 = new JLabel("/");
-        separador2.setLocation(205, 67);
+        separador2.setLocation(210, 67);
         separador2.setSize(10, 10);
         separador2.setFont(new Font("", Font.BOLD, 15));
         separador2.setForeground(Color.white);
         arriba.add(separador2);
         
-        JButton datos = new JButton("Datos Clientes");
+        JButton datos = new JButton("Datos Instructor");
         datos.setSize(140, 23);
         datos.setBackground(new Color(61,61,61));
         datos.setLocation(212, 60);
@@ -90,7 +90,7 @@ public class EliminarInstructor {
         separador3.setFont(new Font("", Font.BOLD, 15));
         arriba.add(separador3);
 
-        JButton crd = new JButton("Editar Cliente");
+        JButton crd = new JButton("Eliminar Instructor");
         crd.setSize(150, 23);
         crd.setSize(180, 23);
         crd.setBackground(new Color(61,61,61));

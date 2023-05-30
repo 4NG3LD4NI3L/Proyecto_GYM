@@ -37,13 +37,13 @@ public class Ventana extends JFrame {
         //mostrarConsultaCliente();
 
         //Instructor
-        //mostrarPanelInstructor();
+        mostrarPanelInstructor();
         //mostrarConsultarInstructor();
-        //mostrarClases();
         //NuevoInstructor();
-        EditarInstructor();
+        //EditarInstructor();
         //mostarEliminarInstructor();
         ////////////////////////////////
+        //mostrarClases();
 
 
         repaint();

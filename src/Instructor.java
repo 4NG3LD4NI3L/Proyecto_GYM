@@ -57,7 +57,7 @@ public class Instructor {
         JButton clientes = new JButton("Instructor");
         clientes.setSize(150, 23);
         clientes.setBackground(new Color(61,61,61));
-        clientes.setLocation(105, 60);
+        clientes.setLocation(90, 60);
         clientes.setFont(new Font("", Font.BOLD, 15));
         clientes.setForeground(Color.yellow);
         clientes.setBorderPainted(false);
