@@ -17,6 +17,9 @@ public class Ventana extends JFrame {
     EditarInstructor editInstructor;
     EliminarInstructor eliminarInstructor;
     Tarifas tarifa;
+    TarifasEditar tarifas_editar;
+    TarifasCrear tarifas_crear;
+    TarifasEliminar tarifas_eliminar;
     
     
     public Ventana(){
@@ -137,6 +140,24 @@ public class Ventana extends JFrame {
         tarifa = new Tarifas(this);
         tarifa.mostrar();
         repaint();
+        revalidate();
+    }
+    public void mostrarTarifasEditar() {
+    	tarifas_editar = new TarifasEditar(this);
+    	this.add(tarifas_editar);
+    	repaint();
+        revalidate();
+    }
+    public void mostrarTarifasCrear() {
+    	tarifas_crear = new TarifasCrear(this);
+    	this.add(tarifas_crear);
+    	repaint();
+        revalidate();
+    }
+    public void mostrarTarifasEliminar() {
+    	tarifas_eliminar = new TarifasEliminar(this);
+    	this.add(tarifas_eliminar);
+    	repaint();
         revalidate();
     }
 }
