@@ -39,49 +39,4 @@ public class Ventana extends JFrame {
         login = new Login(this); 
         login.agregar();
     }
-    
-    
-
-
-    public void mostrarConsultarInstructor(){
-    	consultarInstructor = new ConsultarInstructor(this);
-    	consultarInstructor.mostrar();
-    }
-    public void NuevoInstructor(){
-        newInstructor = new NuevoInstructor(this);
-        newInstructor.mostrar();
-        repaint();
-        revalidate();
-    }
-    public void EditarInstructor(){
-        editInstructor = new EditarInstructor(this);
-        editInstructor.mostrar();
-        repaint();
-        revalidate();
-    }
-    public void mostarEliminarInstructor(){
-        eliminarInstructor = new EliminarInstructor(this);
-        eliminarInstructor.mostrar();
-        repaint();
-        revalidate();
-    }
-
-    public void mostrarTarifasEditar() {
-    	tarifas_editar = new EditarTarifa(this);
-    	tarifas_editar.mostrar();
-    	repaint();
-        revalidate();
-    }
-    public void mostrarTarifasCrear() {
-    	tarifas_crear = new CrearTarifa(this);
-    	tarifas_crear.mostrar();
-    	repaint();
-        revalidate();
-    }
-    public void mostrarTarifasEliminar() {
-    	tarifas_eliminar = new EliminarTarifa(this);
-    	tarifas_eliminar.mostrar();
-    	repaint();
-        revalidate();
-    }
 }
