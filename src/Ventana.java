@@ -29,33 +29,8 @@ public class Ventana extends JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //mostrarLogin();
-        mostrarMenu();
-
-        //Clientes
-
-        //mostrarConsultaCliente();
-        // mostrarPanelCliente();
-        //NuevoCliente();
-        //EditarCliente();
-        //mostarEliminarCliente();
-        //mostrarConsultaCliente();
-
-        //Instructor
-        //mostrarPanelInstructor();
-        //mostrarConsultarInstructor();
-        //NuevoInstructor();
-        //EditarInstructor();
-        //mostarEliminarInstructor();
-        ////////////////////////////////
-        //mostrarClases();
-
-        //Tarifas
-        //mostrarTarifas();
-        //mostrarTarifasEditar();
-        //mostrarTarifasCrear();
-        //mostrarTarifasEliminar();
-
+        mostrarLogin();
+        
         repaint();
         revalidate();
     }
@@ -64,20 +39,9 @@ public class Ventana extends JFrame {
         login = new Login(this); 
         login.agregar();
     }
-
-    public void mostrarPanelCliente(){
-        clientes = new Clientes(this); 
-        clientes.mostrar();
-
-    }
     
     
-    public void NuevoCliente(){
-        newcliente = new NuevoCliente(this);
-        newcliente.mostrar();
-        repaint();
-        revalidate();
-    }
+
 
     public void EditarCliente(){
         editCliente = new EditarCliente(this);
@@ -86,37 +50,7 @@ public class Ventana extends JFrame {
         revalidate();
     }
 
-    public void mostrarClases(){
-        clases = new Clases(this);
-        clases.mostrar();
-        repaint();
-        revalidate();
-    }
 
-    public void mostarEliminarCliente(){
-        eliminarCliente = new EliminarCliente(this);
-        eliminarCliente.mostrar();
-        repaint();
-        revalidate();
-    }
-
-    public void mostrarConsultaCliente(){
-        consultaCliente = new ConsultarCliente(this);
-        consultaCliente.mostrar();
-        repaint();
-        revalidate();
-    }
-
-    public void mostrarMenu(){
-        menu = new Menu(this);
-        menu.mostrar();
-        repaint();
-        revalidate();
-    }
-    public void mostrarPanelInstructor(){
-    	instructor = new Instructor(this);
-    	instructor.mostrar();
-    }
     public void mostrarConsultarInstructor(){
     	consultarInstructor = new ConsultarInstructor(this);
     	consultarInstructor.mostrar();
@@ -140,12 +74,6 @@ public class Ventana extends JFrame {
         revalidate();
     }
 
-    public void mostrarTarifas(){
-        tarifa = new Tarifas(this);
-        tarifa.mostrar();
-        repaint();
-        revalidate();
-    }
     public void mostrarTarifasEditar() {
     	tarifas_editar = new EditarTarifa(this);
     	tarifas_editar.mostrar();

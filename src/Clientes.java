@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.*;
 
 import javax.swing.*;
 
@@ -121,6 +122,54 @@ public class Clientes {
         nuevoCliente.setUI(roundUI_dos);
         nuevoCliente.setPreferredSize(new Dimension(87,34));
         panel.add(nuevoCliente);
+
+        menu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarMenu();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        regresar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarMenu();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        nuevoCliente.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                NuevoCliente();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        buscar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarConsultaCliente();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+
+
+
         
         frame.repaint();
 	    frame.revalidate();
@@ -128,9 +177,32 @@ public class Clientes {
     }
 
     public void mostrar(){
-        //frame.add(panel); ESTE PANEL NO ESTA INICIALIZADO Y MANDA NULL
         frame.add(fondo);
 		frame.repaint();
 		frame.revalidate();
+    }
+
+    //Menu
+    public void mostrarMenu(){
+        Menu menu = new Menu(frame);
+        menu.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
+
+    //NuevoCiente
+    public void NuevoCliente(){
+        NuevoCliente newcliente = new NuevoCliente(frame);
+        newcliente.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
+
+    //Consultar
+    public void mostrarConsultaCliente(){
+        ConsultarCliente consultaCliente = new ConsultarCliente(frame);
+        consultaCliente.mostrar();
+        frame.repaint();
+        frame.revalidate();
     }
 }

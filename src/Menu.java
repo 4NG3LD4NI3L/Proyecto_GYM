@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -72,7 +74,7 @@ public class Menu{
         cerrarSesion.setUI(roundUI);
         arriba.add(cerrarSesion);
         
-        JButton op1 = new JButton("Clientes");
+        JButton op1 = new JButton(null,new ImageIcon("Resources/clientes.png"));
         op1.setSize(120, 120);
         op1.setLocation(65, 30);
         ShapedButtonUI roundUI_dos = new ShapedButtonUI();
@@ -80,13 +82,6 @@ public class Menu{
         op1.setUI(roundUI_dos);
         op1.setPreferredSize(new Dimension(87,34));
         panel.add(op1);
-        
-        ImageIcon clientesI = new ImageIcon("Resources/clientes.png");
-        JLabel clientes = new JLabel();
-        clientes.setIcon(new ImageIcon(clientesI.getImage().getScaledInstance(110, 110, Image.SCALE_SMOOTH)));
-        clientes.setLocation(0, 0);
-        clientes.setSize(120, 120);
-        op1.add(clientes);
         
         JButton op2 = new JButton("Tarifas");
         op2.setSize(120, 120);
@@ -136,6 +131,65 @@ public class Menu{
         instructores.setSize(120, 120);
         op4.add(instructores);
 		
+        ////////
+        op1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarPanelCliente();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        op2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarPanelTarifas();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        op3.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarPanelClases();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        op4.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarPanelInstructor();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        cerrarSesion.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarLogin();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+
+
+
         frame.repaint();
 	    frame.revalidate();
         fondo.add(fondoI);
@@ -145,6 +199,41 @@ public class Menu{
         frame.add(fondo);
 		frame.repaint();
 		frame.revalidate();
+    }
+
+    public void mostrarPanelCliente(){
+        Clientes clientes = new Clientes(frame); 
+        clientes.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
+
+    public void mostrarPanelTarifas(){
+       Tarifas tarifa = new Tarifas(frame);
+        tarifa.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
+
+    public void mostrarPanelClases(){
+        Clases clases = new Clases(frame);
+        clases.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
+
+    public void mostrarPanelInstructor(){
+    	Instructor instructor = new Instructor(frame);
+    	instructor.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
+
+    public void mostrarLogin(){
+        Login login = new Login(frame); 
+        login.agregar();
+        frame.repaint();
+        frame.revalidate();
     }
 
 }

@@ -81,7 +81,7 @@ public class Tarifas {
         CreaTarifa.setUI(roundUI);
         fondo.add(CreaTarifa);
         
-        JButton op1 = new JButton("1 Mes");
+        JButton op1 = new JButton(new ImageIcon("Resources/1 Mes.png"));
         op1.setSize(150, 220);
         op1.setLocation(25, 30);
         ShapedButtonUI roundUI_dos = new ShapedButtonUI();
@@ -90,7 +90,7 @@ public class Tarifas {
         op1.setPreferredSize(new Dimension(87,34));
         panel.add(op1);
         
-        ImageIcon foto1 = new ImageIcon("Resources/1 Mes.png");
+       ImageIcon foto1 = new ImageIcon("Resources/1 Mes.png");
         JLabel fill = new JLabel();
         fill.setIcon(new ImageIcon(foto1.getImage().getScaledInstance(150, 220, Image.SCALE_SMOOTH)));
         fill.setLocation(0, 0);

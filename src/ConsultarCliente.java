@@ -3,6 +3,8 @@ import java.awt.Font;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.*;
+import java.util.Formattable;
 
 public class ConsultarCliente {
 
@@ -170,15 +172,105 @@ public class ConsultarCliente {
         historialC.setLocation(95, 0);
         up.add(historialC);
 
+
+        menu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarMenu();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        clientes.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarPanelCliente();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        botonEliminarC.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostarEliminarCliente();
+                
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        botonEditarC.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                EditarCliente();
+                
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        botonCredencialC.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                
+                JOptionPane.showMessageDialog(null,"Se descargo Correctamente la credencial");
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        botonDescargarC.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                
+                JOptionPane.showMessageDialog(null,"Se descargo Correctamente el documento");
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
         frame.repaint();
 	    frame.revalidate();
         fondo.add(fondo1);
     }
 
     public void mostrar(){
-        frame.add(panel);
         frame.add(fondo);
 		frame.repaint();
 		frame.revalidate();
+    }
+
+    //Menu
+    public void mostrarMenu(){
+        Menu menu = new Menu(frame);
+        menu.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
+
+    //Cliente
+    public void mostrarPanelCliente(){
+        Clientes clientes = new Clientes(frame); 
+        clientes.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
+
+    //ELIMINAR CLIENTE
+    public void mostarEliminarCliente(){
+        EliminarCliente eliminarCliente = new EliminarCliente(frame);
+        eliminarCliente.mostrar();
+    }
+
+    //Editar cliente
+    public void EditarCliente(){
+        EditarCliente editCliente = new EditarCliente(frame);
+        editCliente.mostrar();
     }
 }

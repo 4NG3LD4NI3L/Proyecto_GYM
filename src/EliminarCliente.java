@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.*;
 
 import javax.swing.*;
 
@@ -161,15 +162,84 @@ public class EliminarCliente {
         cancelar.setBorderPainted(false);
         panel.add(cancelar);
 
+        menu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarMenu();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        clientes.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarPanelCliente();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        datos.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarConsultaCliente();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        cancelar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarConsultaCliente();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+
+
         frame.repaint();
 	    frame.revalidate();
         fondo.add(fondo1);
     }
 
     public void mostrar(){
-        frame.add(panel);
         frame.add(fondo);
 		frame.repaint();
 		frame.revalidate();
+    }
+
+    //MENU
+    public void mostrarMenu(){
+        Menu menu = new Menu(frame);
+        menu.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
+
+    //Cliente
+    public void mostrarPanelCliente(){
+        Clientes clientes = new Clientes(frame); 
+        clientes.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
+
+    //Consultar
+    public void mostrarConsultaCliente(){
+        ConsultarCliente consultaCliente = new ConsultarCliente(frame);
+        consultaCliente.mostrar();
+        frame.repaint();
+        frame.revalidate();
     }
 }

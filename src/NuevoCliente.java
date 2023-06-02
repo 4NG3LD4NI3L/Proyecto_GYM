@@ -1,5 +1,7 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -193,16 +195,65 @@ public class NuevoCliente {
         fotoN.setBackground(Color.white);
         panel.add(fotoN);
 
+        menu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarMenu();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        clientes.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarPanelCliente();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        cancelar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarPanelCliente();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
         frame.repaint();
 	    frame.revalidate();
         fondo.add(fondo1);
     }
 
     public void mostrar(){
-        frame.add(panel);
         frame.add(fondo);
 		frame.repaint();
 		frame.revalidate();
     }
+
+    //MENU
+    public void mostrarMenu(){
+        Menu menu = new Menu(frame);
+        menu.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
+
+    //Cliente
+    public void mostrarPanelCliente(){
+        Clientes clientes = new Clientes(frame); 
+        clientes.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
+
 }
 

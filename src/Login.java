@@ -1,4 +1,7 @@
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.ImageIcon;
@@ -8,30 +11,24 @@ public class Login {
     private JPanel fondo;
     private JPanel panel;
     public JButton inicio;
+
+    Menu menu;
     
     public Login(JFrame frame) {
         this.frame = frame;
 
-       JLabel fondo1 = new JLabel(new ImageIcon("Resources/FondoGym.png"));
-       fondo1.setSize(691, 487);
-       
-       fondo = new JPanel();
-       fondo.setLayout(null);
-       fondo.setOpaque(true);
-       fondo.setBackground(Color.black);
-       fondo.setSize(691, 487);
-       frame.add(fondo);
-       fondo.add(fondo1);
+        
+        fondo = new JPanel();
+        fondo.setLayout(null);
+        fondo.setOpaque(true);
+        fondo.setBackground(Color.black);
+        fondo.setSize(691, 487);
+        frame.add(fondo);
 
-       
-       inicio = new JButton("LOGIN");
-       inicio.setSize(75, 34);
-       inicio.setLocation(305, 417);
-       inicio.setBackground(new Color(255,144,21));
-       inicio.setBorderPainted(false);
-       frame.add(inicio);
+        JLabel fondo1 = new JLabel(new ImageIcon("Resources/FondoGym.png"));
+        fondo1.setSize(691, 487);
+        fondo.add(fondo1);
 
-       
        JLabel logo = new JLabel(new ImageIcon("Resources/logoGrande.png"));
        logo.setSize(241, 189);
        logo.setLocation(229, 2);
@@ -67,6 +64,31 @@ public class Login {
         contraseña.setLocation(76, 120);
         contraseña.setBorder(null);
         panel.add(contraseña);
+    
+        inicio = new JButton("LOGIN");
+       inicio.setSize(75, 34);
+       inicio.setLocation(305, 417);
+       inicio.setOpaque(true);
+       inicio.setBackground(new Color(255,144,21));
+       inicio.setBorderPainted(false);
+       frame.add(inicio);
+
+        inicio.addActionListener(new ActionListener(){
+
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+                frame.remove(inicio);
+                frame.remove(textoUsu);
+                frame.remove(textoContra);
+                frame.remove(logo);
+
+                fondo.repaint();
+                fondo.revalidate();
+
+                mostrarMenu();
+                frame.repaint();
+            }
+       });
 
         frame.repaint();
 		frame.revalidate();
@@ -74,9 +96,17 @@ public class Login {
 
     public void agregar(){
         frame.add(fondo);
-        frame.add(panel);
 		frame.repaint();
 		frame.revalidate();
         
     }
+
+
+    public void mostrarMenu(){
+        Menu menu = new Menu(frame);
+        menu.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
+    
 }
