@@ -1,10 +1,13 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -56,14 +59,14 @@ public class ConsultarInstructor {
 	        separador.setForeground(Color.white);
 	        arriba.add(separador);
 
-	        JButton clientes = new JButton("Instructores");
-	        clientes.setSize(120, 23);
-	        clientes.setBackground(new Color(61,61,61));
-	        clientes.setLocation(95, 60);
-	        clientes.setFont(new Font("", Font.BOLD, 15));
-	        clientes.setForeground(Color.white);
-	        clientes.setBorderPainted(false);
-	        arriba.add(clientes);
+	        JButton instr = new JButton("Instructores");
+	        instr.setSize(120, 23);
+	        instr.setBackground(new Color(61,61,61));
+	        instr.setLocation(95, 60);
+	        instr.setFont(new Font("", Font.BOLD, 15));
+	        instr.setForeground(Color.white);
+	        instr.setBorderPainted(false);
+	        arriba.add(instr);
 
 	        JLabel separador2 = new JLabel("/");
 	        separador2.setLocation(221, 67);
@@ -175,15 +178,110 @@ public class ConsultarInstructor {
 	        historialC.setLocation(65, 0);
 	        up.add(historialC);
 
+			menu.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) { 
+					frame.remove(fondo);
+	
+					mostrarMenu();
+	
+					frame.repaint();
+					frame.revalidate();
+				}
+			});
+	
+			instr.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) { 
+					frame.remove(fondo);
+	
+					mostrarPanelInstructor();
+	
+					frame.repaint();
+					frame.revalidate();
+				}
+			});
+
+			botonEditarC.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) { 
+					frame.remove(fondo);
+	
+					EditarInstructor();
+	
+					frame.repaint();
+					frame.revalidate();
+				}
+			});
+
+			botonEliminarC.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) { 
+					frame.remove(fondo);
+	
+					mostarEliminarInstructor();
+	
+					frame.repaint();
+					frame.revalidate();
+				}
+			});
+
+
+
+			botonCredencialC.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) { 
+					
+					JOptionPane.showMessageDialog(null,"Se descargo Correctamente la credencial");
+					frame.repaint();
+					frame.revalidate();
+				}
+			});
+	
+			botonDescargarC.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) { 
+					
+					JOptionPane.showMessageDialog(null,"Se descargo Correctamente el documento");
+					frame.repaint();
+					frame.revalidate();
+				}
+			});
+			
 	        frame.repaint();
 		    frame.revalidate();
 	        fondo.add(fondo1);
 	    }
 
 	    public void mostrar(){
-	        frame.add(panel);
 	        frame.add(fondo);
 			frame.repaint();
 			frame.revalidate();
 	    }
+
+		//Menu
+		public void mostrarMenu(){
+			Menu menu = new Menu(frame);
+			menu.mostrar();
+			frame.repaint();
+			frame.revalidate();
+		}
+	
+		//Instructor
+		public void mostrarPanelInstructor(){
+			Instructor instructor = new Instructor(frame);
+			instructor.mostrar();
+			frame.repaint();
+			frame.revalidate();
+		}
+
+		//EditarInstructor
+		public void EditarInstructor(){
+			EditarInstructor editInstructor = new EditarInstructor(frame);
+			editInstructor.mostrar();
+			
+		}
+
+		//EliminarInstructor
+		public void mostarEliminarInstructor(){
+			EliminarInstructor eliminarInstructor = new EliminarInstructor(frame);
+			eliminarInstructor.mostrar();
+			
+		}
+
+
 }

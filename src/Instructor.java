@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -125,16 +126,80 @@ public class Instructor {
         nuevoCliente.setPreferredSize(new Dimension(87,34));
         panel.add(nuevoCliente);
         
+
+        menu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarMenu();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        regresar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarMenu();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        nuevoCliente.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                NuevoInstructor();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        buscar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarConsultarInstructor();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
         frame.repaint();
 	    frame.revalidate();
         fondo.add(fondo1);
     }
 
     public void mostrar(){
-    	
-        //frame.add(panel); ESTE PANEL NO ESTA INICIALIZADO Y MANDA NULL
         frame.add(fondo);
 		frame.repaint();
 		frame.revalidate();
+    }
+
+    //Menu
+    public void mostrarMenu(){
+        Menu menu = new Menu(frame);
+        menu.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
+
+    //NuevoInstructor
+    public void NuevoInstructor(){
+        NuevoInstructor newInstructor = new NuevoInstructor(frame);
+        newInstructor.mostrar();
+        
+    }
+
+    //Consultar
+    public void mostrarConsultarInstructor(){
+    	ConsultarInstructor consultarInstructor = new ConsultarInstructor(frame);
+    	consultarInstructor.mostrar();
     }
 }
