@@ -48,22 +48,22 @@ public class Login {
        frame.add(textoUsu);
 
        JTextField usuario = new JTextField("ADMIN");
-       usuario.setLocation(76, 67);
+       usuario.setLocation(241, 264);
        usuario.setSize(206, 25);
        usuario.setBorder(null);
-       panel.add(usuario);
+       frame.add(usuario);
 
        JLabel textoContra = new JLabel("Contraseña");
        textoContra.setSize(89, 14);
-       textoContra.setLocation(242, 302);
+       textoContra.setLocation(241, 302);
        textoContra.setForeground(new Color(255,255,255));
        frame.add(textoContra);
        
        JPasswordField contraseña = new JPasswordField();
         contraseña.setSize(206,25);
-        contraseña.setLocation(76, 120);
+        contraseña.setLocation(241, 317);
         contraseña.setBorder(null);
-        panel.add(contraseña);
+        frame.add(contraseña);
     
         inicio = new JButton("LOGIN");
        inicio.setSize(75, 34);
@@ -81,6 +81,8 @@ public class Login {
                 frame.remove(textoUsu);
                 frame.remove(textoContra);
                 frame.remove(logo);
+                frame.remove(contraseña);
+                frame.remove(usuario);
 
                 fondo.repaint();
                 fondo.revalidate();
