@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -12,11 +14,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class EliminarTarifa {
+
 	private JFrame frame;
 	private JPanel fondo;
 	private JPanel panel;
 	private JPanel arriba;
+
 	public EliminarTarifa(JFrame frame) {
+
 		this.frame = frame;
 		JLabel fondoI = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondoI.setSize(691, 487);
@@ -50,14 +55,14 @@ public class EliminarTarifa {
         separador.setForeground(Color.white);
         arriba.add(separador);
 
-        JButton clientes = new JButton("Tarifas");
-        clientes.setSize(100, 23);
-        clientes.setBackground(new Color(61,61,61));
-        clientes.setLocation(105, 60);
-        clientes.setFont(new Font("", Font.BOLD, 15));
-        clientes.setForeground(Color.white);
-        clientes.setBorderPainted(false);
-        arriba.add(clientes);
+        JButton tari = new JButton("Tarifas");
+        tari.setSize(100, 23);
+        tari.setBackground(new Color(61,61,61));
+        tari.setLocation(105, 60);
+        tari.setFont(new Font("", Font.BOLD, 15));
+        tari.setForeground(Color.white);
+        tari.setBorderPainted(false);
+        arriba.add(tari);
 
         JLabel separador2 = new JLabel("/");
         separador2.setLocation(207, 67);
@@ -134,14 +139,64 @@ public class EliminarTarifa {
         cancelar.setForeground(Color.decode("#ff4343"));
         panel.add(cancelar);
         
+        menu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarMenu();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        tari.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarPanelTarifas();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        cancelar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarPanelTarifas();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
         
         frame.repaint();
 		frame.revalidate();
 		fondo.add(fondoI);
 	}
+
 	public void mostrar(){
         frame.add(fondo);
 		frame.repaint();
 		frame.revalidate();
     }
+
+    
+    //Menu
+    public void mostrarMenu(){
+        Menu menu = new Menu(frame);
+        menu.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
+
+    //Tarifas
+    public void mostrarPanelTarifas(){
+        Tarifas tarifa = new Tarifas(frame);
+         tarifa.mostrar();
+         frame.repaint();
+         frame.revalidate();
+     }
 }

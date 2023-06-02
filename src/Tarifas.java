@@ -154,10 +154,32 @@ public class Tarifas {
                 editTarifa.setLocation(20, 40);
                 fill.add(editTarifa);
 
+                editTarifa.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) { 
+                        frame.remove(fondo);
+        
+                        mostrarTarifasEditar();
+        
+                        frame.repaint();
+                        frame.revalidate();
+                    }
+                });
+
                 JButton eliTarifa = new JButton("Eliminar Tarifa");
                 eliTarifa.setSize(80, 30);
                 eliTarifa.setLocation(20, 100);
                 fill.add(eliTarifa);
+
+                eliTarifa.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) { 
+                        frame.remove(fondo);
+        
+                        mostrarTarifasEliminar();
+        
+                        frame.repaint();
+                        frame.revalidate();
+                    }
+                });
 
                 JButton cancelTarifa = new JButton("Cancelar");
                 cancelTarifa.setSize(80, 30);
@@ -190,10 +212,32 @@ public class Tarifas {
                 editTarifa.setLocation(20, 40);
                 fill1.add(editTarifa);
 
+                editTarifa.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) { 
+                        frame.remove(fondo);
+        
+                        mostrarTarifasEditar();
+        
+                        frame.repaint();
+                        frame.revalidate();
+                    }
+                });
+
                 JButton eliTarifa = new JButton("Eliminar Tarifa");
                 eliTarifa.setSize(80, 30);
                 eliTarifa.setLocation(20, 100);
                 fill1.add(eliTarifa);
+
+                eliTarifa.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) { 
+                        frame.remove(fondo);
+        
+                        mostrarTarifasEliminar();
+        
+                        frame.repaint();
+                        frame.revalidate();
+                    }
+                });
 
                 JButton cancelTarifa = new JButton("Cancelar");
                 cancelTarifa.setSize(80, 30);
@@ -226,10 +270,32 @@ public class Tarifas {
                 editTarifa.setLocation(20, 40);
                 fill2.add(editTarifa);
 
+                editTarifa.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) { 
+                        frame.remove(fondo);
+        
+                        mostrarTarifasEditar();
+        
+                        frame.repaint();
+                        frame.revalidate();
+                    }
+                });
+
                 JButton eliTarifa = new JButton("Eliminar Tarifa");
                 eliTarifa.setSize(80, 30);
                 eliTarifa.setLocation(20, 100);
                 fill2.add(eliTarifa);
+
+                eliTarifa.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) { 
+                        frame.remove(fondo);
+        
+                        mostrarTarifasEliminar();
+        
+                        frame.repaint();
+                        frame.revalidate();
+                    }
+                });
 
                 JButton cancelTarifa = new JButton("Cancelar");
                 cancelTarifa.setSize(80,30);
@@ -252,7 +318,37 @@ public class Tarifas {
 			}
         });
         
-		frame.repaint();
+		menu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostrarMenu();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        CreaTarifa.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                CrearTarifas();
+
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        frame.repaint();
 		frame.revalidate();
 		fondo.add(fondoI);
 	}
@@ -261,10 +357,38 @@ public class Tarifas {
 		frame.repaint();
 		frame.revalidate();
     }
+
 	public void CrearTarifas(){
         cTarifa = new CrearTarifa(frame);
         cTarifa.mostrar();
         frame.repaint();
         frame.revalidate();
+    }
+
+    //Menu
+    public void mostrarMenu(){
+        Menu menu = new Menu(frame);
+        menu.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
+
+    //Tarifas
+    public void mostrarPanelTarifas(){
+        Tarifas tarifa = new Tarifas(frame);
+         tarifa.mostrar();
+         frame.repaint();
+         frame.revalidate();
+    }
+
+    public void mostrarTarifasEditar() {
+    	EditarTarifa tarifas_editar = new EditarTarifa(frame);
+    	tarifas_editar.mostrar();
+    }
+
+    public void mostrarTarifasEliminar() {
+    	EliminarTarifa tarifas_eliminar = new EliminarTarifa(frame);
+    	tarifas_eliminar.mostrar();
+    	
     }
 }
