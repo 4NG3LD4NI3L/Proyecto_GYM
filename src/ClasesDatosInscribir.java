@@ -141,6 +141,46 @@ public class ClasesDatosInscribir extends JPanel {
         inscribirCliente.setPreferredSize(new Dimension(123,34));
         inscribirCliente.setFocusPainted(false);
         panel.add(inscribirCliente);
+
+        menu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+               cerrarEstaVentana();
+
+                mostrarMenu();
+
+                
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        clases.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) { 
+				cerrarEstaVentana();
+                
+				mostrarPanelClases();
+				
+				frame.requestFocus();
+				frame.repaint();
+				frame.revalidate();
+			}
+		});
+        
+        datos.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) { 
+				clase_datos = new ClasesDatos(frame);
+				cerrarEstaVentana();
+				frame.add(clase_datos);
+				
+				frame.requestFocus();
+				frame.repaint();
+				frame.revalidate();
+			}
+		});
         
         regresar.addActionListener(new ActionListener() {
 			
@@ -174,5 +214,21 @@ public class ClasesDatosInscribir extends JPanel {
 	public void cerrarEstaVentana() {
 		frame.remove(this);
 	}
+
+    //Menu
+    public void mostrarMenu(){
+        Menu menu = new Menu(frame);
+        menu.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
+
+    //Clases panel
+    public void mostrarPanelClases(){
+        Clases clases = new Clases(frame);
+        clases.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
 
 }

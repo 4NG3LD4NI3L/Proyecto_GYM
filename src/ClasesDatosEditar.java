@@ -259,7 +259,47 @@ public class ClasesDatosEditar extends JPanel {
         checkJueves.setSelected(true);
         checkSabado.setSelected(true);
         checkDomingo.setSelected(true);
+
+        menu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+               cerrarEstaVentana();
+
+                mostrarMenu();
+
+                
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        clases.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) { 
+				cerrarEstaVentana();
+                
+				mostrarPanelClases();
+				
+				frame.requestFocus();
+				frame.repaint();
+				frame.revalidate();
+			}
+		});
         
+        datos.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) { 
+				clase_datos = new ClasesDatos(frame);
+				cerrarEstaVentana();
+				frame.add(clase_datos);
+				
+				frame.requestFocus();
+				frame.repaint();
+				frame.revalidate();
+			}
+		});
+
         regresar.addActionListener(new ActionListener() {
 			
 			@Override
@@ -292,5 +332,21 @@ public class ClasesDatosEditar extends JPanel {
 	public void cerrarEstaVentana() {
 		frame.remove(this);
 	}
+
+    //Menu
+    public void mostrarMenu(){
+        Menu menu = new Menu(frame);
+        menu.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
+
+    //Clases panel
+    public void mostrarPanelClases(){
+        Clases clases = new Clases(frame);
+        clases.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
 
 }

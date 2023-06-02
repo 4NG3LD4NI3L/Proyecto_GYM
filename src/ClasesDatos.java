@@ -103,13 +103,13 @@ public class ClasesDatos extends JPanel {
         separador_uno.setForeground(Color.white);
         arriba.add(separador_uno);
 
-        JButton clientes = new JButton("Clases");
-        clientes.setSize(80, 23);
-        clientes.setBackground(new Color(61,61,61));
-        clientes.setLocation(90, 60);
-        clientes.setForeground(Color.white);
-        clientes.setBorderPainted(false);
-        arriba.add(clientes);
+        JButton clases = new JButton("Clases");
+        clases.setSize(80, 23);
+        clases.setBackground(new Color(61,61,61));
+        clases.setLocation(90, 60);
+        clases.setForeground(Color.white);
+        clases.setBorderPainted(false);
+        arriba.add(clases);
         
         JLabel separador_dos = new JLabel("/");
         separador_dos.setLocation(170, 67);
@@ -208,8 +208,34 @@ public class ClasesDatos extends JPanel {
 				frame.revalidate();
 			}
 		});
+
+		menu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+               cerrarEstaVentana();
+
+                mostrarMenu();
+
+                
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
         
-        regresar.addActionListener(new ActionListener() {
+        clases.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) { 
+				clase = new Clases(frame);
+				cerrarEstaVentana();
+				frame.add(clase);
+				
+				frame.requestFocus();
+				frame.repaint();
+				frame.revalidate();
+			}
+		});
+
+		regresar.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) { 
@@ -245,6 +271,14 @@ public class ClasesDatos extends JPanel {
 	public void cerrarEstaVentana() {
 		frame.remove(this);
 	}
+
+	//Menu
+    public void mostrarMenu(){
+        Menu menu = new Menu(frame);
+        menu.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
 	
 	public void tabladeDatos() throws IOException {
 		panelScroll.setSize(370,39);

@@ -122,6 +122,18 @@ public class Clases extends JPanel {
         nuevoCliente.setPreferredSize(new Dimension(123,34));
         nuevoCliente.setFocusPainted(false);
         panel.add(nuevoCliente);
+
+        menu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+               cerrarEstaVentana();
+
+                mostrarMenu();
+
+                
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
         
         buscar.addActionListener(new ActionListener() {
 			
@@ -141,11 +153,13 @@ public class Clases extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Aqui debe mandar al menu
-				
-				frame.requestFocus();
-				frame.repaint();
-				frame.revalidate();
+                cerrarEstaVentana();
+
+                mostrarMenu();
+
+                
+                frame.repaint();
+                frame.revalidate();
 			}
 		});
         
@@ -173,9 +187,16 @@ public class Clases extends JPanel {
 	}
 
     public void mostrar(){
-        //frame.add(panel); ESTE PANEL NO ESTA INICIALIZADO Y MANDA NULL
         frame.add(this);
 		frame.repaint();
 		frame.revalidate();
+    }
+
+     //Menu
+     public void mostrarMenu(){
+        Menu menu = new Menu(frame);
+        menu.mostrar();
+        frame.repaint();
+        frame.revalidate();
     }
 }

@@ -43,14 +43,6 @@ public class Ventana extends JFrame {
     
 
 
-    public void EditarCliente(){
-        editCliente = new EditarCliente(this);
-        editCliente.mostrar();
-        repaint();
-        revalidate();
-    }
-
-
     public void mostrarConsultarInstructor(){
     	consultarInstructor = new ConsultarInstructor(this);
     	consultarInstructor.mostrar();

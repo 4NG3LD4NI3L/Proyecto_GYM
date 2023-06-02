@@ -55,13 +55,13 @@ public class ClasesDatosCrear extends JPanel {
         separador.setForeground(Color.white);
         arriba.add(separador);
 
-        JButton clientes = new JButton("Clases");
-        clientes.setSize(80, 23);
-        clientes.setBackground(new Color(61,61,61));
-        clientes.setLocation(90, 60);
-        clientes.setForeground(Color.white);
-        clientes.setBorderPainted(false);
-        arriba.add(clientes);
+        JButton clases = new JButton("Clases");
+        clases.setSize(80, 23);
+        clases.setBackground(new Color(61,61,61));
+        clases.setLocation(90, 60);
+        clases.setForeground(Color.white);
+        clases.setBorderPainted(false);
+        arriba.add(clases);
         
         JLabel separador_2 = new JLabel("/");
         separador_2.setLocation(170, 67);
@@ -235,6 +235,30 @@ public class ClasesDatosCrear extends JPanel {
         nuevoCliente.setPreferredSize(new Dimension(123,34));
         nuevoCliente.setFocusPainted(false);
         panel.add(nuevoCliente);
+
+        menu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+               cerrarEstaVentana();
+
+                mostrarMenu();
+
+                
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        clases.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+               cerrarEstaVentana();
+
+               mostrarPanelClases();
+
+                
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
         
         regresar.addActionListener(new ActionListener() {
 			
@@ -268,5 +292,21 @@ public class ClasesDatosCrear extends JPanel {
 	public void cerrarEstaVentana() {
 		frame.remove(this);
 	}
+
+    //Menu
+    public void mostrarMenu(){
+        Menu menu = new Menu(frame);
+        menu.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
+
+    //Clases panel
+    public void mostrarPanelClases(){
+        Clases clases = new Clases(frame);
+        clases.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
 
 }
