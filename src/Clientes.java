@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.*;
+import java.sql.SQLException;
 
 import javax.swing.*;
 
@@ -11,6 +12,7 @@ public class Clientes {
     private JPanel fondo;
     private JPanel panel;
     private JPanel arriba;
+    private BaseDatos bd;
 
     public Clientes(JFrame frame){
         this.frame = frame;
@@ -158,10 +160,16 @@ public class Clientes {
 
         buscar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { 
-                frame.remove(fondo);
-
-                mostrarConsultaCliente();
-
+                //frame.remove(fondo);
+                //mostrarConsultaCliente();
+            	
+            	try {
+					buscarNombre(nombre.getText());
+					buscarId(Integer.parseInt(iD.getText()));
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+            	
                 frame.repaint();
                 frame.revalidate();
             }
@@ -174,6 +182,28 @@ public class Clientes {
         frame.repaint();
 	    frame.revalidate();
         fondo.add(fondo1);
+    }
+    
+    public void buscarNombre(String nombre) throws SQLException {
+    	bd = new BaseDatos();
+    	
+    	if (bd.buscarNombreCliente(nombre)) {
+    		System.out.println("LO ENCONTRO");
+    	}else {
+    		System.out.println("no lo encontro");
+    	}
+    	
+    }
+    
+    public void buscarId(int id) throws SQLException {
+    	bd = new BaseDatos();
+    	
+    	if (bd.buscarIdCliente(id)) {
+    		System.out.println("LO ENCONTRO");
+    	}else {
+    		System.out.println("no lo encontro");
+    	}
+    	
     }
 
     public void mostrar(){
