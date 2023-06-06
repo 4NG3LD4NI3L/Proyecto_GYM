@@ -3,6 +3,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.*;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.*;
 
@@ -160,12 +163,24 @@ public class Clientes {
 
         buscar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { 
-                //frame.remove(fondo);
-                //mostrarConsultaCliente();
             	
             	try {
-					buscarNombre(nombre.getText());
-					buscarId(Integer.parseInt(iD.getText()));
+            		
+            		if (nombre.getText().length()>0 && iD.getText().length()>0) {
+            			if (!verifID(iD.getText())) {
+            				if (buscarId(Integer.parseInt(iD.getText()))) {
+            					frame.remove(fondo);
+            					mostrarConsultaCliente();
+            				}else {
+            					JOptionPane.showMessageDialog(null,"El nombre del usuario y/o ID son incorrectos o no coinciden","Error al buscar el usuario",JOptionPane.ERROR_MESSAGE);
+            				}
+            			}else {
+            				JOptionPane.showMessageDialog(null,"Solo se pueden ingresar numeros en la casilla ID","Error al buscar el usuario",JOptionPane.INFORMATION_MESSAGE);
+            			}
+            		}else {
+            			JOptionPane.showMessageDialog(null,"Todos los elementos deben ser llenados","Error al buscar el usuario",JOptionPane.ERROR_MESSAGE);            			
+            		}
+					
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -184,27 +199,50 @@ public class Clientes {
         fondo.add(fondo1);
     }
     
-    public void buscarNombre(String nombre) throws SQLException {
+    public boolean buscarNombre(String nombre) throws SQLException {
     	bd = new BaseDatos();
+    	boolean resultado = false;
     	
     	if (bd.buscarNombreCliente(nombre)) {
     		System.out.println("LO ENCONTRO");
+    		resultado=true;
     	}else {
     		System.out.println("no lo encontro");
     	}
     	
+    	return resultado;
     }
     
-    public void buscarId(int id) throws SQLException {
+    public boolean buscarId(int id) throws SQLException {
     	bd = new BaseDatos();
+    	boolean resultado = false;
     	
     	if (bd.buscarIdCliente(id)) {
     		System.out.println("LO ENCONTRO");
+    		resultado=true;
     	}else {
     		System.out.println("no lo encontro");
     	}
     	
+    	return resultado;
     }
+    
+    public boolean verifID(String id) {
+		boolean resultado = false;
+		Set<Character> caracteresProhibidos = new HashSet<>(Arrays.asList('|','°','¬','!','"','#','$','%','&','/','(',')','=','?','¡','¿','+','*','~','´','¨',
+																		'{','}','[',']','^','`','<','>',',',';','.',':','-','_','q','Q','w','W','e','E','r','R'
+																		,'t','T','y','Y','u','U','i','I','o','O','p','P','a','A','s','S','d','D','f','F','g','G',
+																		'h','H','j','J','k','K','l','L','ñ','Ñ','z','Z','x','X','c','C','v','V','b','B','n','N',
+																		'm','M'));
+		for (int i=0;i<id.length();i++) {
+			char caracterActual = id.charAt(i);
+			if (caracteresProhibidos.contains(caracterActual)) {
+				resultado = true;
+			}
+		}
+		
+		return resultado;
+	}
 
     public void mostrar(){
         frame.add(fondo);
