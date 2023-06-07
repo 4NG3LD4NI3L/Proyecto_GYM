@@ -171,7 +171,7 @@ public class Clientes {
             			if (!verifID(iD.getText())) {
             				if (buscarBD(nombre.getText(),Integer.parseInt(iD.getText()))) {
             					frame.remove(fondo);
-            					mostrarConsultaCliente();
+            					mostrarConsultaCliente(nombre.getText(),Integer.parseInt(iD.getText()));
             				}else {
             					JOptionPane.showMessageDialog(null,"El nombre del usuario y/o ID son incorrectos o no coinciden","Error al buscar el usuario",JOptionPane.ERROR_MESSAGE);
             				}
@@ -254,8 +254,8 @@ public class Clientes {
     }
 
     //Consultar
-    public void mostrarConsultaCliente(){
-        ConsultarCliente consultaCliente = new ConsultarCliente(frame);
+    public void mostrarConsultaCliente(String nombre,int id){// EDITADO PARA PASAR LOS DATOS DEL CLIENTE
+        ConsultarCliente consultaCliente = new ConsultarCliente(frame,nombre,id);
         consultaCliente.mostrar();
         frame.repaint();
         frame.revalidate();

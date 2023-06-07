@@ -10,9 +10,13 @@ public class EliminarCliente {
     private JPanel fondo;
     private JPanel panel;
     private JPanel arriba;
+    private String nombre_cliente;
+    private int id_cliente;
 
-    public EliminarCliente(JFrame frame){
+    public EliminarCliente(JFrame frame, String nombre, int id){
         this.frame = frame;
+        this.nombre_cliente=nombre;
+    	this.id_cliente=id;
         
         JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondo1.setSize(691, 487);
@@ -237,7 +241,7 @@ public class EliminarCliente {
 
     //Consultar
     public void mostrarConsultaCliente(){
-        ConsultarCliente consultaCliente = new ConsultarCliente(frame);
+        ConsultarCliente consultaCliente = new ConsultarCliente(frame,nombre_cliente,id_cliente);
         consultaCliente.mostrar();
         frame.repaint();
         frame.revalidate();

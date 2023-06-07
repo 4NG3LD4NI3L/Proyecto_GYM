@@ -12,9 +12,13 @@ public class ConsultarCliente {
     private JPanel fondo;
     private JPanel panel;
     private JPanel arriba;
+    private String nombre_cliente;
+    private int id_cliente;
 
-    public ConsultarCliente(JFrame frame){
+    public ConsultarCliente(JFrame frame,String nombre,int id){
         this.frame = frame;
+        this.nombre_cliente=nombre;
+    	this.id_cliente=id;
         
         JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondo1.setSize(691, 487);
@@ -99,7 +103,7 @@ public class ConsultarCliente {
         nId.setForeground(Color.black);
         panel.add(nId);
 
-        JLabel nameCliente = new JLabel("Lalo suares");
+        JLabel nameCliente = new JLabel(nombre_cliente);
         nameCliente.setSize(150, 15);
         nameCliente.setLocation(20, 40);
         nameCliente.setFont(new Font("",Font.BOLD,13));
@@ -108,7 +112,7 @@ public class ConsultarCliente {
         nameCliente.setForeground(Color.black);
         panel.add(nameCliente);
 
-        JLabel idCliente = new JLabel("106015");
+        JLabel idCliente = new JLabel(Integer.toString(id_cliente));
         idCliente.setSize(150, 15);
         idCliente.setLocation(238, 40);
         idCliente.setFont(new Font("",Font.BOLD,13));
@@ -263,14 +267,14 @@ public class ConsultarCliente {
     }
 
     //ELIMINAR CLIENTE
-    public void mostarEliminarCliente(){
-        EliminarCliente eliminarCliente = new EliminarCliente(frame);
+    public void mostarEliminarCliente(){// AGREGAR PARAMETROS LUEGO
+        EliminarCliente eliminarCliente = new EliminarCliente(frame,nombre_cliente,id_cliente);
         eliminarCliente.mostrar();
     }
 
     //Editar cliente
-    public void EditarCliente(){
-        EditarCliente editCliente = new EditarCliente(frame);
+    public void EditarCliente(){// AGREGAR PARAMETROS LUEGO
+        EditarCliente editCliente = new EditarCliente(frame,nombre_cliente,id_cliente);
         editCliente.mostrar();
     }
 }

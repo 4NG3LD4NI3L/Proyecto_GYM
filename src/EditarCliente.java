@@ -11,9 +11,13 @@ public class EditarCliente {
     private JPanel fondo;
     private JPanel panel;
     private JPanel arriba;
+    private String nombre_cliente;
+    private int id_cliente;
 
-    public EditarCliente(JFrame frame){
+    public EditarCliente(JFrame frame, String nombre, int id){
         this.frame = frame;
+        this.nombre_cliente=nombre;
+    	this.id_cliente=id;
         
         JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondo1.setSize(691, 487);
@@ -287,7 +291,7 @@ public class EditarCliente {
 
     //Consultar
     public void mostrarConsultaCliente(){
-        ConsultarCliente consultaCliente = new ConsultarCliente(frame);
+        ConsultarCliente consultaCliente = new ConsultarCliente(frame,nombre_cliente,id_cliente);
         consultaCliente.mostrar();
         frame.repaint();
         frame.revalidate();
