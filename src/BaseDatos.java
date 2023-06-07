@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.table.DefaultTableModel;
+
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
@@ -81,6 +83,35 @@ public class BaseDatos {
 		conn.close();
 		
 		return encontrado;
+	}
+	
+	public DefaultTableModel buscar(int id) throws SQLException {
+		String[]columnas = {"Mes","Asistencia","Clases","Monto"};
+		DefaultTableModel dtm = new DefaultTableModel(columnas,0) {
+			public boolean isCellEditable(int row, int column) { 
+				return false;
+			}
+		};
+		String[] datosNew = new String[4];
+		
+		ResultSet rs = s.executeQuery("SELECT * FROM clases RIGHT JOIN clientes ON clientes_id_cla = id_cliente WHERE id_cliente = "+id+";");
+		rs.next();
+		datosNew[0] = rs.getString("fecha_inscrito_cli");
+		datosNew[1] = Integer.toString(rs.getInt("asistencia_cli"));
+		datosNew[2] = rs.getString("nombre_cla");
+		if(rs.getString("nombre_cla") != null) {
+			rs = s.executeQuery("SELECT * FROM tarifas WHERE clase_tr = '"+rs.getString("nombre_cla")+"';");
+			rs.next();
+			datosNew[3] = Integer.toString(rs.getInt("costo_tr"));
+		}else {
+			datosNew[3] = "600";
+		}
+		
+		dtm.addRow(datosNew);
+		
+		conn.close();
+		
+		return dtm;
 	}
 	
 }

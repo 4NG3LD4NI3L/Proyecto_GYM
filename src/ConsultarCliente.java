@@ -4,6 +4,7 @@ import java.awt.Font;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.util.Formattable;
 
 public class ConsultarCliente {
@@ -12,6 +13,7 @@ public class ConsultarCliente {
     private JPanel fondo;
     private JPanel panel;
     private JPanel arriba;
+    private BaseDatos bd;
     private String nombre_cliente;
     private int id_cliente;
 
@@ -19,6 +21,11 @@ public class ConsultarCliente {
         this.frame = frame;
         this.nombre_cliente=nombre;
     	this.id_cliente=id;
+    	try {
+			bd = new BaseDatos();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
         
         JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondo1.setSize(691, 487);
@@ -151,18 +158,16 @@ public class ConsultarCliente {
         panel2.setLocation(20, 65);
         panel2.setBackground(new Color(255,255,255));
         panel.add(panel2);
-
-        
-        String[]columnas = {"Mes","Asistencia","Monto"};
-        String[][]datosT ={
-            {"Enero","15","$300.00"}
-        };
-        DefaultTableModel modelo = new DefaultTableModel(datosT,columnas);
     
-        JTable tabla = new JTable(modelo);
-        JScrollPane scroll = new JScrollPane(tabla);
-        scroll.setBounds(20, 40, 330, 200);
-        panel2.add(scroll);
+		try {
+			JTable tabla;
+			tabla = new JTable(bd.buscar(id_cliente));
+			JScrollPane scroll = new JScrollPane(tabla);
+			scroll.setBounds(20, 40, 330, 200);
+			panel2.add(scroll);
+		} catch (SQLException e) {
+			System.err.println("Error al mostrar la tabla: "+e);
+		}
 
         RoundedPanel up = new RoundedPanel(15);
         up.setSize(370, 30);
