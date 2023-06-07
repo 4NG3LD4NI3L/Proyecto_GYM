@@ -114,4 +114,30 @@ public class BaseDatos {
 		return dtm;
 	}
 	
+	public void crearNuevoCliente(String nombre,String apellidoMat,String apellidoPat,String correo,String telefono,String telefonoEmer,String fecha,int asistencia,int edad) throws SQLException {
+		try {
+			String insertarDatos = "INSERT INTO clientes (nombre_cli, apellido_pat_cli, apellido_mat_cli, correo_cli, telefono_cli, telefono_eme_cli, fecha_inscrito_cli, asistencia_cli, edad_cli) VALUES \r\n"
+					+ "(?,?,?,?,?,?,?,?,?);" ;
+			ps = (PreparedStatement) conn.prepareStatement(insertarDatos);
+			
+			ps.setString(1, nombre);
+			ps.setString(2, apellidoPat);
+			ps.setString(3, apellidoMat);
+			ps.setString(4, correo);
+			ps.setString(5, telefono);
+			ps.setString(6, telefonoEmer);
+			ps.setString(7, fecha);
+			ps.setInt(8, asistencia);
+			ps.setInt(9, edad);
+			
+			ps.executeUpdate();
+			System.out.println("Se subieron los registros");
+			
+		} catch (SQLException e) {
+			System.err.println("Error BD: "+e.getMessage());
+		}finally {
+			conn.close();
+		}
+	}
+	
 }

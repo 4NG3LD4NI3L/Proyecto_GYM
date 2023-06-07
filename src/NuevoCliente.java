@@ -2,6 +2,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.*;
 
@@ -11,9 +15,15 @@ public class NuevoCliente {
     private JPanel fondo;
     private JPanel panel;
     private JPanel arriba;
+    private BaseDatos bd;
 
     public NuevoCliente(JFrame frame){
         this.frame = frame;
+        try {
+			bd = new BaseDatos();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
         
         JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondo1.setSize(691, 487);
@@ -100,17 +110,17 @@ public class NuevoCliente {
         nombreN.setForeground(Color.black);
         panel.add(nombreN);
         
-        JLabel apellidoNuevo = new JLabel("Apellido");
-        apellidoNuevo.setSize(83, 22);
-        apellidoNuevo.setLocation(30, 70);
-        apellidoNuevo.setForeground(Color.black);
-        panel.add(apellidoNuevo);
+        JLabel apellido = new JLabel("Apellidos");
+        apellido.setSize(83, 22);
+        apellido.setLocation(30, 70);
+        apellido.setForeground(Color.black);
+        panel.add(apellido);
 
-        JTextField Apellido = new JTextField();
-        Apellido.setSize(300, 27);
-        Apellido.setLocation(30, 90);
-        Apellido.setBorder(null);
-        panel.add(Apellido);
+        JTextField apellidoPatMat = new JTextField();
+        apellidoPatMat.setSize(300, 27);
+        apellidoPatMat.setLocation(30, 90);
+        apellidoPatMat.setBorder(null);
+        panel.add(apellidoPatMat);
         
         JLabel edadNuevo = new JLabel("Edad");
         edadNuevo.setSize(83, 22);
@@ -130,11 +140,11 @@ public class NuevoCliente {
         correoNuevo.setForeground(Color.black);
         panel.add(correoNuevo);
         
-        JTextField CorreoN = new JTextField();
-        CorreoN.setSize(300, 27);
-        CorreoN.setLocation(30, 180);
-        CorreoN.setBorder(null);
-        panel.add(CorreoN);
+        JTextField correoN = new JTextField();
+        correoN.setSize(300, 27);
+        correoN.setLocation(30, 180);
+        correoN.setBorder(null);
+        panel.add(correoN);
 
         JLabel telefonoNuevo = new JLabel("Telefono");
         telefonoNuevo.setSize(83, 22);
@@ -227,11 +237,110 @@ public class NuevoCliente {
                 frame.revalidate();
             }
         });
+        
+        confirmarN.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Presionaste confirmar");
+				
+				if (nombreN.getText().length()>0 &&
+					apellidoPatMat.getText().length()>0 &&
+					edad.getText().length()>0 &&
+					correoN.getText().length()>0 &&
+					telefonoN.getText().length()==10 &&
+					telefonoNewEme.getText().length()==10) {
+					if (verifNombreApellidos(nombreN.getText(), apellidoPatMat.getText())) {
+						if (verifEdad_Telefonos(edad.getText(), telefonoN.getText(), telefonoNewEme.getText())) {
+							try {
+								bd.crearNuevoCliente(nombreN.getText(), apellidoPatMat.getText(), apellidoPatMat.getText(), correoN.getText(), telefonoN.getText(), telefonoNewEme.getText(), "07-06-2023", 0, Integer.parseInt(edad.getText()));
+							} catch (NumberFormatException e1) {
+								e1.printStackTrace();
+							} catch (SQLException e1) {
+								e1.printStackTrace();
+							}
+						}else {
+							JOptionPane.showMessageDialog(null,"Solo puedes ingresar numeros en: Edad, Telefono y Telefono de emergencia","Error al crear cliente",JOptionPane.WARNING_MESSAGE);
+						}
+					}else {
+						JOptionPane.showMessageDialog(null,"Solo puedes ingresar letras en: Nombre y Apellidos","Error al crear cliente",JOptionPane.WARNING_MESSAGE);
+					}
+				}else {
+					JOptionPane.showMessageDialog(null,"Todos los elementos deben ser llenados","Error al crear cliente",JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
 
         frame.repaint();
 	    frame.revalidate();
         fondo.add(fondo1);
     }
+    
+    public boolean verifEdad_Telefonos(String edad,String telefonos,String telefonosEmer) {
+		boolean resultado = true;
+		Set<Character> caracteresProhibidos = new HashSet<>(Arrays.asList('|','°','¬','!','"','#','$','%','&','/','(',')','=','?','¡','¿','+','*','~','´','¨',
+																		'{','}','[',']','^','`','<','>',',',';','.',':','-','_','q','Q','w','W','e','E','r','R'
+																		,'t','T','y','Y','u','U','i','I','o','O','p','P','a','A','s','S','d','D','f','F','g','G',
+																		'h','H','j','J','k','K','l','L','ñ','Ñ','z','Z','x','X','c','C','v','V','b','B','n','N',
+																		'm','M',' '));
+		
+		int contador=0;
+		
+		for (int i=0;i<edad.length();i++) {
+			char caracterActual = edad.charAt(i);
+			if (caracteresProhibidos.contains(caracterActual)) {
+				contador++;
+			}
+		}
+		
+		for (int i=0;i<telefonos.length();i++) {
+			char caracterActual = telefonos.charAt(i);
+			if (caracteresProhibidos.contains(caracterActual)) {
+				contador++;
+			}
+		}
+		
+		for (int i=0;i<telefonosEmer.length();i++) {
+			char caracterActual = telefonosEmer.charAt(i);
+			if (caracteresProhibidos.contains(caracterActual)) {
+				contador++;
+			}
+		}
+		
+		if (contador>0) {
+			resultado=false;
+		}
+		
+		return resultado;
+	}
+    
+    public boolean verifNombreApellidos(String nombre,String ApellidoPat) {
+		boolean resultado = true;
+		Set<Character> caracteresProhibidos = new HashSet<>(Arrays.asList('0','1','2','3','4','5','6','7','8','9','|','°','¬','!','"','#','$','%','&','/',
+																		'(',')','=','?','¡','¿','+','*','~','´','¨','{','}','[',']','^','`','<','>',',',';',
+																		'.',':','-','_','@'));
+		int contador=0;
+		
+		for (int i=0;i<nombre.length();i++) {
+			char caracterActual = nombre.charAt(i);
+			if (caracteresProhibidos.contains(caracterActual)) {
+				contador++;
+			}
+		}
+		
+		for (int i=0;i<ApellidoPat.length();i++) {
+			char caracterActual = ApellidoPat.charAt(i);
+			if (caracteresProhibidos.contains(caracterActual)) {
+				contador++;
+			}
+		}
+		
+		if (contador>0) {
+			resultado=false;
+		}
+		
+		return resultado;
+	}
 
     public void mostrar(){
         frame.add(fondo);
