@@ -11,7 +11,7 @@ USE `proyecto-gym`;
 CREATE TABLE IF NOT EXISTS `clases` (
   `nombre_cla` varchar(50) NOT NULL,
   `instructor_designado_cla` varchar(50) NOT NULL,
-  `horario_cla` varchar(5) NOT NULL DEFAULT '',
+  `horario_cla` varchar(50) NOT NULL DEFAULT '',
   `dias_cla` varchar(100) DEFAULT NULL,
   `clientes_nombre_cla` varchar(50) NOT NULL,
   `clientes_id_cla` int(5) NOT NULL,
@@ -25,6 +25,8 @@ CREATE TABLE IF NOT EXISTS `clases` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 /*!40000 ALTER TABLE `clases` DISABLE KEYS */;
+INSERT INTO `clases` (`nombre_cla`, `instructor_designado_cla`, `horario_cla`, `dias_cla`, `clientes_nombre_cla`, `clientes_id_cla`) VALUES
+	('xCombat', 'Maria', '8:00 AM - 11:00 AM', 'Lunes,Martes,Jueves,Sabado', 'Julian', 2);
 /*!40000 ALTER TABLE `clases` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `clientes` (
@@ -55,13 +57,15 @@ CREATE TABLE IF NOT EXISTS `instructor` (
   `apellido_mat_in` varchar(50) NOT NULL,
   `edad_in` int(3) NOT NULL,
   `correo_in` varchar(50) NOT NULL,
-  `telefono_in` int(10) NOT NULL,
-  `telefono_eme_in` int(10) NOT NULL,
+  `telefono_in` varchar(10) NOT NULL DEFAULT '',
+  `telefono_eme_in` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`id_instructor`),
   UNIQUE KEY `nombre_in` (`nombre_in`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 /*!40000 ALTER TABLE `instructor` DISABLE KEYS */;
+INSERT INTO `instructor` (`id_instructor`, `nombre_in`, `apellido_pat_in`, `apellido_mat_in`, `edad_in`, `correo_in`, `telefono_in`, `telefono_eme_in`) VALUES
+	(1, 'Maria', 'Chavez', 'Pilares', 34, 'chama89@gmail.com', '6129991548', '6244579014');
 /*!40000 ALTER TABLE `instructor` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `tarifas` (
@@ -72,6 +76,8 @@ CREATE TABLE IF NOT EXISTS `tarifas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 /*!40000 ALTER TABLE `tarifas` DISABLE KEYS */;
+INSERT INTO `tarifas` (`clase_tr`, `costo_tr`) VALUES
+	('xCombat', 300);
 /*!40000 ALTER TABLE `tarifas` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
