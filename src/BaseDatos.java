@@ -65,4 +65,22 @@ public class BaseDatos {
 		return encontrado;
 	}
 	
+	public boolean buscarNombreClienteIdCliente(String nombre,int id) throws SQLException {
+		ResultSet rs = s.executeQuery("SELECT * FROM clientes");
+		boolean encontrado = false;
+		
+		while (rs.next()) {
+			
+			if (id == rs.getInt("id_cliente")) {
+				if (nombre.equals(rs.getString("nombre_cli"))) {
+					encontrado = true;
+				}
+			}
+			
+		}
+		conn.close();
+		
+		return encontrado;
+	}
+	
 }

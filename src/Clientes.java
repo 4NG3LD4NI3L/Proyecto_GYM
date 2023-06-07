@@ -141,6 +141,7 @@ public class Clientes {
 
         regresar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { 
+            	
                 frame.remove(fondo);
 
                 mostrarMenu();
@@ -168,7 +169,7 @@ public class Clientes {
             		
             		if (nombre.getText().length()>0 && iD.getText().length()>0) {
             			if (!verifID(iD.getText())) {
-            				if (buscarId(Integer.parseInt(iD.getText()))) {
+            				if (buscarBD(nombre.getText(),Integer.parseInt(iD.getText()))) {
             					frame.remove(fondo);
             					mostrarConsultaCliente();
             				}else {
@@ -199,25 +200,11 @@ public class Clientes {
         fondo.add(fondo1);
     }
     
-    public boolean buscarNombre(String nombre) throws SQLException {
+    public boolean buscarBD(String nombre,int id) throws SQLException {
     	bd = new BaseDatos();
     	boolean resultado = false;
     	
-    	if (bd.buscarNombreCliente(nombre)) {
-    		System.out.println("LO ENCONTRO");
-    		resultado=true;
-    	}else {
-    		System.out.println("no lo encontro");
-    	}
-    	
-    	return resultado;
-    }
-    
-    public boolean buscarId(int id) throws SQLException {
-    	bd = new BaseDatos();
-    	boolean resultado = false;
-    	
-    	if (bd.buscarIdCliente(id)) {
+    	if ( bd.buscarNombreClienteIdCliente(nombre,id)) {
     		System.out.println("LO ENCONTRO");
     		resultado=true;
     	}else {
@@ -233,7 +220,7 @@ public class Clientes {
 																		'{','}','[',']','^','`','<','>',',',';','.',':','-','_','q','Q','w','W','e','E','r','R'
 																		,'t','T','y','Y','u','U','i','I','o','O','p','P','a','A','s','S','d','D','f','F','g','G',
 																		'h','H','j','J','k','K','l','L','ñ','Ñ','z','Z','x','X','c','C','v','V','b','B','n','N',
-																		'm','M'));
+																		'm','M',' '));
 		for (int i=0;i<id.length();i++) {
 			char caracterActual = id.charAt(i);
 			if (caracteresProhibidos.contains(caracterActual)) {
