@@ -74,75 +74,60 @@ public class Tarifas {
         fondo.add(panel);
         
         JButton CreaTarifa = new JButton("Crear tarifa");
-        CreaTarifa.setSize(100, 30);
+        CreaTarifa.setSize(105, 20);
         CreaTarifa.setLocation(540, 110);
         ShapedButtonUI roundUI = new ShapedButtonUI();
         roundUI.setShape(ButtonShape.ROUND, CreaTarifa,Color.decode("#01FF57"));
         CreaTarifa.setUI(roundUI);
         fondo.add(CreaTarifa);
         
-        JButton op1 = new JButton(new ImageIcon("Resources/1 Mes.png"));
-        op1.setSize(150, 220);
-        op1.setLocation(25, 30);
-        ShapedButtonUI roundUI_dos = new ShapedButtonUI();
-        roundUI_dos.setShape(ButtonShape.ROUND, op1,Color.decode("#FAFF00"));
-        op1.setUI(roundUI_dos);
-        op1.setPreferredSize(new Dimension(87,34));
-        panel.add(op1);
-        
-       ImageIcon foto1 = new ImageIcon("Resources/1 Mes.png");
-        JLabel fill = new JLabel();
-        fill.setIcon(new ImageIcon(foto1.getImage().getScaledInstance(150, 220, Image.SCALE_SMOOTH)));
-        fill.setLocation(0, 0);
-        fill.setSize(150, 220);
-        op1.add(fill);
-        
-        JButton op2 = new JButton("3 meses");
-        op2.setSize(150, 220);
-        op2.setLocation(225, 30);
-        ShapedButtonUI roundUI_tres = new ShapedButtonUI();
-        roundUI_tres.setShape(ButtonShape.ROUND, op2,Color.decode("#FAFF00"));
-        op2.setUI(roundUI_tres);
-        op2.setPreferredSize(new Dimension(87,34));
-        panel.add(op2);
-        
+        RoundedPanel plan1 = new RoundedPanel(15);
+        plan1.setLayout(null);
+        plan1.setSize(150, 220);
+        plan1.setLocation(25, 30);
+        panel.add(plan1);
+
+        ImageIcon foto1 = new ImageIcon("Resources/1 Mes.png");
+        JLabel fondo1 = new JLabel(new ImageIcon(foto1.getImage().getScaledInstance(150, 220, Image.SCALE_SMOOTH)));
+        fondo1.setSize(150, 220);
+        plan1.add(fondo1);
+
+        RoundedPanel plan2 = new RoundedPanel(15);
+        plan2.setLayout(null);
+        plan2.setSize(150, 220);
+        plan2.setLocation(225, 30);
+        panel.add(plan2);
+
         ImageIcon foto2 = new ImageIcon("Resources/3 Meses.png");
-        JLabel fill1 = new JLabel();
-        fill1.setIcon(new ImageIcon(foto2.getImage().getScaledInstance(150, 220, Image.SCALE_SMOOTH)));
-        fill1.setLocation(0,0);
-        fill1.setSize(150, 220);
-        op2.add(fill1);
-        
-        JButton op3 = new JButton("1 Año");
-        op3.setSize(150, 220);
-        op3.setLocation(425, 30);
-        ShapedButtonUI roundUI_cuatro = new ShapedButtonUI();
-        roundUI_cuatro.setShape(ButtonShape.ROUND, op3,Color.decode("#FAFF00"));
-        op3.setUI(roundUI_cuatro);
-        op3.setPreferredSize(new Dimension(87,34));
-        panel.add(op3);
-        
+        JLabel fondo2 = new JLabel(new ImageIcon(foto2.getImage().getScaledInstance(150, 220, Image.SCALE_SMOOTH)));
+        fondo2.setSize(150, 220);
+        plan2.add(fondo2);
+
+        RoundedPanel plan3 = new RoundedPanel(15);
+        plan3.setLayout(null);
+        plan3.setSize(150, 220);
+        plan3.setLocation(425, 30);
+        panel.add(plan3);
+
         ImageIcon foto3 = new ImageIcon("Resources/1 Año.png");
-        JLabel fill2 = new JLabel();
-        fill2.setIcon(new ImageIcon(foto3.getImage().getScaledInstance(150, 220, Image.SCALE_SMOOTH)));
-        fill2.setLocation(0,0);
-        fill2.setSize(150, 220);
-        op3.add(fill2);
+        JLabel fondo3 = new JLabel(new ImageIcon(foto3.getImage().getScaledInstance(150, 220, Image.SCALE_SMOOTH)));
+        fondo3.setSize(150, 220);
+        plan3.add(fondo3);
         
         JButton pq1 = new JButton();
         pq1.setSize(20, 20);
-        pq1.setLocation(95,5);
-        fill.add(pq1);
+        pq1.setLocation(120,5);
+        fondo1.add(pq1);
 
         JButton pq2 = new JButton();
         pq2.setSize(20, 20);
-        pq2.setLocation(95,5);
-        fill1.add(pq2);
+        pq2.setLocation(120,5);
+        fondo2.add(pq2);
 
         JButton pq3 = new JButton();
         pq3.setSize(20, 20);
-        pq3.setLocation(95,5);
-        fill2.add(pq3);
+        pq3.setLocation(120,5);
+        fondo3.add(pq3);
 
         pq1.addActionListener(new ActionListener() {
 
@@ -150,9 +135,9 @@ public class Tarifas {
 				pq1.setSize(0, 0);
 
                 JButton editTarifa = new JButton("Editar Tarifa");
-                editTarifa.setSize(80, 30);
+                editTarifa.setSize(105, 30);
                 editTarifa.setLocation(20, 40);
-                fill.add(editTarifa);
+                fondo1.add(editTarifa);
 
                 editTarifa.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) { 
@@ -165,10 +150,10 @@ public class Tarifas {
                     }
                 });
 
-                JButton eliTarifa = new JButton("Eliminar Tarifa");
-                eliTarifa.setSize(80, 30);
+                JButton eliTarifa = new JButton("Eliminar");
+                eliTarifa.setSize(105, 30);
                 eliTarifa.setLocation(20, 100);
-                fill.add(eliTarifa);
+                fondo1.add(eliTarifa);
 
                 eliTarifa.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) { 
@@ -182,9 +167,9 @@ public class Tarifas {
                 });
 
                 JButton cancelTarifa = new JButton("Cancelar");
-                cancelTarifa.setSize(80, 30);
+                cancelTarifa.setSize(105, 30);
                 cancelTarifa.setLocation(20, 160);
-                fill.add(cancelTarifa);
+                fondo1.add(cancelTarifa);
 
                 cancelTarifa.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) { 
@@ -197,8 +182,8 @@ public class Tarifas {
                     }
                 });
 
-                fill.repaint();
-                fill.revalidate();
+                fondo1.repaint();
+                fondo1.revalidate();
 			}
         });
 
@@ -208,9 +193,9 @@ public class Tarifas {
 				pq2.setSize(0, 0);
 
                 JButton editTarifa = new JButton("Editar Tarifa");
-                editTarifa.setSize(80, 30);
+                editTarifa.setSize(105, 30);
                 editTarifa.setLocation(20, 40);
-                fill1.add(editTarifa);
+                fondo2.add(editTarifa);
 
                 editTarifa.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) { 
@@ -223,10 +208,10 @@ public class Tarifas {
                     }
                 });
 
-                JButton eliTarifa = new JButton("Eliminar Tarifa");
-                eliTarifa.setSize(80, 30);
+                JButton eliTarifa = new JButton("Eliminar");
+                eliTarifa.setSize(105, 30);
                 eliTarifa.setLocation(20, 100);
-                fill1.add(eliTarifa);
+                fondo2.add(eliTarifa);
 
                 eliTarifa.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) { 
@@ -240,9 +225,9 @@ public class Tarifas {
                 });
 
                 JButton cancelTarifa = new JButton("Cancelar");
-                cancelTarifa.setSize(80, 30);
+                cancelTarifa.setSize(105, 30);
                 cancelTarifa.setLocation(20, 160);
-                fill1.add(cancelTarifa);
+                fondo2.add(cancelTarifa);
 
                 cancelTarifa.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) { 
@@ -255,8 +240,8 @@ public class Tarifas {
                     }
                 });
 
-                fill1.repaint();
-                fill1.revalidate();
+                fondo2.repaint();
+                fondo2.revalidate();
 			}
         });
 
@@ -266,9 +251,9 @@ public class Tarifas {
 				pq3.setSize(0, 0);
 
                 JButton editTarifa = new JButton("Editar Tarifa");
-                editTarifa.setSize(80, 30);
+                editTarifa.setSize(105, 30);
                 editTarifa.setLocation(20, 40);
-                fill2.add(editTarifa);
+                fondo3.add(editTarifa);
 
                 editTarifa.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) { 
@@ -281,10 +266,10 @@ public class Tarifas {
                     }
                 });
 
-                JButton eliTarifa = new JButton("Eliminar Tarifa");
-                eliTarifa.setSize(80, 30);
+                JButton eliTarifa = new JButton("Eliminar");
+                eliTarifa.setSize(105, 30);
                 eliTarifa.setLocation(20, 100);
-                fill2.add(eliTarifa);
+                fondo3.add(eliTarifa);
 
                 eliTarifa.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) { 
@@ -298,9 +283,9 @@ public class Tarifas {
                 });
 
                 JButton cancelTarifa = new JButton("Cancelar");
-                cancelTarifa.setSize(80,30);
+                cancelTarifa.setSize(105,30);
                 cancelTarifa.setLocation(20, 160);
-                fill2.add(cancelTarifa);
+                fondo3.add(cancelTarifa);
 
                 cancelTarifa.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) { 
@@ -313,8 +298,8 @@ public class Tarifas {
                     }
                 });
 
-                fill2.repaint();
-                fill2.revalidate();
+                fondo3.repaint();
+                fondo3.revalidate();
 			}
         });
         
