@@ -15,9 +15,9 @@ public class ConsultarCliente {
     private JPanel arriba;
     private BaseDatos bd;
     private String nombre_cliente;
-    private int id_cliente;
+    private String id_cliente;
 
-    public ConsultarCliente(JFrame frame,String nombre,int id){
+    public ConsultarCliente(JFrame frame,String nombre,String id){
         this.frame = frame;
         this.nombre_cliente=nombre;
     	this.id_cliente=id;
@@ -119,7 +119,7 @@ public class ConsultarCliente {
         nameCliente.setForeground(Color.black);
         panel.add(nameCliente);
 
-        JLabel idCliente = new JLabel(Integer.toString(id_cliente));
+        JLabel idCliente = new JLabel(id_cliente);
         idCliente.setSize(150, 15);
         idCliente.setLocation(238, 40);
         idCliente.setFont(new Font("",Font.BOLD,13));
@@ -161,7 +161,7 @@ public class ConsultarCliente {
     
 		try {
 			JTable tabla;
-			tabla = new JTable(bd.buscar(id_cliente));
+			tabla = new JTable(bd.buscar(Integer.parseInt(id_cliente)));
 			JScrollPane scroll = new JScrollPane(tabla);
 			scroll.setBounds(20, 40, 330, 200);
 			panel2.add(scroll);

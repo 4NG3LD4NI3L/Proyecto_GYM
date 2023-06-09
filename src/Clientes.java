@@ -3,6 +3,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +20,11 @@ public class Clientes {
 
     public Clientes(JFrame frame){
         this.frame = frame;
+        try {
+			bd = new BaseDatos();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
         
         JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondo1.setSize(691, 487);
@@ -65,45 +71,46 @@ public class Clientes {
         clientes.setForeground(Color.yellow);
         clientes.setBorderPainted(false);
         arriba.add(clientes);
-        
+
         RoundedPanel panel = new RoundedPanel(15);
         panel.setLayout(null);
-        panel.setSize(293, 283);
-        panel.setLocation(199, 137);
-        panel.setBackground(new Color(0,0,0,85));
+        panel.setSize(493, 133);
+        panel.setLocation(99, 227);
+        panel.setBackground(new Color(0,0,0,100));
         fondo.add(panel);
 
-        JTextField nombre = new JTextField();
-        nombre.setSize(208, 25);
-        nombre.setLocation(241, 190);
-        nombre.setBackground(Color.decode("#404040"));
-        nombre.setForeground(Color.white);
-        nombre.setBorder(null);
-        fondo.add(nombre);
-
-        JTextField iD = new JTextField();
-        iD.setSize(208, 25);
-        iD.setLocation(241, 245);
-        iD.setBorder(null);
-        iD.setBackground(Color.decode("#404040"));
-        iD.setForeground(Color.white);
-        fondo.add(iD);
-
-        JLabel nombreCliente = new JLabel("Nombre del cliente");
-        nombreCliente.setSize(145, 15);
-        nombreCliente.setLocation(42, 36);
-        nombreCliente.setForeground(Color.white);
-        panel.add(nombreCliente);
-
-        JLabel idCliente = new JLabel("ID cliente");
-        idCliente.setSize(145, 15);
-        idCliente.setLocation(42, 91);
-        idCliente.setForeground(Color.white);
-        panel.add(idCliente);
+        JLabel nombreClase = new JLabel("Cliente:");
+        nombreClase.setSize(145, 20);
+        nombreClase.setLocation(42, 34);
+        nombreClase.setFont(new Font("Arial",Font.BOLD,20));
+        nombreClase.setForeground(Color.white);
+        panel.add(nombreClase);
+        
+        ArrayList<String> clientesBD = new ArrayList<>();
+        try {
+			clientesBD = bd.obtenerNombresClientes();
+		} catch (SQLException e) {
+			System.err.println("Error al capturar los clientes: "+e.getMessage());
+		}
+        JComboBox<String> clasesDisponible_comboBox = new JComboBox<>();
+        clasesDisponible_comboBox.setSize(250, 30);
+        clasesDisponible_comboBox.setLocation(120, 30);
+        clasesDisponible_comboBox.setOpaque(true);
+        clasesDisponible_comboBox.setBackground(Color.white);
+        clasesDisponible_comboBox.setForeground(Color.black);
+        clasesDisponible_comboBox.setFocusable(false);
+        if (!clientesBD.isEmpty()) {
+        	for (int i=0;i<clientesBD.size();i++) {
+        		clasesDisponible_comboBox.addItem(clientesBD.get(i));
+        	}
+        }else {
+        	clasesDisponible_comboBox.addItem("-1 <No hay clientes registrados>");
+        }
+        panel.add(clasesDisponible_comboBox);
 
         JButton regresar = new JButton("Regresar");
         regresar.setSize(87, 34);
-        regresar.setLocation(42, 151);
+        regresar.setLocation(150, 90);
         regresar.setBackground(Color.decode("#ff4343"));
         regresar.setBorderPainted(false);
        
@@ -113,7 +120,7 @@ public class Clientes {
         JButton buscar = new JButton("Buscar");
         ShapedButtonUI roundUI = new ShapedButtonUI();//CLASE PARA REDONDEAR BOTONES
         buscar.setSize(87, 34);
-        buscar.setLocation(164, 151);
+        buscar.setLocation(380, 30);
         roundUI.setShape(ButtonShape.ROUND, buscar,new Color(255,144,21));//AQUI SE AGREGA: (LA FORMA DESEADA, EL NOMBRE DEL BOTON, EL COLOR)
         buscar.setUI(roundUI);//
         buscar.setPreferredSize(new Dimension(87,34));//
@@ -121,7 +128,7 @@ public class Clientes {
 
         JButton nuevoCliente = new JButton("Nuevo Cliente");
         nuevoCliente.setSize(123, 27);
-        nuevoCliente.setLocation(85, 214);
+        nuevoCliente.setLocation(250, 90);
         ShapedButtonUI roundUI_dos = new ShapedButtonUI();
         roundUI_dos.setShape(ButtonShape.ROUND, nuevoCliente,Color.decode("#01ff57"));
         nuevoCliente.setUI(roundUI_dos);
@@ -163,29 +170,14 @@ public class Clientes {
         });
 
         buscar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) { 
+            public void actionPerformed(ActionEvent e) {
             	
-            	try {
-            		
-            		if (nombre.getText().length()>0 && iD.getText().length()>0) {
-            			if (!verifID(iD.getText())) {
-            				if (buscarBD(nombre.getText(),Integer.parseInt(iD.getText()))) {
-            					frame.remove(fondo);
-            					mostrarConsultaCliente(nombre.getText(),Integer.parseInt(iD.getText()));
-            				}else {
-            					JOptionPane.showMessageDialog(null,"El nombre del usuario y/o ID son incorrectos o no coinciden","Error al buscar el usuario",JOptionPane.ERROR_MESSAGE);
-            				}
-            			}else {
-            				JOptionPane.showMessageDialog(null,"Solo se pueden ingresar numeros en la casilla ID","Error al buscar el usuario",JOptionPane.INFORMATION_MESSAGE);
-            			}
-            		}else {
-            			JOptionPane.showMessageDialog(null,"Todos los elementos deben ser llenados","Error al buscar el usuario",JOptionPane.ERROR_MESSAGE);            			
-            		}
-					
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+            	String opcionSeleccionada = (String) clasesDisponible_comboBox.getSelectedItem();
+            	String[] datos = opcionSeleccionada.split(" ");
             	
+            	mostrarConsultaCliente(datos[1], datos[0]);
+            	
+            	frame.remove(fondo);
                 frame.repaint();
                 frame.revalidate();
             }
@@ -254,7 +246,7 @@ public class Clientes {
     }
 
     //Consultar
-    public void mostrarConsultaCliente(String nombre,int id){// EDITADO PARA PASAR LOS DATOS DEL CLIENTE
+    public void mostrarConsultaCliente(String nombre,String id){// EDITADO PARA PASAR LOS DATOS DEL CLIENTE
         ConsultarCliente consultaCliente = new ConsultarCliente(frame,nombre,id);
         consultaCliente.mostrar();
         frame.repaint();

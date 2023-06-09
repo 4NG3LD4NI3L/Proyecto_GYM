@@ -99,7 +99,7 @@ public class Clases extends JPanel {
         regresar.setFocusPainted(false);
         regresar.setFont(new Font("Arial",Font.BOLD,12));
         regresar.setSize(87, 34);
-        regresar.setLocation(100+50, 90);
+        regresar.setLocation(150, 90);
         regresar.setPreferredSize(new Dimension(87,34));
         panel.add(regresar);
 
@@ -117,7 +117,7 @@ public class Clases extends JPanel {
         ShapedButtonUI roundUI_2 = new ShapedButtonUI();
         roundUI_2.setShape(ButtonShape.ROUND, nuevoCliente,Color.decode("#01ff57"));
         nuevoCliente.setSize(123, 34);
-        nuevoCliente.setLocation(300-50, 90);
+        nuevoCliente.setLocation(250, 90);
         nuevoCliente.setUI(roundUI_2);
         nuevoCliente.setPreferredSize(new Dimension(123,34));
         nuevoCliente.setFocusPainted(false);

@@ -29,7 +29,7 @@ public class BaseDatos {
 
 		while (rs.next()) {
 			System.out.println(rs.getString("nombre_cli"));
-			nombres.add(rs.getString("nombre_cli"));
+			nombres.add(Integer.toString(rs.getInt("id_cliente"))+" "+rs.getString("nombre_cli"));
 		}
 		conn.close();
 		return nombres;

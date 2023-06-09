@@ -11,9 +11,9 @@ public class EliminarCliente {
     private JPanel panel;
     private JPanel arriba;
     private String nombre_cliente;
-    private int id_cliente;
+    private String id_cliente;
 
-    public EliminarCliente(JFrame frame, String nombre, int id){
+    public EliminarCliente(JFrame frame, String nombre, String id){
         this.frame = frame;
         this.nombre_cliente=nombre;
     	this.id_cliente=id;
