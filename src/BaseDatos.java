@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 
 import com.mysql.jdbc.PreparedStatement;
@@ -11,15 +12,15 @@ import com.mysql.jdbc.Statement;
 
 public class BaseDatos {
 	
-	String url = "jdbc:mysql://localhost/";
-	String bd = "proyecto-gym";
+	static String url = "jdbc:mysql://localhost/";
+	static String bd = "proyecto-gym";
 	Connection conn = null;	
 	PreparedStatement ps = null;
 	ResultSet rs;
 	Statement s;
 	
 	public BaseDatos() throws SQLException {
-		conn = DriverManager.getConnection(url + bd, "root","72914630");
+		conn = DriverManager.getConnection(url + bd, "root","");
 		s = (Statement) conn.createStatement();
 	}
 	
@@ -114,7 +115,7 @@ public class BaseDatos {
 		return dtm;
 	}
 	
-	public void crearNuevoCliente(String nombre,String apellidoMat,String apellidoPat,String correo,String telefono,String telefonoEmer,String fecha,int asistencia,int edad) throws SQLException {
+	public void crearNuevoCliente(String nombre,String apellidoMat,String apellidoPat,String correo,String telefono,String telefonoEmer,String fecha,int asistencia,int edad,JLabel fotoN) throws SQLException {
 		try {
 			String insertarDatos = "INSERT INTO clientes (nombre_cli, apellido_pat_cli, apellido_mat_cli, correo_cli, telefono_cli, telefono_eme_cli, fecha_inscrito_cli, asistencia_cli, edad_cli) VALUES \r\n"
 					+ "(?,?,?,?,?,?,?,?,?);" ;
@@ -129,6 +130,7 @@ public class BaseDatos {
 			ps.setString(7, fecha);
 			ps.setInt(8, asistencia);
 			ps.setInt(9, edad);
+			//ps.setInt(10,fotoN);
 			
 			ps.executeUpdate();
 			System.out.println("Se subieron los registros");
@@ -139,5 +141,17 @@ public class BaseDatos {
 			conn.close();
 		}
 	}
+	
+	public static Connection conectar() {
+        try {
+
+            Connection cn = DriverManager.getConnection(url + bd, "root","");
+            return cn;
+
+        } catch (SQLException e) {
+            System.out.println("Error en la conexion local " + e);
+        }
+        return (null);
+    }
 	
 }
