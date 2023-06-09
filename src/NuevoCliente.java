@@ -2,16 +2,23 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class NuevoCliente {
+	
+	static final int NUM_IMAGENES = 1;
 
     private JFrame frame;
+    private String nombreImagen;
     private JPanel fondo;
     private JPanel panel;
     private JPanel arriba;
@@ -23,6 +30,7 @@ public class NuevoCliente {
 			bd = new BaseDatos();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			System.out.println("BASE DE DATOS NO FUNCIONA");
 		}
         
         JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
@@ -190,7 +198,7 @@ public class NuevoCliente {
         panel.add(cancelar);
 
         
-        JButton ingresarFoto = new JButton("Ingresa una foto");
+        JButton ingresarFoto = new JButton("Ingresa una foto");//Ingresar foto
         ingresarFoto.setSize(126, 16);
         ingresarFoto.setLocation(440, 180);
         ingresarFoto.setBackground(Color.decode("#797979"));
@@ -270,6 +278,47 @@ public class NuevoCliente {
 				}
 			}
 		});
+        
+        ingresarFoto.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				 // Abrir un cuadro de dialogo para seleccionar las imagenes
+	            JFileChooser fileChooser = new JFileChooser();
+	            fileChooser.setMultiSelectionEnabled(true);
+	            fileChooser.showOpenDialog(panel);
+	            File[] selectedFiles = fileChooser.getSelectedFiles();
+
+	            if (selectedFiles.length != NUM_IMAGENES) {
+	                JOptionPane.showMessageDialog(panel, "Debe seleccionar " + NUM_IMAGENES + " imagenes.");
+	                return;
+	            }
+
+	            try {
+	                for (int i = 0; i < selectedFiles.length; i++) {
+	                    // Cargar la imagen seleccionada
+	                    BufferedImage image = ImageIO.read(selectedFiles[i]);
+                        nombreImagen = selectedFiles[i].getName();
+
+	                    // Guardar la imagen en disco
+	                    File outputfile = new File("Resources\\img" + i + ".png");
+	                    ImageIO.write(image, "png", outputfile);
+
+
+	                    // Mostrar la imagen en la interfaz de usuario
+	                    ImageIcon icon = new ImageIcon(image);
+	                    JLabel label = new JLabel(icon);
+	                    panel.add(label);
+	                   
+	                }
+
+	                JOptionPane.showMessageDialog(panel, "La imagenen se han guardado exitosamente en disco y se han mostrado en la interfaz de usuario.");
+	            } catch (IOException ex) {
+	                ex.printStackTrace();
+	            }
+			}
+        	
+        });
 
         frame.repaint();
 	    frame.revalidate();
