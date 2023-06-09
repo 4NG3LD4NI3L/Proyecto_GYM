@@ -1,9 +1,12 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -13,9 +16,15 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
+
 public class NuevoCliente {
 	
+	private FileInputStream fis;
+    private int longitudBytes;
 	static final int NUM_IMAGENES = 1;
+	static int NUM = 1;
 
     private JFrame frame;
     private String nombreImagen;
@@ -23,11 +32,20 @@ public class NuevoCliente {
     private JPanel panel;
     private JPanel arriba;
     private BaseDatos bd;
+    
+    //
+    private JTextField nombreN;
+    private JTextField apellidoPatMat;
+    private JTextField edad;
+    private JTextField correoN;
+    private JTextField telefonoN;
+    private JTextField telefonoNewEme;
+    private JLabel fotoN;
 
     public NuevoCliente(JFrame frame){
         this.frame = frame;
         try {
-			bd = new BaseDatos();
+        	bd = new BaseDatos();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("BASE DE DATOS NO FUNCIONA");
@@ -111,7 +129,7 @@ public class NuevoCliente {
         nombrenuevo.setForeground(Color.black);
         panel.add(nombrenuevo);
         
-        JTextField nombreN = new JTextField();
+        nombreN = new JTextField();
         nombreN.setSize(300, 27);
         nombreN.setLocation(30, 45);
         nombreN.setBorder(null);
@@ -124,7 +142,7 @@ public class NuevoCliente {
         apellido.setForeground(Color.black);
         panel.add(apellido);
 
-        JTextField apellidoPatMat = new JTextField();
+        apellidoPatMat = new JTextField();
         apellidoPatMat.setSize(300, 27);
         apellidoPatMat.setLocation(30, 90);
         apellidoPatMat.setBorder(null);
@@ -136,7 +154,7 @@ public class NuevoCliente {
         edadNuevo.setForeground(Color.black);
         panel.add(edadNuevo);
 
-        JTextField edad = new JTextField();
+        edad = new JTextField();
         edad.setSize(300, 27);
         edad.setLocation(30, 135);
         edad.setBorder(null);
@@ -148,7 +166,7 @@ public class NuevoCliente {
         correoNuevo.setForeground(Color.black);
         panel.add(correoNuevo);
         
-        JTextField correoN = new JTextField();
+        correoN = new JTextField();
         correoN.setSize(300, 27);
         correoN.setLocation(30, 180);
         correoN.setBorder(null);
@@ -160,7 +178,7 @@ public class NuevoCliente {
         telefonoNuevo.setForeground(Color.black);
         panel.add(telefonoNuevo);
 
-        JTextField telefonoN = new JTextField();
+        telefonoN = new JTextField();
         telefonoN.setSize(300, 27);
         telefonoN.setLocation(30, 225);
         telefonoN.setBorder(null);
@@ -172,7 +190,7 @@ public class NuevoCliente {
         telefonoNuevoEme.setForeground(Color.black);
         panel.add(telefonoNuevoEme);
 
-        JTextField telefonoNewEme = new JTextField();
+        telefonoNewEme = new JTextField();
         telefonoNewEme.setSize(300, 27);
         telefonoNewEme.setLocation(30, 270);
         telefonoNewEme.setBorder(null);
@@ -206,12 +224,14 @@ public class NuevoCliente {
         ingresarFoto.setBorderPainted(false);
         panel.add(ingresarFoto);
         
-        JLabel fotoN = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
+        fotoN = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fotoN.setSize(124, 135);
         fotoN.setLocation(440, 40);//25
         fotoN.setForeground(Color.black);
         fotoN.setBackground(Color.white);
         panel.add(fotoN);
+        
+        
 
         menu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { 
@@ -281,41 +301,11 @@ public class NuevoCliente {
         
         ingresarFoto.addActionListener(new ActionListener() {
 
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				 // Abrir un cuadro de dialogo para seleccionar las imagenes
-	            JFileChooser fileChooser = new JFileChooser();
-	            fileChooser.setMultiSelectionEnabled(true);
-	            fileChooser.showOpenDialog(panel);
-	            File[] selectedFiles = fileChooser.getSelectedFiles();
-
-	            if (selectedFiles.length != NUM_IMAGENES) {
-	                JOptionPane.showMessageDialog(panel, "Debe seleccionar " + NUM_IMAGENES + " imagenes.");
-	                return;
-	            }
-
-	            try {
-	                for (int i = 0; i < selectedFiles.length; i++) {
-	                    // Cargar la imagen seleccionada
-	                    BufferedImage image = ImageIO.read(selectedFiles[i]);
-                        nombreImagen = selectedFiles[i].getName();
-
-	                    // Guardar la imagen en disco
-	                    File outputfile = new File("Resources\\img" + i + ".png");
-	                    ImageIO.write(image, "png", outputfile);
-
-
-	                    // Mostrar la imagen en la interfaz de usuario
-	                    ImageIcon icon = new ImageIcon(image);
-	                    JLabel label = new JLabel(icon);
-	                    panel.add(label);
-	                   
-	                }
-
-	                JOptionPane.showMessageDialog(panel, "La imagenen se han guardado exitosamente en disco y se han mostrado en la interfaz de usuario.");
-	            } catch (IOException ex) {
-	                ex.printStackTrace();
-	            }
+				fotoN.setText("");
+				GuardarImagen();
 			}
         	
         });
@@ -412,6 +402,58 @@ public class NuevoCliente {
         frame.repaint();
         frame.revalidate();
     }
+    
+    
+    public void GuardarImagen() {
+    	
+    	JFileChooser se = new JFileChooser();
+        se.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int estado = se.showOpenDialog(null);
+        if (estado == JFileChooser.APPROVE_OPTION) {
+            try {
+
+                fis = new FileInputStream(se.getSelectedFile());
+                this.longitudBytes = (int) se.getSelectedFile().length();
+                Image icono = ImageIO.read(se.getSelectedFile()).getScaledInstance(fotoN.getWidth(), fotoN.getHeight(), Image.SCALE_DEFAULT);
+                fotoN.setIcon(new ImageIcon(icono));
+                fotoN.updateUI();
+
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+                System.out.println("Error en el primer catch");
+            } catch (IOException x) {
+                x.printStackTrace();
+                System.out.println("Error en el segundo catch");
+            }
+        }
+    
+    		String nombre;
+    		nombre = nombreN.getText().trim();
+    		
+    		try {
+    			bd = new BaseDatos();
+    			
+    			Connection cn = (Connection) BaseDatos.conectar();
+    			PreparedStatement pst = (PreparedStatement) cn.prepareStatement("Insert Into fotos values (?,?)");
+    			
+    			pst.setString(1,nombre);
+    			pst.setBlob(2, fis, longitudBytes);
+    			
+    			pst.executeUpdate();
+    			cn.close();
+    			
+    			
+    		}catch(SQLException e) {
+    			System.out.println("ERROR AL GUARDAR FOTO" );
+    			JOptionPane.showMessageDialog(null,"ERROR AL GUARDAR FOTO");
+    		}
+   
+    }
+    
+   
+    
+    public void Limpiar(){
+    	nombreN.setText("");
+    }
 
 }
-
