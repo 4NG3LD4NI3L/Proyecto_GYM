@@ -208,6 +208,29 @@ public class BaseDatos {
     	return datosCli;
     }
     
+    public String[] obtenerTodoDelinstructor(int id) {
+    	String[] datosInstructor = new String[8];
+    	
+    	try {
+			ResultSet rs = s.executeQuery("SELECT * FROM instructor WHERE id_instructor = "+Integer.toString(id)+";");
+			rs.next();
+			
+			datosInstructor[0] = rs.getString("nombre_in");
+			datosInstructor[1] = rs.getString("apellido_in");
+			datosInstructor[2] = Integer.toString(rs.getInt("edad_in"));
+			datosInstructor[3] = rs.getString("correo_in");
+			datosInstructor[4] = rs.getString("telefono_in");
+			datosInstructor[5] = rs.getString("telefono_eme_in");
+			datosInstructor[6] = rs.getString("fecha_inscrito_in");
+			datosInstructor[7] = Integer.toString(rs.getInt("asistencia_in"));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	
+    	return datosInstructor;
+    }
+    
     public void actualizarCliente(int id,String nombre,String apellidos,String correo,String telefono,String telefonoEmer,String edad,String fotoN) throws SQLException {
 		try {
 			String insertarDatos = "UPDATE clientes SET nombre_cli = ?, apellidos_cli = ?, correo_cli = ?, telefono_cli = ?, telefono_eme_cli = ?, edad_cli = ? WHERE id_cliente = "+id;
@@ -225,6 +248,27 @@ public class BaseDatos {
 			
 		} catch (SQLException e) {
 			System.err.println("Error BD en la funcion actualizarCliente: "+e.getMessage());
+		}
+		conn.close();
+	}
+    
+    public void actualizarInstructor(int id,String nombre,String apellidos,String edad,String correo,String telefono,String telefonoEmer,String fotoN) throws SQLException {
+		try {
+			String insertarDatos = "UPDATE instructor SET nombre_in = ?, apellido_in = ?,edad_in = ?, correo_in = ?, telefono_in = ?, telefono_eme_in = ? WHERE id_instructor = "+id;
+			ps = (PreparedStatement) conn.prepareStatement(insertarDatos);
+			
+			ps.setString(1, nombre);
+			ps.setString(2, apellidos);
+			ps.setString(3, edad);
+			ps.setString(4, correo);
+			ps.setString(5, telefono);
+			ps.setString(6, telefonoEmer);
+			
+			ps.executeUpdate();
+			System.out.println("Se subieron los registros");
+			
+		} catch (SQLException e) {
+			System.err.println("Error BD en la funcion actualizarinstructor: "+e.getMessage());
 		}
 		conn.close();
 	}
