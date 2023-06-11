@@ -2,9 +2,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,8 +18,15 @@ public class Instructor {
 	private JFrame frame;
     private JPanel fondo;
     private JPanel arriba;
+    private BaseDatos bd;
+    
 	public Instructor(JFrame frame) {
 		this.frame = frame;
+        try {
+			bd = new BaseDatos();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
         
         JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondo1.setSize(691, 487);
@@ -66,42 +76,44 @@ public class Instructor {
         
         RoundedPanel panel = new RoundedPanel(15);
         panel.setLayout(null);
-        panel.setSize(293, 283);
-        panel.setLocation(199, 137);
-        panel.setBackground(new Color(0,0,0,85));
+        panel.setSize(493, 133);
+        panel.setLocation(99, 227);
+        panel.setBackground(new Color(0,0,0,100));
         fondo.add(panel);
 
-        JTextField nombre = new JTextField();
-        nombre.setSize(208, 25);
-        nombre.setLocation(241, 190);
-        nombre.setBackground(Color.decode("#404040"));
-        nombre.setForeground(Color.white);
-        nombre.setBorder(null);
-        fondo.add(nombre);
-
-        JTextField iD = new JTextField();
-        iD.setSize(208, 25);
-        iD.setLocation(241, 245);
-        iD.setBorder(null);
-        iD.setBackground(Color.decode("#404040"));
-        iD.setForeground(Color.white);
-        fondo.add(iD);
-
-        JLabel nombreCliente = new JLabel("Nombre del instructor");
-        nombreCliente.setSize(145, 15);
-        nombreCliente.setLocation(42, 36);
-        nombreCliente.setForeground(Color.white);
-        panel.add(nombreCliente);
-
-        JLabel idCliente = new JLabel("ID instructor");
-        idCliente.setSize(145, 15);
-        idCliente.setLocation(42, 91);
-        idCliente.setForeground(Color.white);
-        panel.add(idCliente);
+        JLabel nombreClase = new JLabel("Instructor:");
+        nombreClase.setSize(145, 20);
+        nombreClase.setLocation(15, 34);
+        nombreClase.setFont(new Font("Arial",Font.BOLD,20));
+        nombreClase.setForeground(Color.white);
+       panel.add(nombreClase);
+        
+        ArrayList<String> instructorBD = new ArrayList<>();
+        try {
+			instructorBD = bd.obtenerNombresinstructor();
+		} catch (SQLException e) {
+			System.err.println("Error al capturar los instructores: "+e.getMessage());
+		}
+       
+        JComboBox<String> clasesDisponible_comboBox = new JComboBox<>();
+        clasesDisponible_comboBox.setSize(250, 30);
+        clasesDisponible_comboBox.setLocation(120, 30);
+        clasesDisponible_comboBox.setOpaque(true);
+        clasesDisponible_comboBox.setBackground(Color.white);
+        clasesDisponible_comboBox.setForeground(Color.black);
+        clasesDisponible_comboBox.setFocusable(false);
+       if (!instructorBD.isEmpty()) {
+        	for (int i=0;i<instructorBD.size();i++) {
+        		clasesDisponible_comboBox.addItem(instructorBD.get(i));
+        	}
+        }else {
+        	clasesDisponible_comboBox.addItem("-1 <No hay clientes registrados>");
+        }
+        panel.add(clasesDisponible_comboBox);
 
         JButton regresar = new JButton("Regresar");
         regresar.setSize(87, 34);
-        regresar.setLocation(42, 151);
+        regresar.setLocation(150, 90);
         regresar.setBackground(Color.decode("#ff4343"));
         regresar.setBorderPainted(false);
        
@@ -111,15 +123,15 @@ public class Instructor {
         JButton buscar = new JButton("Buscar");
         ShapedButtonUI roundUI = new ShapedButtonUI();//CLASE PARA REDONDEAR BOTONES
         buscar.setSize(87, 34);
-        buscar.setLocation(164, 151);
+        buscar.setLocation(380, 30);
         roundUI.setShape(ButtonShape.ROUND, buscar,new Color(255,144,21));//AQUI SE AGREGA: (LA FORMA DESEADA, EL NOMBRE DEL BOTON, EL COLOR)
         buscar.setUI(roundUI);//
         buscar.setPreferredSize(new Dimension(87,34));//
         panel.add(buscar);
 
         JButton nuevoCliente = new JButton("Nuevo Instructor");
-        nuevoCliente.setSize(145, 27);
-        nuevoCliente.setLocation(75, 214);
+        nuevoCliente.setSize(123, 27);
+        nuevoCliente.setLocation(250, 90);
         ShapedButtonUI roundUI_dos = new ShapedButtonUI();
         roundUI_dos.setShape(ButtonShape.ROUND, nuevoCliente,Color.decode("#01ff57"));
         nuevoCliente.setUI(roundUI_dos);
