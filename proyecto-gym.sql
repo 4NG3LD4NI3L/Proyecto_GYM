@@ -32,22 +32,24 @@ INSERT INTO `clases` (`nombre_cla`, `instructor_designado_cla`, `horario_cla`, `
 CREATE TABLE IF NOT EXISTS `clientes` (
   `id_cliente` int(5) NOT NULL AUTO_INCREMENT,
   `nombre_cli` varchar(50) NOT NULL,
-  `apellido_pat_cli` varchar(50) NOT NULL,
-  `apellido_mat_cli` varchar(50) NOT NULL,
+  `apellidos_cli` varchar(50) NOT NULL,
   `correo_cli` varchar(50) NOT NULL,
   `telefono_cli` varchar(50) NOT NULL,
   `telefono_eme_cli` varchar(50) DEFAULT NULL,
-  `fecha_inscrito_cli` date NOT NULL,
+  `fecha_inscrito_cli` varchar(50) NOT NULL DEFAULT '',
   `asistencia_cli` int(2) DEFAULT NULL,
   `edad_cli` int(3) NOT NULL,
   PRIMARY KEY (`id_cliente`),
   KEY `nombre_cli` (`nombre_cli`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-INSERT INTO `clientes` (`id_cliente`, `nombre_cli`, `apellido_pat_cli`, `apellido_mat_cli`, `correo_cli`, `telefono_cli`, `telefono_eme_cli`, `fecha_inscrito_cli`, `asistencia_cli`, `edad_cli`) VALUES
-	(1, 'Alfonso', 'Cota', 'Jauregui', 'alfa123@gmail.com', '6120001010', '6240001234', '2023-06-04', 1, 25),
-	(2, 'Julian', 'Mendoza', 'Espinoza', 'mendozaARK@gmail.com', '4980159812', '0', '2023-06-04', 28, 38);
+INSERT INTO `clientes` (`id_cliente`, `nombre_cli`, `apellidos_cli`, `correo_cli`, `telefono_cli`, `telefono_eme_cli`, `fecha_inscrito_cli`, `asistencia_cli`, `edad_cli`) VALUES
+	(1, 'Alfonso', 'Cota', 'alfa123@gmail.com', '6120001010', '6240001234', '2023-06-04', 1, 25),
+	(2, 'Julian', 'Mendoza', 'mendozaARK@gmail.com', '4980159812', '0', '2023-06-04', 28, 38),
+	(4, 'David', 'Castro Montaño', 'david@gmail.com', '6122294578', '6242013140', '07-06-2023', 0, 18),
+	(6, 'Josue', 'Zamora Garcia', 'gohan117', '6126549872', '6245120258', '07-06-2023', 0, 23),
+	(9, 'wqwqwq', 'qwqwqw', 'qwqwqw@gmail.com', '6126543210', '6244567890', '07-06-2023', 0, 98);
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `instructor` (
