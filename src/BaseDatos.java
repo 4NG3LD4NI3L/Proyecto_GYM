@@ -20,7 +20,7 @@ public class BaseDatos {
 	Statement s;
 	
 	public BaseDatos() throws SQLException {
-		conn = DriverManager.getConnection(url + bd, "root","72914630");
+		conn = DriverManager.getConnection(url + bd, "root","");
 		s = (Statement) conn.createStatement();
 	}
 	
@@ -37,8 +37,20 @@ public class BaseDatos {
 		ArrayList<String> nombres = new ArrayList<>();
 
 		while (rs.next()) {
-			System.out.println(rs.getString("nombre_cli"));
+			//System.out.println(rs.getString("nombre_cli"));
 			nombres.add(Integer.toString(rs.getInt("id_cliente"))+" "+rs.getString("nombre_cli"));
+		}
+		conn.close();
+		return nombres;
+	}
+	
+	public ArrayList obtenerNombresinstructor() throws SQLException {//REGRESA LOS TODOS LOS NOMBRES EN UNA LISTA
+		ResultSet rs = s.executeQuery("SELECT * FROM instructor");
+		ArrayList<String> nombres = new ArrayList<>();
+
+		while (rs.next()) {
+			//System.out.println(rs.getString("nombre_cli"));
+			nombres.add(Integer.toString(rs.getInt("id_instructor"))+" "+rs.getString("nombre_in"));
 		}
 		conn.close();
 		return nombres;
@@ -137,6 +149,31 @@ public class BaseDatos {
 			ps.setString(6, fecha);
 			ps.setInt(7, asistencia);
 			ps.setInt(8, edad);
+			
+			ps.executeUpdate();
+			System.out.println("Se subieron los registros");
+			
+		} catch (SQLException e) {
+			System.err.println("Error BD: "+e.getMessage());
+		}finally {
+			conn.close();
+		}
+	}
+	
+	public void crearNuevoInstructor(String nombre,String apellido,String correo,String telefono,String telefonoEmer,String fecha,int asistencia,int edad,String fotoN) throws SQLException {
+		try {
+			String insertarDatos = "INSERT INTO instructor (nombre_in, apellido_in, edad_in, correo_in , telefono_in , telefono_eme_in, Fecha_Inscrito_in , asistencia_in ) VALUES \r\n"
+					+ "(?,?,?,?,?,?,?,?);" ;
+			ps = (PreparedStatement) conn.prepareStatement(insertarDatos);
+			
+			ps.setString(1, nombre);
+			ps.setString(2, apellido);
+			ps.setInt(3, edad);
+			ps.setString(4, correo);
+			ps.setString(5, telefono);
+			ps.setString(6, telefonoEmer);
+			ps.setString(7, fecha);
+			ps.setInt(8, asistencia);
 			
 			ps.executeUpdate();
 			System.out.println("Se subieron los registros");
