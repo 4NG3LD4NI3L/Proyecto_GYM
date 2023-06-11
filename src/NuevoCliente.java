@@ -278,7 +278,7 @@ public class NuevoCliente {
 					edad.getText().length()>0    && correoN.getText().length()>0 &&
 				telefonoN.getText().length()>=10 && telefonoNewEme.getText().length()>=10) {
 					
-					if (nombreN.getText().matches("[a-zA-Z ]+") && apellidoPatMat.getText().matches("[a-zA-Z ]+") && correoN.getText().matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.(gmail|hotmail)\\.com")){
+					if (nombreN.getText().matches("[a-zA-Z ]+") && apellidoPatMat.getText().matches("[a-zA-Z ]+") && correoN.getText().matches("^[a-zA-Z0-9._%+-]+@(gmail\\.com|hotmail\\.com)$")){
 						if (edad.getText().matches("[0-9]+") && telefonoN.getText().matches("[0-9]+") && telefonoNewEme.getText().matches("[0-9]+")) {
 							
 							try {
