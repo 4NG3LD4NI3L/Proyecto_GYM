@@ -274,14 +274,13 @@ public class NuevoCliente {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				if (nombreN.getText().length()>0 &&
-					apellidoPatMat.getText().length()>0 &&
-					edad.getText().length()>0 &&
-					correoN.getText().length()>0 &&
-					telefonoN.getText().length()>=10 &&
-					telefonoNewEme.getText().length()>=10) {
-					if (verifNombreApellidos(nombreN.getText(), apellidoPatMat.getText())) {
-						if (verifEdad_Telefonos(edad.getText(), telefonoN.getText(), telefonoNewEme.getText())) {
+				if (nombreN.getText().length()>0 && apellidoPatMat.getText().length()>0 &&
+					edad.getText().length()>0    && correoN.getText().length()>0 &&
+				telefonoN.getText().length()>=10 && telefonoNewEme.getText().length()>=10) {
+					
+					if (nombreN.getText().matches("[a-zA-Z ]+") && apellidoPatMat.getText().matches("[a-zA-Z ]+") && correoN.getText().matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.(gmail|hotmail)\\.com")){
+						if (edad.getText().matches("[0-9]+") && telefonoN.getText().matches("[0-9]+") && telefonoNewEme.getText().matches("[0-9]+")) {
+							
 							try {
 								bd.crearNuevoCliente(nombreN.getText(), apellidoPatMat.getText(), apellidoPatMat.getText(), correoN.getText(), telefonoN.getText(), telefonoNewEme.getText(), "07-06-2023", 0, Integer.parseInt(edad.getText()),fotoN.getText());
 							} catch (NumberFormatException e1) {
@@ -325,71 +324,7 @@ public class NuevoCliente {
         fondo.add(fondo1);
     }
     
-    public boolean verifEdad_Telefonos(String edad,String telefonos,String telefonosEmer) {
-		boolean resultado = true;
-		Set<Character> caracteresProhibidos = new HashSet<>(Arrays.asList('|','°','¬','!','"','#','$','%','&','/','(',')','=','?','¡','¿','+','*','~','´','¨',
-																		'{','}','[',']','^','`','<','>',',',';','.',':','-','_','q','Q','w','W','e','E','r','R'
-																		,'t','T','y','Y','u','U','i','I','o','O','p','P','a','A','s','S','d','D','f','F','g','G',
-																		'h','H','j','J','k','K','l','L','ñ','Ñ','z','Z','x','X','c','C','v','V','b','B','n','N',
-																		'm','M',' '));
-		
-		int contador=0;
-		
-		for (int i=0;i<edad.length();i++) {
-			char caracterActual = edad.charAt(i);
-			if (caracteresProhibidos.contains(caracterActual)) {
-				contador++;
-			}
-		}
-		
-		for (int i=0;i<telefonos.length();i++) {
-			char caracterActual = telefonos.charAt(i);
-			if (caracteresProhibidos.contains(caracterActual)) {
-				contador++;
-			}
-		}
-		
-		for (int i=0;i<telefonosEmer.length();i++) {
-			char caracterActual = telefonosEmer.charAt(i);
-			if (caracteresProhibidos.contains(caracterActual)) {
-				contador++;
-			}
-		}
-		
-		if (contador>0) {
-			resultado=false;
-		}
-		
-		return resultado;
-	}
     
-    public boolean verifNombreApellidos(String nombre,String ApellidoPat) {
-		boolean resultado = true;
-		Set<Character> caracteresProhibidos = new HashSet<>(Arrays.asList('0','1','2','3','4','5','6','7','8','9','|','°','¬','!','"','#','$','%','&','/',
-																		'(',')','=','?','¡','¿','+','*','~','´','¨','{','}','[',']','^','`','<','>',',',';',
-																		'.',':','-','_','@'));
-		int contador=0;
-		
-		for (int i=0;i<nombre.length();i++) {
-			char caracterActual = nombre.charAt(i);
-			if (caracteresProhibidos.contains(caracterActual)) {
-				contador++;
-			}
-		}
-		
-		for (int i=0;i<ApellidoPat.length();i++) {
-			char caracterActual = ApellidoPat.charAt(i);
-			if (caracteresProhibidos.contains(caracterActual)) {
-				contador++;
-			}
-		}
-		
-		if (contador>0) {
-			resultado=false;
-		}
-		
-		return resultado;
-	}
 
     public void mostrar(){
         frame.add(fondo);
@@ -412,7 +347,6 @@ public class NuevoCliente {
         frame.repaint();
         frame.revalidate();
     }
-    
     
     /*public void GuardarImagen() {
     	
