@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,8 +20,22 @@ public class ConsultarInstructor {
 	    private JPanel fondo;
 	    private JPanel panel;
 	    private JPanel arriba;
-	public ConsultarInstructor(JFrame frame) {
-		   this.frame = frame;
+	    
+	    private BaseDatos bd;
+	    private String nombre_instructor;
+	    private String id_instructor;
+	    
+	public ConsultarInstructor(JFrame frame, String nombre, String id) {
+		this.frame = frame;
+        this.nombre_instructor=nombre;
+    	this.id_instructor=id;
+    	
+    	try {
+			bd = new BaseDatos();
+		} catch (SQLException e) {
+			System.err.println("BaseDatos fallo en la clase EditarCliente, ERROR: "+e.getMessage());
+		}
+    	String[] datosInstructor = bd.obtenerTodoDelinstructor(Integer.parseInt(id_instructor));
 	        
 	        JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
 	        fondo1.setSize(691, 487);
@@ -105,7 +120,7 @@ public class ConsultarInstructor {
 	        nId.setForeground(Color.black);
 	        panel.add(nId);
 
-	        JLabel nameCliente = new JLabel("Lalo suares");
+	        JLabel nameCliente = new JLabel(nombre_instructor);
 	        nameCliente.setSize(150, 15);
 	        nameCliente.setLocation(20, 40);
 	        nameCliente.setFont(new Font("",Font.BOLD,13));
@@ -114,7 +129,7 @@ public class ConsultarInstructor {
 	        nameCliente.setForeground(Color.black);
 	        panel.add(nameCliente);
 
-	        JLabel idCliente = new JLabel("106015");
+	        JLabel idCliente = new JLabel(id_instructor);
 	        idCliente.setSize(150, 15);
 	        idCliente.setLocation(238, 40);
 	        idCliente.setFont(new Font("",Font.BOLD,13));
@@ -161,10 +176,15 @@ public class ConsultarInstructor {
 	        };
 	        DefaultTableModel modelo = new DefaultTableModel(datosT,columnas);
 	    
-	        JTable tabla = new JTable(modelo);
-	        JScrollPane scroll = new JScrollPane(tabla);
-	        scroll.setBounds(20, 40, 330, 200);
-	        panel2.add(scroll);
+	        try {
+				JTable tabla;
+				tabla = new JTable(bd.buscar(Integer.parseInt(id_instructor)));
+				JScrollPane scroll = new JScrollPane(tabla);
+				scroll.setBounds(20, 40, 330, 200);
+				panel2.add(scroll);
+			} catch (SQLException e) {
+				System.err.println("Error al mostrar la tabla: "+e);
+			}
 
 	        RoundedPanel up = new RoundedPanel(15);
 	        up.setSize(370, 30);
@@ -271,7 +291,7 @@ public class ConsultarInstructor {
 
 		//EditarInstructor
 		public void EditarInstructor(){
-			EditarInstructor editInstructor = new EditarInstructor(frame);
+			EditarInstructor editInstructor = new EditarInstructor(frame,nombre_instructor,id_instructor);
 			editInstructor.mostrar();
 			
 		}
