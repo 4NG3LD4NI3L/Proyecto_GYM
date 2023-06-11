@@ -24,6 +24,14 @@ public class BaseDatos {
 		s = (Statement) conn.createStatement();
 	}
 	
+	public void cerrarCONEXION() {
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			System.err.println("Problemas al cerrar la conexion con la Base de Datos: "+e.getMessage());
+		}
+	}
+	
 	public ArrayList obtenerNombresClientes() throws SQLException {//REGRESA LOS TODOS LOS NOMBRES EN UNA LISTA
 		ResultSet rs = s.executeQuery("SELECT * FROM clientes");
 		ArrayList<String> nombres = new ArrayList<>();
@@ -181,6 +189,7 @@ public class BaseDatos {
 		} catch (SQLException e) {
 			System.err.println("Error BD en la funcion actualizarCliente: "+e.getMessage());
 		}
+		conn.close();
 	}
 	
 }

@@ -292,6 +292,13 @@ public class EditarCliente {
 							if (verifCorreo(correoN.getText())) {
 								try {
 									bd.actualizarCliente(Integer.parseInt(id_cliente), nombreN.getText(), apellido.getText(), correoN.getText(), telefonoN.getText(), telefonoNewEme.getText(), edad.getText(), "Aqui va la foto");
+									bd.cerrarCONEXION();
+									
+									frame.remove(fondo);
+					                mostrarConsultaCliente();
+
+					                frame.repaint();
+					                frame.revalidate();
 								} catch (NumberFormatException e1) {
 									e1.printStackTrace();
 								} catch (SQLException e1) {
