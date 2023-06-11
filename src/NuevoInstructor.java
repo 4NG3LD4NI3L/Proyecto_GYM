@@ -2,11 +2,16 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -16,9 +21,16 @@ public class NuevoInstructor {
     private JPanel fondo;
     private JPanel panel;
     private JPanel arriba;
+    private BaseDatos bd;
     
 	public NuevoInstructor(JFrame frame){
         this.frame = frame;
+        try {
+        	bd = new BaseDatos();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("BASE DE DATOS NO FUNCIONA");
+		}
         
         JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondo1.setSize(691, 487);
@@ -232,6 +244,46 @@ public class NuevoInstructor {
                 frame.revalidate();
             }
         });
+        
+confirmarN.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if (nombreN.getText().length()>0 && Apellido.getText().length()>0 &&
+					edad.getText().length()>0    && CorreoN.getText().length()>0 &&
+				telefonoN.getText().length()>=10 && telefonoNewEme.getText().length()>=10) {
+					
+					if (nombreN.getText().matches("[a-zA-Z ]+") && Apellido.getText().matches("[a-zA-Z ]+")) {
+						
+						if (edad.getText().matches("[0-9]+") && telefonoN.getText().matches("[0-9]+") && telefonoNewEme.getText().matches("[0-9]+")) {
+							
+							try {
+								bd.crearNuevoInstructor(nombreN.getText(), Apellido.getText(), CorreoN.getText(), telefonoN.getText(), telefonoNewEme.getText(), "07-06-2023", 0, Integer.parseInt(edad.getText()),fotoN.getText());
+							} catch (NumberFormatException e1) {
+								e1.printStackTrace();
+							} catch (SQLException e1) {
+								e1.printStackTrace();
+							}
+							JOptionPane.showMessageDialog(null,"Instructor inscrito correctamente","Proceso finalizado",JOptionPane.INFORMATION_MESSAGE);
+							
+							frame.remove(fondo);
+
+							mostrarPanelInstructor();
+
+			                frame.repaint();
+			                frame.revalidate();
+						}else {
+							JOptionPane.showMessageDialog(null,"Solo puedes ingresar numeros en: Edad, Telefono y Telefono de emergencia","Error al crear cliente",JOptionPane.WARNING_MESSAGE);
+						}
+					}else {
+						JOptionPane.showMessageDialog(null,"Solo puedes ingresar letras en: Nombre y Apellidos","Error al crear cliente",JOptionPane.WARNING_MESSAGE);
+					}
+				}else {
+					JOptionPane.showMessageDialog(null,"Todos los elementos deben ser llenados\n[nota: lo numeros telefonicos deben tener mas de 10 digitos]","Error al crear cliente",JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
 
         frame.repaint();
 	    frame.revalidate();
@@ -259,6 +311,6 @@ public class NuevoInstructor {
         frame.repaint();
         frame.revalidate();
     }
-
+    
 
 }
