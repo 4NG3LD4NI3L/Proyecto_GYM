@@ -175,8 +175,11 @@ public class Instructor {
         buscar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { 
                 frame.remove(fondo);
+                
+                String opcionSeleccionada = (String) clasesDisponible_comboBox.getSelectedItem();
+            	String[] datos = opcionSeleccionada.split(" ");
 
-                mostrarConsultarInstructor();
+                mostrarConsultarInstructor(datos[1], datos[0]);
 
                 frame.repaint();
                 frame.revalidate();
@@ -210,8 +213,8 @@ public class Instructor {
     }
 
     //Consultar
-    public void mostrarConsultarInstructor(){
-    	ConsultarInstructor consultarInstructor = new ConsultarInstructor(frame);
+    public void mostrarConsultarInstructor(String nombre,String id){
+    	ConsultarInstructor consultarInstructor = new ConsultarInstructor(frame,nombre,id);
     	consultarInstructor.mostrar();
     }
 }
