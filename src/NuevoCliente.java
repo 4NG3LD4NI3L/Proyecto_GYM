@@ -8,6 +8,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -276,12 +279,12 @@ public class NuevoCliente {
 					apellidoPatMat.getText().length()>0 &&
 					edad.getText().length()>0 &&
 					correoN.getText().length()>0 &&
-					telefonoN.getText().length()==10 &&
-					telefonoNewEme.getText().length()==10) {
+					telefonoN.getText().length()>=10 &&
+					telefonoNewEme.getText().length()>=10) {
 					if (verifNombreApellidos(nombreN.getText(), apellidoPatMat.getText())) {
 						if (verifEdad_Telefonos(edad.getText(), telefonoN.getText(), telefonoNewEme.getText())) {
 							try {
-								bd.crearNuevoCliente(nombreN.getText(), apellidoPatMat.getText(), apellidoPatMat.getText(), correoN.getText(), telefonoN.getText(), telefonoNewEme.getText(), "07-06-2023", 0, Integer.parseInt(edad.getText()));
+								bd.crearNuevoCliente(nombreN.getText(), apellidoPatMat.getText(), apellidoPatMat.getText(), correoN.getText(), telefonoN.getText(), telefonoNewEme.getText(), "07-06-2023", 0, Integer.parseInt(edad.getText()),fotoN.getText());
 							} catch (NumberFormatException e1) {
 								e1.printStackTrace();
 							} catch (SQLException e1) {
@@ -294,7 +297,7 @@ public class NuevoCliente {
 						JOptionPane.showMessageDialog(null,"Solo puedes ingresar letras en: Nombre y Apellidos","Error al crear cliente",JOptionPane.WARNING_MESSAGE);
 					}
 				}else {
-					JOptionPane.showMessageDialog(null,"Todos los elementos deben ser llenados","Error al crear cliente",JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null,"Todos los elementos deben ser llenados\n[nota: lo numeros telefonicos deben tener mas de 10 digitos]","Error al crear cliente",JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -304,8 +307,8 @@ public class NuevoCliente {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				fotoN.setText("");
-				GuardarImagen();
+				//fotoN.setText("");
+				//GuardarImagen();
 			}
         	
         });
@@ -404,20 +407,23 @@ public class NuevoCliente {
     }
     
     
-    public void GuardarImagen() {
+    /*public void GuardarImagen() {
     	
     	JFileChooser se = new JFileChooser();
         se.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int estado = se.showOpenDialog(null);
         if (estado == JFileChooser.APPROVE_OPTION) {
             try {
-
+            	
+            	
                 fis = new FileInputStream(se.getSelectedFile());
                 this.longitudBytes = (int) se.getSelectedFile().length();
                 Image icono = ImageIO.read(se.getSelectedFile()).getScaledInstance(fotoN.getWidth(), fotoN.getHeight(), Image.SCALE_DEFAULT);
+                System.out.println("Archivo nombre: "+se.getSelectedFile());
                 fotoN.setIcon(new ImageIcon(icono));
                 fotoN.updateUI();
-
+                
+                
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
                 System.out.println("Error en el primer catch");
@@ -433,7 +439,7 @@ public class NuevoCliente {
     		try {
     			bd = new BaseDatos();
     			
-    			Connection cn = (Connection) BaseDatos.conectar();
+    			Connection cn = (Connection) bd.conectar();
     			PreparedStatement pst = (PreparedStatement) cn.prepareStatement("Insert Into fotos values (?,?)");
     			
     			pst.setString(1,nombre);
@@ -448,7 +454,7 @@ public class NuevoCliente {
     			JOptionPane.showMessageDialog(null,"ERROR AL GUARDAR FOTO");
     		}
    
-    }
+    }*/
     
    
     

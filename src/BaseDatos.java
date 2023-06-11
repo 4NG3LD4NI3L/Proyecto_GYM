@@ -20,7 +20,7 @@ public class BaseDatos {
 	Statement s;
 	
 	public BaseDatos() throws SQLException {
-		conn = DriverManager.getConnection(url + bd, "root","");
+		conn = DriverManager.getConnection(url + bd, "root","72914630");
 		s = (Statement) conn.createStatement();
 	}
 	
@@ -115,22 +115,20 @@ public class BaseDatos {
 		return dtm;
 	}
 	
-	public void crearNuevoCliente(String nombre,String apellidoMat,String apellidoPat,String correo,String telefono,String telefonoEmer,String fecha,int asistencia,int edad,JLabel fotoN) throws SQLException {
+	public void crearNuevoCliente(String nombre,String apellidoMat,String apellidoPat,String correo,String telefono,String telefonoEmer,String fecha,int asistencia,int edad,String fotoN) throws SQLException {
 		try {
-			String insertarDatos = "INSERT INTO clientes (nombre_cli, apellido_pat_cli, apellido_mat_cli, correo_cli, telefono_cli, telefono_eme_cli, fecha_inscrito_cli, asistencia_cli, edad_cli) VALUES \r\n"
+			String insertarDatos = "INSERT INTO clientes (nombre_cli, apellidos_cli, correo_cli, telefono_cli, telefono_eme_cli, fecha_inscrito_cli, asistencia_cli, edad_cli, url_img_cli) VALUES \r\n"
 					+ "(?,?,?,?,?,?,?,?,?);" ;
 			ps = (PreparedStatement) conn.prepareStatement(insertarDatos);
 			
 			ps.setString(1, nombre);
 			ps.setString(2, apellidoPat);
-			ps.setString(3, apellidoMat);
-			ps.setString(4, correo);
-			ps.setString(5, telefono);
-			ps.setString(6, telefonoEmer);
-			ps.setString(7, fecha);
-			ps.setInt(8, asistencia);
-			ps.setInt(9, edad);
-			//ps.setInt(10,fotoN);
+			ps.setString(3, correo);
+			ps.setString(4, telefono);
+			ps.setString(5, telefonoEmer);
+			ps.setString(6, fecha);
+			ps.setInt(7, asistencia);
+			ps.setInt(8, edad);
 			
 			ps.executeUpdate();
 			System.out.println("Se subieron los registros");
@@ -142,16 +140,47 @@ public class BaseDatos {
 		}
 	}
 	
-	public static Connection conectar() {
-        try {
-
-            Connection cn = DriverManager.getConnection(url + bd, "root","");
-            return cn;
-
-        } catch (SQLException e) {
-            System.out.println("Error en la conexion local " + e);
-        }
-        return (null);
+    public String[] obtenerTodoDelCliente(int id) {
+    	String[] datosCli = new String[8];
+    	
+    	try {
+			ResultSet rs = s.executeQuery("SELECT * FROM clientes WHERE id_cliente = "+Integer.toString(id)+";");
+			rs.next();
+			
+			datosCli[0] = rs.getString("nombre_cli");
+			datosCli[1] = rs.getString("apellidos_cli");
+			datosCli[2] = rs.getString("correo_cli");
+			datosCli[3] = rs.getString("telefono_cli");
+			datosCli[4] = rs.getString("telefono_eme_cli");
+			datosCli[5] = rs.getString("fecha_inscrito_cli");
+			datosCli[6] = Integer.toString(rs.getInt("asistencia_cli"));
+			datosCli[7] = Integer.toString(rs.getInt("edad_cli"));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	
+    	return datosCli;
     }
+    
+    public void actualizarCliente(int id,String nombre,String apellidos,String correo,String telefono,String telefonoEmer,String edad,String fotoN) throws SQLException {
+		try {
+			String insertarDatos = "UPDATE clientes SET nombre_cli = ?, apellidos_cli = ?, correo_cli = ?, telefono_cli = ?, telefono_eme_cli = ?, edad_cli = ? WHERE id_cliente = "+id;
+			ps = (PreparedStatement) conn.prepareStatement(insertarDatos);
+			
+			ps.setString(1, nombre);
+			ps.setString(2, apellidos);
+			ps.setString(3, correo);
+			ps.setString(4, telefono);
+			ps.setString(5, telefonoEmer);
+			ps.setString(6, edad);
+			
+			ps.executeUpdate();
+			System.out.println("Se subieron los registros");
+			
+		} catch (SQLException e) {
+			System.err.println("Error BD en la funcion actualizarCliente: "+e.getMessage());
+		}
+	}
 	
 }
