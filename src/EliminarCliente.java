@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.*;
+import java.sql.SQLException;
 
 import javax.swing.*;
 
@@ -12,12 +13,13 @@ public class EliminarCliente {
     private JPanel arriba;
     private String nombre_cliente;
     private String id_cliente;
+    private BaseDatos bd;
 
     public EliminarCliente(JFrame frame, String nombre, String id){
         this.frame = frame;
         this.nombre_cliente=nombre;
     	this.id_cliente=id;
-        
+    	
         JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondo1.setSize(691, 487);
 
@@ -129,7 +131,7 @@ public class EliminarCliente {
         nId.setForeground(Color.black);
         panel.add(nId);
 
-        JLabel nameCliente = new JLabel("Lalo suares");
+        JLabel nameCliente = new JLabel(nombre_cliente);
         nameCliente.setSize(120, 15);
         nameCliente.setLocation(150, 100);
         nameCliente.setFont(new Font("",Font.BOLD,13));
@@ -138,7 +140,7 @@ public class EliminarCliente {
         nameCliente.setForeground(Color.black);
         panel.add(nameCliente);
 
-        JLabel idCliente = new JLabel("106015");
+        JLabel idCliente = new JLabel(id_cliente);
         idCliente.setSize(120, 15);
         idCliente.setLocation(350, 100);
         idCliente.setFont(new Font("",Font.BOLD,13));
@@ -210,11 +212,34 @@ public class EliminarCliente {
             }
         });
 
-
+        confirmarN.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				eliminarCuenta(id_cliente);
+				
+				JOptionPane.showMessageDialog(null,"Se elimino exitosamente","Cliente eliminado",JOptionPane.INFORMATION_MESSAGE);
+				
+				frame.remove(fondo);
+				mostrarPanelCliente();
+				
+				frame.repaint();
+				frame.revalidate();
+			}
+		});
 
         frame.repaint();
 	    frame.revalidate();
         fondo.add(fondo1);
+    }
+    
+    public void eliminarCuenta(String id) {
+    	try {
+			bd = new BaseDatos();
+			bd.eliminarCliente(Integer.parseInt(id));
+		} catch (SQLException e) {
+			System.err.println("Base de datos fallo en la clase Eliminar cliente: "+e.getMessage());
+		}
     }
 
     public void mostrar(){

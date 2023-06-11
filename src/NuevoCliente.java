@@ -273,7 +273,6 @@ public class NuevoCliente {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Presionaste confirmar");
 				
 				if (nombreN.getText().length()>0 &&
 					apellidoPatMat.getText().length()>0 &&

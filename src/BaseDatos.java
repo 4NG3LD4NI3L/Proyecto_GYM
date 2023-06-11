@@ -125,8 +125,8 @@ public class BaseDatos {
 	
 	public void crearNuevoCliente(String nombre,String apellidoMat,String apellidoPat,String correo,String telefono,String telefonoEmer,String fecha,int asistencia,int edad,String fotoN) throws SQLException {
 		try {
-			String insertarDatos = "INSERT INTO clientes (nombre_cli, apellidos_cli, correo_cli, telefono_cli, telefono_eme_cli, fecha_inscrito_cli, asistencia_cli, edad_cli, url_img_cli) VALUES \r\n"
-					+ "(?,?,?,?,?,?,?,?,?);" ;
+			String insertarDatos = "INSERT INTO clientes (nombre_cli, apellidos_cli, correo_cli, telefono_cli, telefono_eme_cli, fecha_inscrito_cli, asistencia_cli, edad_cli) VALUES \r\n"
+					+ "(?,?,?,?,?,?,?,?);" ;
 			ps = (PreparedStatement) conn.prepareStatement(insertarDatos);
 			
 			ps.setString(1, nombre);
@@ -191,5 +191,18 @@ public class BaseDatos {
 		}
 		conn.close();
 	}
+    
+    public void eliminarCliente(int id) {
+    	
+		try {
+			String insertarDatos = "DELETE FROM clientes WHERE id_cliente = "+id+";";
+			ps = (PreparedStatement) conn.prepareStatement(insertarDatos);
+			
+			ps.executeUpdate();
+			conn.close();
+		} catch (SQLException e) {
+			System.err.println("Error BaseDatos en la funcion EliminarCliente: "+e.getMessage());
+		}
+    }
 	
 }
