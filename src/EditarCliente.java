@@ -293,6 +293,7 @@ public class EditarCliente {
 								try {
 									bd.actualizarCliente(Integer.parseInt(id_cliente), nombreN.getText(), apellido.getText(), correoN.getText(), telefonoN.getText(), telefonoNewEme.getText(), edad.getText(), "Aqui va la foto");
 									bd.cerrarCONEXION();
+									JOptionPane.showMessageDialog(null,"Los datos se actualizaron correctamete","Completado",JOptionPane.INFORMATION_MESSAGE);
 									
 									frame.remove(fondo);
 					                mostrarConsultaCliente();
@@ -304,7 +305,6 @@ public class EditarCliente {
 								} catch (SQLException e1) {
 									e1.printStackTrace();
 								}
-								JOptionPane.showMessageDialog(null,"Los datos se actualizaron correctamete","Completado",JOptionPane.INFORMATION_MESSAGE);
 							}else {
 								JOptionPane.showMessageDialog(null,"No es un correo valido","Error al actualizar la informacion",JOptionPane.ERROR_MESSAGE);
 							}

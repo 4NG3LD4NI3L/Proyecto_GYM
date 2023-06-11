@@ -289,6 +289,14 @@ public class NuevoCliente {
 							} catch (SQLException e1) {
 								e1.printStackTrace();
 							}
+							JOptionPane.showMessageDialog(null,"Cliente inscrito correctamente","Proceso finalizado",JOptionPane.INFORMATION_MESSAGE);
+							
+							frame.remove(fondo);
+
+			                mostrarPanelCliente();
+
+			                frame.repaint();
+			                frame.revalidate();
 						}else {
 							JOptionPane.showMessageDialog(null,"Solo puedes ingresar numeros en: Edad, Telefono y Telefono de emergencia","Error al crear cliente",JOptionPane.WARNING_MESSAGE);
 						}
