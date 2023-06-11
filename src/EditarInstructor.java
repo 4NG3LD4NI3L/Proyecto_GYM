@@ -2,11 +2,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -15,10 +17,24 @@ public class EditarInstructor {
     private JPanel fondo;
     private JPanel panel;
     private JPanel arriba;
+    
+    private String nombre_instructor;
+    private String id_instructor;
+    private BaseDatos bd;
 
 
-	public EditarInstructor(JFrame frame){
-        this.frame = frame;
+	public EditarInstructor(JFrame frame, String nombre, String id){
+		 this.frame = frame;
+	        this.nombre_instructor=nombre;
+	    	this.id_instructor=id;
+	    	
+	    	try {
+				bd = new BaseDatos();
+			} catch (SQLException e) {
+				System.err.println("BaseDatos fallo en la clase EditarCliente, ERROR: "+e.getMessage());
+			}
+	    	String[] datosInstructor = bd.obtenerTodoDelinstructor(Integer.parseInt(id_instructor));
+	    	
         
         JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondo1.setSize(691, 487);
@@ -133,7 +149,7 @@ public class EditarInstructor {
         nombrenuevo.setForeground(Color.black);
         panel.add(nombrenuevo);
         
-        JTextField nombreN = new JTextField("Ricardo");
+        JTextField nombreN = new JTextField(datosInstructor[0]);
         nombreN.setSize(300, 27);
         nombreN.setLocation(30, 45);
         nombreN.setBorder(null);
@@ -146,7 +162,7 @@ public class EditarInstructor {
         apellidoNuevo.setForeground(Color.black);
         panel.add(apellidoNuevo);
 
-        JTextField Apellido = new JTextField("Montana");
+        JTextField Apellido = new JTextField(datosInstructor[1]);
         Apellido.setSize(300, 27);
         Apellido.setLocation(30, 90);
         Apellido.setBorder(null);
@@ -158,7 +174,7 @@ public class EditarInstructor {
         edadNuevo.setForeground(Color.black);
         panel.add(edadNuevo);
 
-        JTextField edad = new JTextField("25");
+        JTextField edad = new JTextField(datosInstructor[2]);
         edad.setSize(300, 27);
         edad.setLocation(30, 135);
         edad.setBorder(null);
@@ -170,7 +186,7 @@ public class EditarInstructor {
         correoNuevo.setForeground(Color.black);
         panel.add(correoNuevo);
         
-        JTextField CorreoN = new JTextField("Richard_Mont@gmail.com");
+        JTextField CorreoN = new JTextField(datosInstructor[3]);
         CorreoN.setSize(300, 27);
         CorreoN.setLocation(30, 180);
         CorreoN.setBorder(null);
@@ -182,7 +198,7 @@ public class EditarInstructor {
         telefonoNuevo.setForeground(Color.black);
         panel.add(telefonoNuevo);
 
-        JTextField telefonoN = new JTextField("612-132-8257");
+        JTextField telefonoN = new JTextField(datosInstructor[4]);
         telefonoN.setSize(300, 27);
         telefonoN.setLocation(30, 225);
         telefonoN.setBorder(null);
@@ -194,7 +210,7 @@ public class EditarInstructor {
         telefonoNuevoEme.setForeground(Color.black);
         panel.add(telefonoNuevoEme);
 
-        JTextField telefonoNewEme = new JTextField("612-145-7811");
+        JTextField telefonoNewEme = new JTextField(datosInstructor[5]);
         telefonoNewEme.setSize(300, 27);
         telefonoNewEme.setLocation(30, 270);
         telefonoNewEme.setBorder(null);
@@ -278,6 +294,48 @@ public class EditarInstructor {
                 frame.revalidate();
             }
         });
+        
+confirmarN.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if (nombreN.getText().length()>0 && Apellido.getText().length()>0 &&
+					edad.getText().length()>0    && CorreoN.getText().length()>0 &&
+			    telefonoN.getText().length()>=10 && telefonoNewEme.getText().length()>=10) {
+					
+					if (nombreN.getText().matches("[a-zA-Z ]+") && Apellido.getText().matches("[a-zA-Z ]+")) {
+						
+						if (edad.getText().matches("[0-9]+") && telefonoN.getText().matches("[0-9]+") && telefonoNewEme.getText().matches("[0-9]+") && CorreoN.getText().matches("^[a-zA-Z0-9._%+-]+@(gmail\\.com|hotmail\\.com)$")) {
+								try {
+									bd.actualizarInstructor(Integer.parseInt(id_instructor), nombreN.getText(), Apellido.getText(),edad.getText(),CorreoN.getText(), telefonoN.getText(), telefonoNewEme.getText(), "Aqui va la foto");
+									bd.cerrarCONEXION();
+									JOptionPane.showMessageDialog(null,"Los datos se actualizaron correctamete","Completado",JOptionPane.INFORMATION_MESSAGE);
+									
+									frame.remove(fondo);
+									mostrarConsultarInstructor();
+
+					                frame.repaint();
+					                frame.revalidate();
+								} catch (NumberFormatException e1) {
+									e1.printStackTrace();
+								} catch (SQLException e1) {
+									e1.printStackTrace();
+								}
+						}else {
+							JOptionPane.showMessageDialog(null,"Solo puedes ingresar numeros en: Edad, Telefono y Telefono de emergencia","Error al actualizar la informacion",JOptionPane.WARNING_MESSAGE);
+						}
+						
+					}else {
+						JOptionPane.showMessageDialog(null,"Solo puedes ingresar letras en: Nombre y Apellidos","Error al actualizar la informacion",JOptionPane.WARNING_MESSAGE);
+					}
+					
+				}else {
+					JOptionPane.showMessageDialog(null,"Todos los elementos deben ser llenados\n[nota: lo numeros telefonicos deben tener mas de 10 digitos]","Error al actualizar la informacion",JOptionPane.WARNING_MESSAGE);
+				}
+				
+			}
+		});
 
         frame.repaint();
 	    frame.revalidate();
@@ -308,7 +366,7 @@ public class EditarInstructor {
 
     //Consultar
     public void mostrarConsultarInstructor(){
-    	ConsultarInstructor consultarInstructor = new ConsultarInstructor(frame);
+    	ConsultarInstructor consultarInstructor = new ConsultarInstructor(frame,nombre_instructor,id_instructor);
     	consultarInstructor.mostrar();
     }
 
