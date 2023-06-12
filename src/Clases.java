@@ -3,6 +3,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,9 +22,16 @@ public class Clases extends JPanel {
 	private JFrame frame;
 	private ClasesDatos clase_datos;
 	private ClasesDatosCrear clase_crear;
+	private String nombre_clase;
+	private BaseDatos bd;
 	
 	public Clases(JFrame ventana) {
 		this.frame=ventana;
+		try {
+			bd = new BaseDatos();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondo1.setSize(691, 487);
@@ -80,6 +89,12 @@ public class Clases extends JPanel {
         nombreClase.setForeground(Color.white);
         panel.add(nombreClase);
         
+        ArrayList<String> clases_nombreBD = new ArrayList<>();
+        try {
+			clases_nombreBD = bd.obtenerNombreClases();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
         JComboBox<String> clasesDisponible_comboBox = new JComboBox<>();
         clasesDisponible_comboBox.setSize(250, 30);
         clasesDisponible_comboBox.setLocation(110, 30);
@@ -87,9 +102,13 @@ public class Clases extends JPanel {
         clasesDisponible_comboBox.setBackground(Color.BLACK);
         clasesDisponible_comboBox.setForeground(Color.white);
         clasesDisponible_comboBox.setFocusable(false);
-        clasesDisponible_comboBox.addItem("Seleccionar una clase");
-        clasesDisponible_comboBox.addItem("Yoga");
-        clasesDisponible_comboBox.addItem("xCombat");
+        if (!clases_nombreBD.isEmpty()) {
+        	for (int i=0;i<clases_nombreBD.size();i++) {
+        		clasesDisponible_comboBox.addItem(clases_nombreBD.get(i));
+        	}
+        }else {
+        	clasesDisponible_comboBox.addItem("-1 <No hay clases registradas>");
+        }
         panel.add(clasesDisponible_comboBox);
 
         JButton regresar = new JButton("Regresar");
@@ -139,7 +158,7 @@ public class Clases extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clase_datos = new ClasesDatos(frame);
+				clase_datos = new ClasesDatos(frame,clasesDisponible_comboBox.getSelectedItem().toString());
 				cerrarEstaVentana();
 				frame.add(clase_datos);
 				

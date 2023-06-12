@@ -20,7 +20,7 @@ public class BaseDatos {
 	Statement s;
 	
 	public BaseDatos() throws SQLException {
-		conn = DriverManager.getConnection(url + bd, "root","");
+		conn = DriverManager.getConnection(url + bd, "root","72914630");
 		s = (Statement) conn.createStatement();
 	}
 	
@@ -294,5 +294,17 @@ public class BaseDatos {
 			System.err.println("Error BaseDatos en la funcion EliminarCliente: "+e.getMessage());
 		}
     }
+    
+    public ArrayList obtenerNombreClases() throws SQLException {//REGRESA LOS TODOS LOS NOMBRES EN UNA LISTA
+		ResultSet rs = s.executeQuery("SELECT * FROM clases");
+		ArrayList<String> nombres = new ArrayList<>();
+
+		while (rs.next()) {
+			//System.out.println(rs.getString("nombre_cli"));
+			nombres.add(rs.getString("nombre_cla"));
+		}
+		conn.close();
+		return nombres;
+	}
 	
 }

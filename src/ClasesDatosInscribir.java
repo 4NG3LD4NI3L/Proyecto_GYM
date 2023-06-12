@@ -16,9 +16,11 @@ public class ClasesDatosInscribir extends JPanel {
 	
 	private JFrame frame;
 	private ClasesDatos clase_datos;
+	private String nombre_clase;
 	
-	public ClasesDatosInscribir(JFrame ventana) {
+	public ClasesDatosInscribir(JFrame ventana,String nombre) {
 		this.frame=ventana;
+		this.nombre_clase=nombre;
 		
 		JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondo1.setSize(691, 487);
@@ -172,7 +174,7 @@ public class ClasesDatosInscribir extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) { 
-				clase_datos = new ClasesDatos(frame);
+				clase_datos = new ClasesDatos(frame,nombre_clase);
 				cerrarEstaVentana();
 				frame.add(clase_datos);
 				
@@ -186,7 +188,7 @@ public class ClasesDatosInscribir extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) { 
-				clase_datos = new ClasesDatos(frame);
+				clase_datos = new ClasesDatos(frame,nombre_clase);
 				cerrarEstaVentana();
 				frame.add(clase_datos);
 				

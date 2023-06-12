@@ -15,15 +15,14 @@ import javax.swing.table.DefaultTableModel;
 
 public class ClasesDatos extends JPanel {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private JFrame frame;
 	private Clases clase;
 	private ClasesDatosEditar clase_editar;
 	private ClasesDatosInscribir clase_inscribir;
+	private String nombre_clase;
+	private BaseDatos bd;
 	
 	String[] columnas = {"Instructor: Yahir Hernandez Soto"};
 	String[] horario = {"Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"};
@@ -66,8 +65,9 @@ public class ClasesDatos extends JPanel {
 	JTable datos_DatosCliente = new JTable(dtm_datosClientes);
 	JScrollPane panelScroll_clientes = new JScrollPane(datos_DatosCliente);
 	
-	public ClasesDatos(JFrame ventana) {
+	public ClasesDatos(JFrame ventana,String nombre_Clase) {
 		this.frame=ventana;
+		this.nombre_clase=nombre_Clase;
 		
 		JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondo1.setSize(691, 487);
@@ -132,7 +132,7 @@ public class ClasesDatos extends JPanel {
         panel.setBackground(new Color(0,0,0,85));
         this.add(panel);
         
-        JLabel etiqueClase = new JLabel("Clase: Zumba");
+        JLabel etiqueClase = new JLabel("Clase: "+nombre_clase);
         etiqueClase.setSize(369, 20);
         etiqueClase.setLocation(11, 10);
         etiqueClase.setForeground(Color.black);
@@ -198,7 +198,7 @@ public class ClasesDatos extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clase_editar = new ClasesDatosEditar(frame);
+				clase_editar = new ClasesDatosEditar(frame,nombre_clase);
 				cerrarEstaVentana();
 				frame.add(clase_editar);
 				
@@ -253,7 +253,7 @@ public class ClasesDatos extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) { 
-				clase_inscribir = new ClasesDatosInscribir(frame);
+				clase_inscribir = new ClasesDatosInscribir(frame,nombre_clase);
 				cerrarEstaVentana();
 				frame.add(clase_inscribir);
 				

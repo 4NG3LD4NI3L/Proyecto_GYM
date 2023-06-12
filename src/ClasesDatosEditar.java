@@ -17,9 +17,11 @@ public class ClasesDatosEditar extends JPanel {
 	
 	private JFrame frame;
 	private ClasesDatos clase_datos;
+	private String clases_nombre;
 	
-	public ClasesDatosEditar(JFrame ventana) {
+	public ClasesDatosEditar(JFrame ventana,String nombre) {
 		this.frame=ventana;
+		clases_nombre=nombre;
 		
 		JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondo1.setSize(691, 487);
@@ -290,7 +292,7 @@ public class ClasesDatosEditar extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) { 
-				clase_datos = new ClasesDatos(frame);
+				clase_datos = new ClasesDatos(frame,clases_nombre);
 				cerrarEstaVentana();
 				frame.add(clase_datos);
 				
@@ -304,7 +306,7 @@ public class ClasesDatosEditar extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) { 
-				clase_datos = new ClasesDatos(frame);
+				clase_datos = new ClasesDatos(frame,clases_nombre);
 				cerrarEstaVentana();
 				frame.add(clase_datos);
 				
