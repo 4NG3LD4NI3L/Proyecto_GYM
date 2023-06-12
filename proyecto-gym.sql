@@ -1,175 +1,88 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 12-06-2023 a las 02:41:52
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
---
--- Base de datos: `proyecto-gym`
---
+CREATE DATABASE IF NOT EXISTS `proyecto-gym antiguo` /*!40100 DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci */;
+USE `proyecto-gym antiguo`;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `clases`
---
-
-CREATE TABLE `clases` (
+CREATE TABLE IF NOT EXISTS `clases` (
   `nombre_cla` varchar(50) NOT NULL,
   `instructor_designado_cla` varchar(50) NOT NULL,
-  `horario_cla` varchar(5) NOT NULL DEFAULT '',
+  `horario_cla` varchar(50) NOT NULL DEFAULT '',
   `dias_cla` varchar(100) DEFAULT NULL,
   `clientes_nombre_cla` varchar(50) NOT NULL,
-  `clientes_id_cla` int(5) NOT NULL
+  `clientes_id_cla` int(5) NOT NULL,
+  PRIMARY KEY (`nombre_cla`) USING BTREE,
+  KEY `instructor_FK` (`instructor_designado_cla`),
+  KEY `clientes_nombre_FK` (`clientes_nombre_cla`),
+  KEY `clientes_id_FK` (`clientes_id_cla`),
+  CONSTRAINT `clientes_id_FK` FOREIGN KEY (`clientes_id_cla`) REFERENCES `clientes` (`id_cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `clientes_nombre_FK` FOREIGN KEY (`clientes_nombre_cla`) REFERENCES `clientes` (`nombre_cli`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `instructor_FK` FOREIGN KEY (`instructor_designado_cla`) REFERENCES `instructor` (`nombre_in`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- --------------------------------------------------------
+/*!40000 ALTER TABLE `clases` DISABLE KEYS */;
+INSERT INTO `clases` (`nombre_cla`, `instructor_designado_cla`, `horario_cla`, `dias_cla`, `clientes_nombre_cla`, `clientes_id_cla`) VALUES
+	('xCombat', 'Maria', '8:00 AM - 11:00 AM', 'Lunes,Martes,Jueves,Sabado', 'Julian', 2);
+/*!40000 ALTER TABLE `clases` ENABLE KEYS */;
 
---
--- Estructura de tabla para la tabla `clientes`
---
-
-CREATE TABLE `clientes` (
-  `id_cliente` int(5) NOT NULL,
+CREATE TABLE IF NOT EXISTS `clientes` (
+  `id_cliente` int(5) NOT NULL AUTO_INCREMENT,
   `nombre_cli` varchar(50) NOT NULL,
-  `apellido_pat_cli` varchar(50) NOT NULL,
-  `apellido_mat_cli` varchar(50) NOT NULL,
+  `apellidos_cli` varchar(50) NOT NULL,
   `correo_cli` varchar(50) NOT NULL,
   `telefono_cli` varchar(50) NOT NULL,
   `telefono_eme_cli` varchar(50) DEFAULT NULL,
-  `fecha_inscrito_cli` date NOT NULL,
+  `fecha_inscrito_cli` varchar(50) NOT NULL DEFAULT '',
   `asistencia_cli` int(2) DEFAULT NULL,
   `edad_cli` int(3) NOT NULL,
-  `Imagenes` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  PRIMARY KEY (`id_cliente`),
+  KEY `nombre_cli` (`nombre_cli`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Volcado de datos para la tabla `clientes`
---
+/*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
+INSERT INTO `clientes` (`id_cliente`, `nombre_cli`, `apellidos_cli`, `correo_cli`, `telefono_cli`, `telefono_eme_cli`, `fecha_inscrito_cli`, `asistencia_cli`, `edad_cli`) VALUES
+	(1, 'Alfonso', 'Cota', 'alfa123@gmail.com', '6120001010', '6240001234', '2023-06-04', 1, 25),
+	(2, 'Julian', 'Mendoza', 'mendozaARK@gmail.com', '4980159812', '0', '2023-06-04', 28, 38),
+	(4, 'David', 'Castro Montaño', 'david@gmail.com', '6122294578', '6242013140', '07-06-2023', 0, 18),
+	(6, 'Josue', 'Zamora Garcia', 'gohan117', '6126549872', '6245120258', '07-06-2023', 0, 23),
+	(9, 'wqwqwq', 'qwqwqw', 'qwqwqw@gmail.com', '6126543210', '6244567890', '07-06-2023', 0, 98);
+/*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 
-INSERT INTO `clientes` (`id_cliente`, `nombre_cli`, `apellido_pat_cli`, `apellido_mat_cli`, `correo_cli`, `telefono_cli`, `telefono_eme_cli`, `fecha_inscrito_cli`, `asistencia_cli`, `edad_cli`, `Imagenes`) VALUES
-(1, 'Alfonso', 'Cota', 'Jauregui', 'alfa123@gmail.com', '6120001010', '6240001234', '2023-06-04', 1, 25, NULL),
-(2, 'Julian', 'Mendoza', 'Espinoza', 'mendozaARK@gmail.com', '4980159812', '0', '2023-06-04', 28, 38, NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `instructor`
---
-
-CREATE TABLE `instructor` (
-  `id_instructor` int(5) NOT NULL,
+CREATE TABLE IF NOT EXISTS `instructor` (
+  `id_instructor` int(5) NOT NULL AUTO_INCREMENT,
   `nombre_in` varchar(50) NOT NULL,
-  `apellido_in` varchar(50) DEFAULT NULL,
+  `apellido_pat_in` varchar(50) NOT NULL,
+  `apellido_mat_in` varchar(50) NOT NULL,
   `edad_in` int(3) NOT NULL,
   `correo_in` varchar(50) NOT NULL,
-  `telefono_in` varchar(50) NOT NULL,
-  `telefono_eme_in` varchar(50) NOT NULL,
-  `Fecha_Inscrito_in` varchar(50) DEFAULT NULL,
-  `asistencia_in` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `telefono_in` varchar(10) NOT NULL DEFAULT '',
+  `telefono_eme_in` varchar(10) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id_instructor`),
+  UNIQUE KEY `nombre_in` (`nombre_in`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Volcado de datos para la tabla `instructor`
---
+/*!40000 ALTER TABLE `instructor` DISABLE KEYS */;
+INSERT INTO `instructor` (`id_instructor`, `nombre_in`, `apellido_pat_in`, `apellido_mat_in`, `edad_in`, `correo_in`, `telefono_in`, `telefono_eme_in`) VALUES
+	(1, 'Maria', 'Chavez', 'Pilares', 34, 'chama89@gmail.com', '6129991548', '6244579014');
+/*!40000 ALTER TABLE `instructor` ENABLE KEYS */;
 
-INSERT INTO `instructor` (`id_instructor`, `nombre_in`, `apellido_in`, `edad_in`, `correo_in`, `telefono_in`, `telefono_eme_in`, `Fecha_Inscrito_in`, `asistencia_in`) VALUES
-(2, 'as', 'as', 12, 'fr', '1234567890', '1234567890', '0000-00-00', '0'),
-(4, 'erdgs', 'sdfsdggs', 20, 'asa', '6123450945', '1234567890', '07-06-2023', '0'),
-(5, 'a', 'd', 2, 'asd@gmail.com', '1234567890', '1234567890', '07-06-2023', '0');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tarifas`
---
-
-CREATE TABLE `tarifas` (
+CREATE TABLE IF NOT EXISTS `tarifas` (
   `clase_tr` varchar(50) NOT NULL,
-  `costo_tr` int(4) NOT NULL
+  `costo_tr` int(4) NOT NULL,
+  KEY `clase_FK` (`clase_tr`),
+  CONSTRAINT `clase_FK` FOREIGN KEY (`clase_tr`) REFERENCES `clases` (`nombre_cla`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Índices para tablas volcadas
---
+/*!40000 ALTER TABLE `tarifas` DISABLE KEYS */;
+INSERT INTO `tarifas` (`clase_tr`, `costo_tr`) VALUES
+	('xCombat', 300);
+/*!40000 ALTER TABLE `tarifas` ENABLE KEYS */;
 
---
--- Indices de la tabla `clases`
---
-ALTER TABLE `clases`
-  ADD PRIMARY KEY (`nombre_cla`) USING BTREE,
-  ADD KEY `instructor_FK` (`instructor_designado_cla`),
-  ADD KEY `clientes_nombre_FK` (`clientes_nombre_cla`),
-  ADD KEY `clientes_id_FK` (`clientes_id_cla`);
-
---
--- Indices de la tabla `clientes`
---
-ALTER TABLE `clientes`
-  ADD PRIMARY KEY (`id_cliente`),
-  ADD KEY `nombre_cli` (`nombre_cli`);
-
---
--- Indices de la tabla `instructor`
---
-ALTER TABLE `instructor`
-  ADD PRIMARY KEY (`id_instructor`),
-  ADD UNIQUE KEY `nombre_in` (`nombre_in`);
-
---
--- Indices de la tabla `tarifas`
---
-ALTER TABLE `tarifas`
-  ADD KEY `clase_FK` (`clase_tr`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `clientes`
---
-ALTER TABLE `clientes`
-  MODIFY `id_cliente` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `instructor`
---
-ALTER TABLE `instructor`
-  MODIFY `id_instructor` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `clases`
---
-ALTER TABLE `clases`
-  ADD CONSTRAINT `clientes_id_FK` FOREIGN KEY (`clientes_id_cla`) REFERENCES `clientes` (`id_cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `clientes_nombre_FK` FOREIGN KEY (`clientes_nombre_cla`) REFERENCES `clientes` (`nombre_cli`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `instructor_FK` FOREIGN KEY (`instructor_designado_cla`) REFERENCES `instructor` (`nombre_in`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `tarifas`
---
-ALTER TABLE `tarifas`
-  ADD CONSTRAINT `clase_FK` FOREIGN KEY (`clase_tr`) REFERENCES `clases` (`nombre_cla`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-COMMIT;
-
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
