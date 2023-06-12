@@ -285,5 +285,18 @@ public class BaseDatos {
 			System.err.println("Error BaseDatos en la funcion EliminarCliente: "+e.getMessage());
 		}
     }
+    
+    public void eliminarInstructor(int id) {
+    	
+		try {
+			String insertarDatos = "DELETE FROM instructor WHERE id_instructor = "+id+";";
+			ps = (PreparedStatement) conn.prepareStatement(insertarDatos);
+			
+			ps.executeUpdate();
+			conn.close();
+		} catch (SQLException e) {
+			System.err.println("Error BaseDatos en la funcion EliminarCliente: "+e.getMessage());
+		}
+    }
 	
 }
