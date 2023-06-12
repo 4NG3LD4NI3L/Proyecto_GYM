@@ -298,7 +298,7 @@ public class ConsultarInstructor {
 
 		//EliminarInstructor
 		public void mostarEliminarInstructor(){
-			EliminarInstructor eliminarInstructor = new EliminarInstructor(frame);
+			EliminarInstructor eliminarInstructor = new EliminarInstructor(frame,nombre_instructor,id_instructor);
 			eliminarInstructor.mostrar();
 			
 		}
