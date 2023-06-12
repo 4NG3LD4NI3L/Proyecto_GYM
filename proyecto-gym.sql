@@ -13,20 +13,15 @@ CREATE TABLE IF NOT EXISTS `clases` (
   `instructor_designado_cla` varchar(50) NOT NULL,
   `horario_cla` varchar(50) NOT NULL DEFAULT '',
   `dias_cla` varchar(100) DEFAULT NULL,
-  `clientes_nombre_cla` varchar(50) NOT NULL,
-  `clientes_id_cla` int(5) NOT NULL,
   PRIMARY KEY (`nombre_cla`) USING BTREE,
   KEY `instructor_FK` (`instructor_designado_cla`),
-  KEY `clientes_nombre_FK` (`clientes_nombre_cla`),
-  KEY `clientes_id_FK` (`clientes_id_cla`),
-  CONSTRAINT `clientes_id_FK` FOREIGN KEY (`clientes_id_cla`) REFERENCES `clientes` (`id_cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `clientes_nombre_FK` FOREIGN KEY (`clientes_nombre_cla`) REFERENCES `clientes` (`nombre_cli`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `instructor_FK` FOREIGN KEY (`instructor_designado_cla`) REFERENCES `instructor` (`nombre_in`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 /*!40000 ALTER TABLE `clases` DISABLE KEYS */;
-INSERT INTO `clases` (`nombre_cla`, `instructor_designado_cla`, `horario_cla`, `dias_cla`, `clientes_nombre_cla`, `clientes_id_cla`) VALUES
-	('xCombat', 'Maria', '8:00 AM - 11:00 AM', 'Lunes,Martes,Jueves,Sabado', 'Julian', 2);
+INSERT INTO `clases` (`nombre_cla`, `instructor_designado_cla`, `horario_cla`, `dias_cla`) VALUES
+	('Body combat', 'Jose Carlos', '7:00 AM - 9:00 AM', 'Lunes,Martes'),
+	('xCombat', 'Maria', '8:00 AM - 11:00 AM', 'Lunes,Martes,Jueves,Sabado');
 /*!40000 ALTER TABLE `clases` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `clientes` (
@@ -52,22 +47,42 @@ INSERT INTO `clientes` (`id_cliente`, `nombre_cli`, `apellidos_cli`, `correo_cli
 	(9, 'wqwqwq', 'qwqwqw', 'qwqwqw@gmail.com', '6126543210', '6244567890', '07-06-2023', 0, 98);
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 
+CREATE TABLE IF NOT EXISTS `inscripciones_a_clases` (
+  `clase` varchar(50) NOT NULL,
+  `instructor_nombre` varchar(50) NOT NULL,
+  `id_cliente_inscrito` int(5) NOT NULL DEFAULT 0,
+  `nombre_cliente_inscrito` varchar(50) NOT NULL,
+  KEY `clase_nombre_FK` (`clase`),
+  KEY `nombre_instructor_FK` (`instructor_nombre`),
+  KEY `id_cliente_FK` (`id_cliente_inscrito`),
+  KEY `nombre_cliente_FK` (`nombre_cliente_inscrito`),
+  CONSTRAINT `clase_nombre_FK` FOREIGN KEY (`clase`) REFERENCES `clases` (`nombre_cla`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `id_cliente_FK` FOREIGN KEY (`id_cliente_inscrito`) REFERENCES `clientes` (`id_cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `nombre_cliente_FK` FOREIGN KEY (`nombre_cliente_inscrito`) REFERENCES `clientes` (`nombre_cli`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `nombre_instructor_FK` FOREIGN KEY (`instructor_nombre`) REFERENCES `instructor` (`nombre_in`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+/*!40000 ALTER TABLE `inscripciones_a_clases` DISABLE KEYS */;
+/*!40000 ALTER TABLE `inscripciones_a_clases` ENABLE KEYS */;
+
 CREATE TABLE IF NOT EXISTS `instructor` (
   `id_instructor` int(5) NOT NULL AUTO_INCREMENT,
   `nombre_in` varchar(50) NOT NULL,
-  `apellido_pat_in` varchar(50) NOT NULL,
-  `apellido_mat_in` varchar(50) NOT NULL,
+  `apellido_in` varchar(50) NOT NULL,
   `edad_in` int(3) NOT NULL,
   `correo_in` varchar(50) NOT NULL,
   `telefono_in` varchar(10) NOT NULL DEFAULT '',
   `telefono_eme_in` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`id_instructor`),
   UNIQUE KEY `nombre_in` (`nombre_in`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 /*!40000 ALTER TABLE `instructor` DISABLE KEYS */;
-INSERT INTO `instructor` (`id_instructor`, `nombre_in`, `apellido_pat_in`, `apellido_mat_in`, `edad_in`, `correo_in`, `telefono_in`, `telefono_eme_in`) VALUES
-	(1, 'Maria', 'Chavez', 'Pilares', 34, 'chama89@gmail.com', '6129991548', '6244579014');
+INSERT INTO `instructor` (`id_instructor`, `nombre_in`, `apellido_in`, `edad_in`, `correo_in`, `telefono_in`, `telefono_eme_in`) VALUES
+	(1, 'Maria', 'Chavez', 20, 'chama89@gmail.com', '6129991548', '6244579014'),
+	(2, 'Jose Carlos', 'Aveiro Lopez', 30, 'jcarlosLZ@gmail.com', '6245204103', '6241598524'),
+	(3, 'Alberto Juan', 'Sedillo Alcatraz', 41, 'xXentrenadorXx@gmail.com', '9604568795', '6128527410'),
+	(4, 'Sherlyn', 'Cruz Rodrigrez', 26, '3str3lla@gmail.com', '4568529519', '2579786547');
 /*!40000 ALTER TABLE `instructor` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `tarifas` (
