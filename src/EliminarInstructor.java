@@ -2,11 +2,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class EliminarInstructor {
@@ -15,9 +17,14 @@ public class EliminarInstructor {
     private JPanel fondo;
     private JPanel panel;
     private JPanel arriba;
+    private String nombre_instructor;
+    private String id_instructor;
+    private BaseDatos bd;
 
-	public EliminarInstructor(JFrame frame){
-        this.frame = frame;
+	public EliminarInstructor(JFrame frame, String nombre, String id){
+		 this.frame = frame;
+	     this.nombre_instructor = nombre;
+	     this.id_instructor = id;
         
         JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondo1.setSize(691, 487);
@@ -135,7 +142,7 @@ public class EliminarInstructor {
         nId.setForeground(Color.black);
         panel.add(nId);
 
-        JLabel nameCliente = new JLabel("Ricardo Montana");
+        JLabel nameCliente = new JLabel(nombre_instructor);
         nameCliente.setSize(120, 15);
         nameCliente.setLocation(150, 100);
         nameCliente.setFont(new Font("",Font.BOLD,13));
@@ -144,7 +151,7 @@ public class EliminarInstructor {
         nameCliente.setForeground(Color.black);
         panel.add(nameCliente);
 
-        JLabel idCliente = new JLabel("254015");
+        JLabel idCliente = new JLabel(id_instructor);
         idCliente.setSize(120, 15);
         idCliente.setLocation(350, 100);
         idCliente.setFont(new Font("",Font.BOLD,13));
@@ -215,6 +222,22 @@ public class EliminarInstructor {
                 frame.revalidate();
             }
         });
+        
+        confirmarN.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				eliminarIns(id_instructor);
+				
+				JOptionPane.showMessageDialog(null,"Se elimino exitosamente","Cliente eliminado",JOptionPane.INFORMATION_MESSAGE);
+				
+				frame.remove(fondo);
+				mostrarPanelInstructor();
+				
+				frame.repaint();
+				frame.revalidate();
+			}
+		});
 
         frame.repaint();
 	    frame.revalidate();
@@ -242,10 +265,19 @@ public class EliminarInstructor {
 		frame.repaint();
 		frame.revalidate();
 	}
+	
+	public void eliminarIns(String id) {
+    	try {
+			bd = new BaseDatos();
+			bd.eliminarInstructor(Integer.parseInt(id));
+		} catch (SQLException e) {
+			System.err.println("Base de datos fallo en la clase Eliminar instructor: "+e.getMessage());
+		}
+    }
 
     //Consultar
     public void mostrarConsultarInstructor(){
-    	ConsultarInstructor consultarInstructor = new ConsultarInstructor(frame);
+    	ConsultarInstructor consultarInstructor = new ConsultarInstructor(frame,nombre_instructor,id_instructor);
     	consultarInstructor.mostrar();
     }
 }
