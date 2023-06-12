@@ -161,7 +161,7 @@ public class ConsultarCliente {
     
 		try {
 			JTable tabla;
-			tabla = new JTable(bd.buscar(Integer.parseInt(id_cliente)));
+			tabla = new JTable(bd.buscarClientes(Integer.parseInt(id_cliente)));
 			JScrollPane scroll = new JScrollPane(tabla);
 			scroll.setBounds(20, 40, 330, 200);
 			panel2.add(scroll);
