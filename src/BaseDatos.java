@@ -20,7 +20,7 @@ public class BaseDatos {
 	Statement s;
 	
 	public BaseDatos() throws SQLException {
-		conn = DriverManager.getConnection(url + bd, "root","72914630");
+		conn = DriverManager.getConnection(url + bd, "root","");
 		s = (Statement) conn.createStatement();
 	}
 	
@@ -106,7 +106,7 @@ public class BaseDatos {
 		return encontrado;
 	}
 	
-	public DefaultTableModel buscar(int id) throws SQLException {
+	public DefaultTableModel buscarClientes(int id) throws SQLException {
 		String[]columnas = {"Mes","Asistencia","Clases","Monto"};
 		DefaultTableModel dtm = new DefaultTableModel(columnas,0) {
 			public boolean isCellEditable(int row, int column) { 
@@ -126,6 +126,34 @@ public class BaseDatos {
 			datosNew[3] = Integer.toString(rs.getInt("costo_tr"));
 		}else {
 			datosNew[3] = "600";
+		}
+		
+		dtm.addRow(datosNew);
+		
+		conn.close();
+		
+		return dtm;
+	}
+	
+	public DefaultTableModel buscarIns(int id) throws SQLException {
+		String[]columnas = {"Nombre","Correo","Monto"};
+		DefaultTableModel dtm = new DefaultTableModel(columnas,0) {
+			public boolean isCellEditable(int row, int column) { 
+				return false;
+			}
+		};
+		String[] datosNew = new String[4];
+		
+		ResultSet rs = s.executeQuery("SELECT * FROM clases RIGHT JOIN instructor ON instructor_designado_cla = id_instructor WHERE id_instructor = "+id+";");
+		rs.next();
+		datosNew[0] = rs.getString("nombre_in");
+		datosNew[1] = rs.getString("correo_in");
+		if(rs.getString("nombre_cla") != null) {
+			rs = s.executeQuery("SELECT * FROM tarifas WHERE clase_tr = '"+rs.getString("nombre_cla")+"';");
+			rs.next();
+			datosNew[2] = Integer.toString(rs.getInt("costo_tr"));
+		}else {
+			datosNew[2] = "600";
 		}
 		
 		dtm.addRow(datosNew);
