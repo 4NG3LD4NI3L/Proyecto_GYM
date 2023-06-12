@@ -168,17 +168,10 @@ public class ConsultarInstructor {
 	        panel2.setLocation(20, 65);
 	        panel2.setBackground(new Color(255,255,255));
 	        panel.add(panel2);
-
-	        
-	        String[]columnas = {"Clase","Clase","Mes","Asistencia"};
-	        String[][]datosT ={
-	            {"Xcore","Xcore","Enero"," 5 "}
-	        };
-	        DefaultTableModel modelo = new DefaultTableModel(datosT,columnas);
 	    
 	        try {
 				JTable tabla;
-				tabla = new JTable(bd.buscar(Integer.parseInt(id_instructor)));
+				tabla = new JTable(bd.buscarIns(Integer.parseInt(id_instructor)));
 				JScrollPane scroll = new JScrollPane(tabla);
 				scroll.setBounds(20, 40, 330, 200);
 				panel2.add(scroll);
