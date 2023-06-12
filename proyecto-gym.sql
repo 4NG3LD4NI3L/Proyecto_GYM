@@ -5,8 +5,8 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE DATABASE IF NOT EXISTS `proyecto-gym antiguo` /*!40100 DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci */;
-USE `proyecto-gym antiguo`;
+CREATE DATABASE IF NOT EXISTS `proyecto-gym` /*!40100 DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci */;
+USE `proyecto-gym`;
 
 CREATE TABLE IF NOT EXISTS `clases` (
   `nombre_cla` varchar(50) NOT NULL,
