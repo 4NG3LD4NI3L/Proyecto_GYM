@@ -162,8 +162,8 @@ public class BaseDatos {
 	
 	public void crearNuevoInstructor(String nombre,String apellido,String correo,String telefono,String telefonoEmer,String fecha,int asistencia,int edad,String fotoN) throws SQLException {
 		try {
-			String insertarDatos = "INSERT INTO instructor (nombre_in, apellido_in, edad_in, correo_in , telefono_in , telefono_eme_in, Fecha_Inscrito_in , asistencia_in ) VALUES \r\n"
-					+ "(?,?,?,?,?,?,?,?);" ;
+			String insertarDatos = "INSERT INTO instructor (nombre_in, apellido_in, edad_in, correo_in , telefono_in , telefono_eme_in) VALUES \r\n"
+					+ "(?,?,?,?,?,?);" ;
 			ps = (PreparedStatement) conn.prepareStatement(insertarDatos);
 			
 			ps.setString(1, nombre);
@@ -172,8 +172,6 @@ public class BaseDatos {
 			ps.setString(4, correo);
 			ps.setString(5, telefono);
 			ps.setString(6, telefonoEmer);
-			ps.setString(7, fecha);
-			ps.setInt(8, asistencia);
 			
 			ps.executeUpdate();
 			System.out.println("Se subieron los registros");
@@ -221,8 +219,6 @@ public class BaseDatos {
 			datosInstructor[3] = rs.getString("correo_in");
 			datosInstructor[4] = rs.getString("telefono_in");
 			datosInstructor[5] = rs.getString("telefono_eme_in");
-			datosInstructor[6] = rs.getString("fecha_inscrito_in");
-			datosInstructor[7] = Integer.toString(rs.getInt("asistencia_in"));
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
