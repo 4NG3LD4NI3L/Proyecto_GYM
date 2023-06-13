@@ -19,6 +19,8 @@ public class EliminarTarifa {
 	private JPanel fondo;
 	private JPanel panel;
 	private JPanel arriba;
+	 private String duracion;
+	 private String id;
 
 	public EliminarTarifa(JFrame frame) {
 

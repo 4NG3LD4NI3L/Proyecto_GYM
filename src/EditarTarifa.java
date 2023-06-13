@@ -18,6 +18,8 @@ public class EditarTarifa {
 	private JPanel fondo;
 	private JPanel panel;
 	private JPanel arriba;
+	 private String duracion;
+	 private String id;
 
 	public EditarTarifa(JFrame frame) {
 		this.frame = frame;
@@ -209,7 +211,7 @@ public class EditarTarifa {
 
     //Tarifas
     public void mostrarPanelTarifas(){
-        Tarifas tarifa = new Tarifas(frame);
+        Tarifas tarifa = new Tarifas(frame,duracion,id);
          tarifa.mostrar();
          frame.repaint();
          frame.revalidate();

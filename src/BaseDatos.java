@@ -20,7 +20,7 @@ public class BaseDatos {
 	Statement s;
 	
 	public BaseDatos() throws SQLException {
-		conn = DriverManager.getConnection(url + bd, "root","72914630");
+		conn = DriverManager.getConnection(url + bd, "root","");
 		s = (Statement) conn.createStatement();
 	}
 	
@@ -41,6 +41,18 @@ public class BaseDatos {
 			nombres.add(Integer.toString(rs.getInt("id_cliente"))+" "+rs.getString("nombre_cli"));
 		}
 		conn.close();
+		return nombres;
+	}
+	
+	public ArrayList obtenerNombresTarifas() throws SQLException {//REGRESA LOS TODOS LOS NOMBRES EN UNA LISTA
+		ResultSet rs = s.executeQuery("SELECT * FROM tarifas");
+		ArrayList<String> nombres = new ArrayList<>();
+
+		while (rs.next()) {
+			//System.out.println(rs.getString("nombre_cli"));
+			nombres.add(Integer.toString(rs.getInt("id_tarifa")) +" : " + rs.getString("plan_tr"));
+		}
+		//conn.close();
 		return nombres;
 	}
 	
@@ -157,6 +169,29 @@ public class BaseDatos {
 		}
 		
 		dtm.addRow(datosNew);
+		
+		conn.close();
+		
+		return dtm;
+	}
+	
+	public DefaultTableModel buscarTarifa() throws SQLException {
+		String[]columnas = {"Plan","Monto"};
+		DefaultTableModel dtm = new DefaultTableModel(columnas,0) {
+			public boolean isCellEditable(int row, int column) { 
+				return false;
+			}
+		};
+		String[] datosNew = new String[2];
+		
+		ResultSet rs = s.executeQuery("SELECT * FROM tarifas;");
+		
+		while(rs.next()) {
+			datosNew[0] = rs.getString("plan_tr");
+			datosNew[1] = rs.getString("costo_tr");
+			dtm.addRow(datosNew);
+		}
+		
 		
 		conn.close();
 		
