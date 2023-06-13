@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `edad_cli` int(3) NOT NULL,
   PRIMARY KEY (`id_cliente`),
   KEY `nombre_cli` (`nombre_cli`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
 INSERT INTO `clientes` (`id_cliente`, `nombre_cli`, `apellidos_cli`, `correo_cli`, `telefono_cli`, `telefono_eme_cli`, `fecha_inscrito_cli`, `asistencia_cli`, `edad_cli`) VALUES
@@ -44,7 +44,8 @@ INSERT INTO `clientes` (`id_cliente`, `nombre_cli`, `apellidos_cli`, `correo_cli
 	(2, 'Julian', 'Mendoza', 'mendozaARK@gmail.com', '4980159812', '0', '2023-06-04', 28, 38),
 	(4, 'David', 'Castro Montaño', 'david@gmail.com', '6122294578', '6242013140', '07-06-2023', 0, 18),
 	(6, 'Josue', 'Zamora Garcia', 'gohan117', '6126549872', '6245120258', '07-06-2023', 0, 23),
-	(9, 'wqwqwq', 'qwqwqw', 'qwqwqw@gmail.com', '6126543210', '6244567890', '07-06-2023', 0, 98);
+	(9, 'wqwqwq', 'qwqwqw', 'qwqwqw@gmail.com', '6126543210', '6244567890', '07-06-2023', 0, 98),
+	(11, 'Joel', 'Miller Jonhson', 'theLastOfus@gmail.com', '6125209634', '6127410852', '12-06-2023', 0, 52);
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `inscripciones_a_clases` (
@@ -63,6 +64,10 @@ CREATE TABLE IF NOT EXISTS `inscripciones_a_clases` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 /*!40000 ALTER TABLE `inscripciones_a_clases` DISABLE KEYS */;
+INSERT INTO `inscripciones_a_clases` (`clase`, `instructor_nombre`, `id_cliente_inscrito`, `nombre_cliente_inscrito`) VALUES
+	('xCombat', 'Maria', 1, 'Alfonso'),
+	('Body combat', 'Jose Carlos', 6, 'Josue'),
+	('Body combat', 'Jose Carlos', 11, 'Joel');
 /*!40000 ALTER TABLE `inscripciones_a_clases` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `instructor` (
