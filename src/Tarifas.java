@@ -1,41 +1,55 @@
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Formattable;
 
 public class Tarifas {
-	private JFrame frame;
-	private JPanel fondo;
-	private JPanel panel;
-	private JPanel arriba;
-	
-	CrearTarifa cTarifa;
-	public Tarifas(JFrame frame) {
-		this.frame = frame;
-		JLabel fondoI = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
-        fondoI.setSize(691, 487);
-		
-		fondo = new JPanel();
+
+    private JFrame frame;
+    private JPanel fondo;
+    private JPanel panel;
+    private JPanel arriba;
+    private BaseDatos bd;
+    private String duracion;
+    private String id_tarifa;
+    
+
+    public Tarifas(JFrame frame){
+        this.frame = frame;
+        this.duracion=duracion;
+    	//this.id_tarifa=id;
+    	try {
+			bd = new BaseDatos();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+        
+        JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
+        fondo1.setSize(691, 487);
+
+        fondo = new JPanel();
         fondo.setLayout(null);
         fondo.setOpaque(true);
         fondo.setBackground(Color.BLACK);
         fondo.setSize(691, 487);
         frame.add(fondo);
-		
+        
         arriba = new JPanel();
         arriba.setSize(691, 83);
         arriba.setLayout(null);
         arriba.setBackground(new Color(61,61,61));
         fondo.add(arriba);
-        
+
+        JLabel lofomini = new JLabel(new ImageIcon("Resources/logoMini.png"));
+        lofomini.setLocation(550, 0);
+        lofomini.setSize(102, 83);
+        arriba.add(lofomini);
+
         JButton menu = new JButton("Menú");
         menu.setSize(80, 23);
         menu.setBackground(new Color(61,61,61));
@@ -52,258 +66,117 @@ public class Tarifas {
         separador.setForeground(Color.white);
         arriba.add(separador);
 
-        JButton clientes = new JButton("Tarifas");
+        JButton clientes = new JButton("Clientes");
         clientes.setSize(100, 23);
         clientes.setBackground(new Color(61,61,61));
         clientes.setLocation(105, 60);
         clientes.setFont(new Font("", Font.BOLD, 15));
-        clientes.setForeground(Color.yellow);
+        clientes.setForeground(Color.white);
         clientes.setBorderPainted(false);
         arriba.add(clientes);
+
+        JLabel separador2 = new JLabel("/");
+        separador2.setLocation(207, 67);
+        separador2.setSize(10, 10);
+        separador2.setFont(new Font("", Font.BOLD, 15));
+        separador2.setForeground(Color.white);
+        arriba.add(separador2);
         
-        JLabel logomini = new JLabel(new ImageIcon("Resources/logoMini.png"));
-        logomini.setLocation(560, 0);
-        logomini.setSize(102, 83);
-        arriba.add(logomini);
+        JButton datos = new JButton("Datos Clientes");
+        datos.setSize(140, 23);
+        datos.setBackground(new Color(61,61,61));
+        datos.setLocation(212, 60);
+        datos.setFont(new Font("", Font.BOLD, 15));
+        datos.setForeground(Color.yellow);
+        datos.setBorderPainted(false);
+        arriba.add(datos);
         
-        RoundedPanel panel = new RoundedPanel(15);
+        RoundedPanel panel = new RoundedPanel(15);///////
         panel.setLayout(null);
-        panel.setSize(600, 280);
-        panel.setLocation(45, 150);
+        panel.setSize(614, 340);
+        panel.setLocation(35, 113);
         panel.setBackground(new Color(0,0,0,85));
         fondo.add(panel);
         
-        JButton CreaTarifa = new JButton("Crear tarifa");
-        CreaTarifa.setSize(105, 20);
-        CreaTarifa.setLocation(540, 110);
-        ShapedButtonUI roundUI = new ShapedButtonUI();
-        roundUI.setShape(ButtonShape.ROUND, CreaTarifa,Color.decode("#01FF57"));
-        CreaTarifa.setUI(roundUI);
-        fondo.add(CreaTarifa);
+        ArrayList<String> tarifas = new ArrayList();
+        try {
+			tarifas=bd.obtenerNombresTarifas();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
-        RoundedPanel plan1 = new RoundedPanel(15);
-        plan1.setLayout(null);
-        plan1.setSize(150, 220);
-        plan1.setLocation(25, 30);
-        panel.add(plan1);
-
-        ImageIcon foto1 = new ImageIcon("Resources/1 Mes.png");
-        JLabel fondo1 = new JLabel(new ImageIcon(foto1.getImage().getScaledInstance(150, 220, Image.SCALE_SMOOTH)));
-        fondo1.setSize(150, 220);
-        plan1.add(fondo1);
-
-        RoundedPanel plan2 = new RoundedPanel(15);
-        plan2.setLayout(null);
-        plan2.setSize(150, 220);
-        plan2.setLocation(225, 30);
-        panel.add(plan2);
-
-        ImageIcon foto2 = new ImageIcon("Resources/3 Meses.png");
-        JLabel fondo2 = new JLabel(new ImageIcon(foto2.getImage().getScaledInstance(150, 220, Image.SCALE_SMOOTH)));
-        fondo2.setSize(150, 220);
-        plan2.add(fondo2);
-
-        RoundedPanel plan3 = new RoundedPanel(15);
-        plan3.setLayout(null);
-        plan3.setSize(150, 220);
-        plan3.setLocation(425, 30);
-        panel.add(plan3);
-
-        ImageIcon foto3 = new ImageIcon("Resources/1 Año.png");
-        JLabel fondo3 = new JLabel(new ImageIcon(foto3.getImage().getScaledInstance(150, 220, Image.SCALE_SMOOTH)));
-        fondo3.setSize(150, 220);
-        plan3.add(fondo3);
+        JComboBox<String> tarifas_comboBox = new JComboBox<>();
+        tarifas_comboBox.setSize(250, 30);
+        tarifas_comboBox.setLocation(85, 20);
+        tarifas_comboBox.setOpaque(true);
+        tarifas_comboBox.setBackground(Color.white);
+        tarifas_comboBox.setForeground(Color.black);
+        tarifas_comboBox.setFocusable(false);
+        if (!tarifas.isEmpty()) {
+            for (int i=0;i<tarifas.size();i++) {
+            	tarifas_comboBox.addItem(tarifas.get(i));
+            }
+        }else {
+        	tarifas_comboBox.addItem("-1 <No hay tarifas registradas>");
+        }
+        panel.add(tarifas_comboBox);
         
-        JButton pq1 = new JButton();
-        pq1.setSize(20, 20);
-        pq1.setLocation(120,5);
-        fondo1.add(pq1);
+        JButton botonEditarC = new JButton("Editar Cliente");
+        botonEditarC.setSize(160, 40);
+        botonEditarC.setLocation(420, 60);
+        botonEditarC.setBackground(Color.decode("#55A763"));
+        panel.add(botonEditarC);
 
-        JButton pq2 = new JButton();
-        pq2.setSize(20, 20);
-        pq2.setLocation(120,5);
-        fondo2.add(pq2);
+        JButton botonEliminarC = new JButton("Eliminar Cliente");
+        botonEliminarC.setSize(160, 40);
+        botonEliminarC.setLocation(420, 120);
+        botonEliminarC.setBackground(Color.decode("#FF4343"));
+        panel.add(botonEliminarC);
 
-        JButton pq3 = new JButton();
-        pq3.setSize(20, 20);
-        pq3.setLocation(120,5);
-        fondo3.add(pq3);
+        JButton botonDescargarC = new JButton("Descagar Historial");
+        botonDescargarC.setSize(160, 40);
+        botonDescargarC.setLocation(420, 180);
+        botonDescargarC.setBackground(Color.decode("#FFFFFF"));
+        panel.add(botonDescargarC);
 
-        pq1.addActionListener(new ActionListener() {
+        JButton botonCredencialC = new JButton("Descagar Credencial");
+        botonCredencialC.setSize(160, 40);
+        botonCredencialC.setLocation(420, 240);
+        botonCredencialC.setBackground(Color.decode("#FFFFFF"));
+        panel.add(botonCredencialC);
 
-            public void actionPerformed(ActionEvent e) { 
-				pq1.setSize(0, 0);
+        JPanel panel2 = new JPanel();
+        panel2.setLayout(null);
+        panel2.setSize(370, 250);
+        panel2.setLocation(20, 65);
+        panel2.setBackground(new Color(255,255,255));
+        panel.add(panel2);
+    
+		try {
+			JTable tabla;
+			tabla = new JTable(bd.buscarTarifa());
+			JScrollPane scroll = new JScrollPane(tabla);
+			scroll.setBounds(20, 40, 330, 200);
+			panel2.add(scroll);
+		} catch (SQLException e) {
+			System.err.println("Error al mostrar la tabla: "+e);
+		}
+		
+        RoundedPanel up = new RoundedPanel(15);
+        up.setSize(370, 30);
+        up.setLayout(null);
+        up.setBackground(Color.yellow);
+        panel2.add(up);
 
-                JButton editTarifa = new JButton("Editar Tarifa");
-                editTarifa.setSize(105, 30);
-                editTarifa.setLocation(20, 40);
-                fondo1.add(editTarifa);
+        JLabel historialC = new JLabel("Historial del cliente");
+        historialC.setFont(new Font("",Font.BOLD,20));
+        historialC.setSize(200, 30);
+        historialC.setLocation(95, 0);
+        up.add(historialC);
 
-                editTarifa.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) { 
-                        frame.remove(fondo);
-        
-                        mostrarTarifasEditar();
-        
-                        frame.repaint();
-                        frame.revalidate();
-                    }
-                });
 
-                JButton eliTarifa = new JButton("Eliminar");
-                eliTarifa.setSize(105, 30);
-                eliTarifa.setLocation(20, 100);
-                fondo1.add(eliTarifa);
-
-                eliTarifa.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) { 
-                        frame.remove(fondo);
-        
-                        mostrarTarifasEliminar();
-        
-                        frame.repaint();
-                        frame.revalidate();
-                    }
-                });
-
-                JButton cancelTarifa = new JButton("Cancelar");
-                cancelTarifa.setSize(105, 30);
-                cancelTarifa.setLocation(20, 160);
-                fondo1.add(cancelTarifa);
-
-                cancelTarifa.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) { 
-                        editTarifa.setSize(0, 0);
-                        eliTarifa.setSize(0, 0);
-                        cancelTarifa.setSize(0, 0);
-
-                        pq1.setSize(20, 20);
-
-                    }
-                });
-
-                fondo1.repaint();
-                fondo1.revalidate();
-			}
-        });
-
-        pq2.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) { 
-				pq2.setSize(0, 0);
-
-                JButton editTarifa = new JButton("Editar Tarifa");
-                editTarifa.setSize(105, 30);
-                editTarifa.setLocation(20, 40);
-                fondo2.add(editTarifa);
-
-                editTarifa.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) { 
-                        frame.remove(fondo);
-        
-                        mostrarTarifasEditar();
-        
-                        frame.repaint();
-                        frame.revalidate();
-                    }
-                });
-
-                JButton eliTarifa = new JButton("Eliminar");
-                eliTarifa.setSize(105, 30);
-                eliTarifa.setLocation(20, 100);
-                fondo2.add(eliTarifa);
-
-                eliTarifa.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) { 
-                        frame.remove(fondo);
-        
-                        mostrarTarifasEliminar();
-        
-                        frame.repaint();
-                        frame.revalidate();
-                    }
-                });
-
-                JButton cancelTarifa = new JButton("Cancelar");
-                cancelTarifa.setSize(105, 30);
-                cancelTarifa.setLocation(20, 160);
-                fondo2.add(cancelTarifa);
-
-                cancelTarifa.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) { 
-                        editTarifa.setSize(0, 0);
-                        eliTarifa.setSize(0, 0);
-                        cancelTarifa.setSize(0, 0);
-
-                        pq2.setSize(20, 20);
-
-                    }
-                });
-
-                fondo2.repaint();
-                fondo2.revalidate();
-			}
-        });
-
-        pq3.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) { 
-				pq3.setSize(0, 0);
-
-                JButton editTarifa = new JButton("Editar Tarifa");
-                editTarifa.setSize(105, 30);
-                editTarifa.setLocation(20, 40);
-                fondo3.add(editTarifa);
-
-                editTarifa.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) { 
-                        frame.remove(fondo);
-        
-                        mostrarTarifasEditar();
-        
-                        frame.repaint();
-                        frame.revalidate();
-                    }
-                });
-
-                JButton eliTarifa = new JButton("Eliminar");
-                eliTarifa.setSize(105, 30);
-                eliTarifa.setLocation(20, 100);
-                fondo3.add(eliTarifa);
-
-                eliTarifa.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) { 
-                        frame.remove(fondo);
-        
-                        mostrarTarifasEliminar();
-        
-                        frame.repaint();
-                        frame.revalidate();
-                    }
-                });
-
-                JButton cancelTarifa = new JButton("Cancelar");
-                cancelTarifa.setSize(105,30);
-                cancelTarifa.setLocation(20, 160);
-                fondo3.add(cancelTarifa);
-
-                cancelTarifa.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) { 
-                        editTarifa.setSize(0, 0);
-                        eliTarifa.setSize(0, 0);
-                        cancelTarifa.setSize(0, 0);
-
-                        pq3.setSize(20, 20);
-
-                    }
-                });
-
-                fondo3.repaint();
-                fondo3.revalidate();
-			}
-        });
-        
-		menu.addActionListener(new ActionListener() {
+        menu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { 
                 frame.remove(fondo);
 
@@ -314,40 +187,66 @@ public class Tarifas {
             }
         });
 
-        CreaTarifa.addActionListener(new ActionListener() {
+        clientes.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { 
                 frame.remove(fondo);
 
-                CrearTarifas();
+                mostrarPanelCliente();
 
                 frame.repaint();
                 frame.revalidate();
             }
         });
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+        botonEliminarC.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                mostarEliminarCliente();
+                
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        botonEditarC.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                frame.remove(fondo);
+
+                EditarCliente();
+                
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        botonCredencialC.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                
+                JOptionPane.showMessageDialog(null,"Se descargo Correctamente la credencial");
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+        botonDescargarC.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                
+                JOptionPane.showMessageDialog(null,"Se descargo Correctamente el documento");
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
         frame.repaint();
-		frame.revalidate();
-		fondo.add(fondoI);
-	}
-	public void mostrar(){
+	    frame.revalidate();
+        fondo.add(fondo1);
+    }
+
+    public void mostrar(){
         frame.add(fondo);
 		frame.repaint();
 		frame.revalidate();
-    }
-
-	public void CrearTarifas(){
-        cTarifa = new CrearTarifa(frame);
-        cTarifa.mostrar();
-        frame.repaint();
-        frame.revalidate();
     }
 
     //Menu
@@ -358,22 +257,23 @@ public class Tarifas {
         frame.revalidate();
     }
 
-    //Tarifas
-    public void mostrarPanelTarifas(){
-        Tarifas tarifa = new Tarifas(frame);
-         tarifa.mostrar();
-         frame.repaint();
-         frame.revalidate();
+    //Cliente
+    public void mostrarPanelCliente(){
+        Clientes clientes = new Clientes(frame); 
+        clientes.mostrar();
+        frame.repaint();
+        frame.revalidate();
     }
 
-    public void mostrarTarifasEditar() {
-    	EditarTarifa tarifas_editar = new EditarTarifa(frame);
-    	tarifas_editar.mostrar();
+    //ELIMINAR CLIENTE
+    public void mostarEliminarCliente(){// AGREGAR PARAMETROS LUEGO
+        EliminarCliente eliminarCliente = new EliminarCliente(frame,duracion,id_tarifa);
+        eliminarCliente.mostrar();
     }
 
-    public void mostrarTarifasEliminar() {
-    	EliminarTarifa tarifas_eliminar = new EliminarTarifa(frame);
-    	tarifas_eliminar.mostrar();
-    	
+    //Editar cliente
+    public void EditarCliente(){// AGREGAR PARAMETROS LUEGO
+        EditarCliente editCliente = new EditarCliente(frame,duracion,id_tarifa);
+        editCliente.mostrar();
     }
 }

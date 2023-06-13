@@ -16,6 +16,9 @@ public class CrearTarifa {
 	private JPanel fondo;
 	private JPanel panel;
 	private JPanel arriba;
+	 private String duracion;
+	 private String id;
+	
 	public CrearTarifa(JFrame frame) {
 		this.frame = frame;
 		JLabel fondoI = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
@@ -211,7 +214,7 @@ public class CrearTarifa {
 
     //Tarifas
     public void mostrarPanelTarifas(){
-        Tarifas tarifa = new Tarifas(frame);
+        Tarifas tarifa = new Tarifas(frame,duracion,id);
          tarifa.mostrar();
          frame.repaint();
          frame.revalidate();

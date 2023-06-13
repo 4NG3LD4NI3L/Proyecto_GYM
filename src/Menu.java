@@ -7,6 +7,8 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,9 +22,18 @@ public class Menu{
 	 private JPanel fondo;
 	 private JPanel panel;
 	 private JPanel arriba;
-	    
+	 private String duracion;
+	 private String id;
+	 private BaseDatos bd;
+	 
 	public Menu(JFrame frame) {
 		this.frame = frame;
+		
+		try {
+            bd = new BaseDatos();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 		
 		JLabel fondoI = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondoI.setSize(691, 487);
@@ -127,7 +138,7 @@ public class Menu{
                 frame.remove(fondo);
 
                 mostrarPanelTarifas();
-
+                
                 frame.repaint();
                 frame.revalidate();
             }
