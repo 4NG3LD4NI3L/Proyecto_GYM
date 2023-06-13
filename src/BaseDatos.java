@@ -20,7 +20,7 @@ public class BaseDatos {
 	Statement s;
 	
 	public BaseDatos() throws SQLException {
-		conn = DriverManager.getConnection(url + bd, "root","");
+		conn = DriverManager.getConnection(url + bd, "root","72914630");
 		s = (Statement) conn.createStatement();
 	}
 	
@@ -107,7 +107,7 @@ public class BaseDatos {
 	}
 	
 	public DefaultTableModel buscarClientes(int id) throws SQLException {
-		String[]columnas = {"Mes","Asistencia","Clases","Monto"};
+		String[]columnas = {"Fecha","Asistencia","Clases","Monto"};
 		DefaultTableModel dtm = new DefaultTableModel(columnas,0) {
 			public boolean isCellEditable(int row, int column) { 
 				return false;
@@ -115,17 +115,17 @@ public class BaseDatos {
 		};
 		String[] datosNew = new String[4];
 		
-		ResultSet rs = s.executeQuery("SELECT * FROM clases RIGHT JOIN clientes ON clientes_id_cla = id_cliente WHERE id_cliente = "+id+";");
+		ResultSet rs = s.executeQuery("SELECT * FROM inscripciones_a_clases RIGHT JOIN clientes ON id_cliente_inscrito = id_cliente WHERE id_cliente = "+id+";");
 		rs.next();
 		datosNew[0] = rs.getString("fecha_inscrito_cli");
 		datosNew[1] = Integer.toString(rs.getInt("asistencia_cli"));
-		datosNew[2] = rs.getString("nombre_cla");
-		if(rs.getString("nombre_cla") != null) {
-			rs = s.executeQuery("SELECT * FROM tarifas WHERE clase_tr = '"+rs.getString("nombre_cla")+"';");
+		datosNew[2] = rs.getString("clase");
+		if(rs.getString("clase") != null) {
+			rs = s.executeQuery("SELECT * FROM tarifas WHERE clase_tr = '"+rs.getString("clase")+"';");
 			rs.next();
 			datosNew[3] = Integer.toString(rs.getInt("costo_tr"));
 		}else {
-			datosNew[3] = "600";
+			datosNew[3] = "0";
 		}
 		
 		dtm.addRow(datosNew);

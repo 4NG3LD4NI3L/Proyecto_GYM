@@ -12,7 +12,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,6 +37,7 @@ public class NuevoCliente {
     private JPanel panel;
     private JPanel arriba;
     private BaseDatos bd;
+    private Date diaActual;
     
     //
     private JTextField nombreN;
@@ -53,6 +56,8 @@ public class NuevoCliente {
 			e.printStackTrace();
 			System.out.println("BASE DE DATOS NO FUNCIONA");
 		}
+        diaActual = new Date();
+        System.out.println(new SimpleDateFormat("dd-MM-yyyy").format(diaActual));
         
         JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondo1.setSize(691, 487);
@@ -282,7 +287,7 @@ public class NuevoCliente {
 						if (edad.getText().matches("[0-9]+") && telefonoN.getText().matches("[0-9]+") && telefonoNewEme.getText().matches("[0-9]+")) {
 							
 							try {
-								bd.crearNuevoCliente(nombreN.getText(), apellidoPatMat.getText(), apellidoPatMat.getText(), correoN.getText(), telefonoN.getText(), telefonoNewEme.getText(), "07-06-2023", 0, Integer.parseInt(edad.getText()),fotoN.getText());
+								bd.crearNuevoCliente(nombreN.getText(), apellidoPatMat.getText(), apellidoPatMat.getText(), correoN.getText(), telefonoN.getText(), telefonoNewEme.getText(), new SimpleDateFormat("dd-MM-yyyy").format(diaActual).toString(), 0, Integer.parseInt(edad.getText()),fotoN.getText());
 							} catch (NumberFormatException e1) {
 								e1.printStackTrace();
 							} catch (SQLException e1) {
