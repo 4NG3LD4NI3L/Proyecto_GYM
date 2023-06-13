@@ -4,6 +4,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.SQLException;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -24,50 +26,76 @@ public class ClasesDatos extends JPanel {
 	private String nombre_clase;
 	private BaseDatos bd;
 	
-	String[] columnas = {"Instructor: Yahir Hernandez Soto"};
-	String[] horario = {"Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"};
-	String[] clientes = {"Clientes"};
-	String[] clientes_datos = {"ID","Nombre"};
-	DefaultTableModel dtm_datosClientes = new DefaultTableModel(clientes_datos,0) {
-		private static final long serialVersionUID = 1L;
-
-		public boolean isCellEditable(int row, int column) { 
-			return false;
-		}
-	};
-	DefaultTableModel dtm_horario = new DefaultTableModel(horario,0) {
-		private static final long serialVersionUID = 1L;
-
-		public boolean isCellEditable(int row, int column) { 
-			return false;
-		}
-	};
-	DefaultTableModel dtm_tituloCliente = new DefaultTableModel(clientes,0) {
-		private static final long serialVersionUID = 1L;
-
-		public boolean isCellEditable(int row, int column) { 
-			return false;
-		}
-	};
-	DefaultTableModel dtm = new DefaultTableModel(columnas,0) {
-		private static final long serialVersionUID = 1L;
-
-		public boolean isCellEditable(int row, int column) { 
-			return false;
-		}
-	};
-	JTable datos = new JTable(dtm);
-	JScrollPane panelScroll = new JScrollPane(datos);
-	JTable datos_horario = new JTable(dtm_horario);
-	JScrollPane panelScroll_horario = new JScrollPane(datos_horario);
-	JTable datos_cliente = new JTable(dtm_tituloCliente);
-	JScrollPane panelScroll_tituloCliente = new JScrollPane(datos_cliente);
-	JTable datos_DatosCliente = new JTable(dtm_datosClientes);
-	JScrollPane panelScroll_clientes = new JScrollPane(datos_DatosCliente);
+	private String[] columnas =  new String[1];
+	private String[] horario = {"Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"};
+	private String[] clientes = {"Clientes"};
+	private String[] clientes_datos = {"ID","Nombre"};
+	private DefaultTableModel dtm_datosClientes;
+	private DefaultTableModel dtm_horario;
+	private DefaultTableModel dtm_tituloCliente;
+	private DefaultTableModel dtm;
+	private JTable datos;
+	private JScrollPane panelScroll;
+	private JTable datos_horario;
+	private JScrollPane panelScroll_horario;
+	private JTable datos_cliente;
+	private JScrollPane panelScroll_tituloCliente;
+	private JTable datos_DatosCliente;
+	private JScrollPane panelScroll_clientes;
 	
 	public ClasesDatos(JFrame ventana,String nombre_Clase) {
 		this.frame=ventana;
 		this.nombre_clase=nombre_Clase;
+		try {
+			bd = new BaseDatos();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		columnas[0] = "Instructor: "+bd.regresarInstructorDeLaClase(nombre_Clase);
+		dtm_datosClientes = new DefaultTableModel(clientes_datos,0) {
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) { 
+				return false;
+			}
+		};
+		dtm_horario = new DefaultTableModel(horario,0) {
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) { 
+				return false;
+			}
+		};
+		dtm_tituloCliente = new DefaultTableModel(clientes,0) {
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) { 
+				return false;
+			}
+		};
+		dtm = new DefaultTableModel(columnas,0) {
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) { 
+				return false;
+			}
+		};
+		datos = new JTable(dtm);
+		try {
+			datos_horario = new JTable(bd.buscarClasesDatos(nombre_Clase));
+			datos_DatosCliente = new JTable(bd.buscarClasesClientes(nombre_Clase));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		datos_cliente = new JTable(dtm_tituloCliente);
+		
+		panelScroll = new JScrollPane(datos);
+		panelScroll_horario = new JScrollPane(datos_horario);
+		panelScroll_tituloCliente = new JScrollPane(datos_cliente);
+		panelScroll_clientes = new JScrollPane(datos_DatosCliente);
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondo1.setSize(691, 487);

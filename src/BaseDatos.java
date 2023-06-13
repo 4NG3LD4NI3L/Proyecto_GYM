@@ -328,11 +328,84 @@ public class BaseDatos {
 		ArrayList<String> nombres = new ArrayList<>();
 
 		while (rs.next()) {
-			//System.out.println(rs.getString("nombre_cli"));
 			nombres.add(rs.getString("nombre_cla"));
 		}
 		conn.close();
 		return nombres;
+	}
+    
+    public String regresarInstructorDeLaClase(String nombre_clase) {    	
+		String nombre = "NO ENCONTRO NINGUN NOMBRE";
+		try {
+			ResultSet rs = s.executeQuery("SELECT * FROM clases WHERE nombre_cla = '"+nombre_clase+"';");
+			rs.next();
+			nombre = rs.getString("instructor_designado_cla");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return nombre;
+    }
+    
+    public DefaultTableModel buscarClasesDatos(String nombre_clase) throws SQLException {
+		String[]columnas = {"Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"};
+		DefaultTableModel dtm = new DefaultTableModel(columnas,0) {
+			public boolean isCellEditable(int row, int column) { 
+				return false;
+			}
+		};
+		String[] datosNew = new String[7];
+		
+		ResultSet rs = s.executeQuery("SELECT * FROM clases WHERE nombre_cla = '"+nombre_clase+"';");
+		rs.next();
+		
+		String diasSemana = rs.getString("dias_cla");
+		String[] diasDondeHayClases = diasSemana.split(",");
+		
+		for (int i=0;i<diasDondeHayClases.length;i++) {
+			
+			for (int j=0;j<columnas.length;j++) {
+				if (diasDondeHayClases[i].equals(columnas[j])) {
+					datosNew[j] = rs.getString("horario_cla");
+				}
+			}
+			
+		}
+		
+		for (int i=0;i<datosNew.length;i++) {
+			if (datosNew[i] == null) {
+				datosNew[i] = "---";
+			}
+		}
+		
+		dtm.addRow(datosNew);
+		
+		return dtm;
+	}
+    
+    public DefaultTableModel buscarClasesClientes(String nombre_clase) throws SQLException {
+		String[]columnas = {"ID","Nombre"};
+		DefaultTableModel dtm = new DefaultTableModel(columnas,0) {
+			public boolean isCellEditable(int row, int column) { 
+				return false;
+			}
+		};
+		String[] datosNew = new String[2];
+		
+		ResultSet rs = s.executeQuery("SELECT * FROM inscripciones_a_clases WHERE clase = '"+nombre_clase+"';");
+		
+		while (rs.next()) {
+			
+			datosNew[0] = Integer.toString(rs.getInt("id_cliente_inscrito"));
+			datosNew[1] = rs.getString("nombre_cliente_inscrito");
+			
+			dtm.addRow(datosNew);
+		}
+		
+		
+		conn.close();
+		
+		return dtm;
 	}
 	
 }
