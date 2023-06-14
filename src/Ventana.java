@@ -1,4 +1,9 @@
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import java.awt.Color;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class Ventana extends JFrame {
@@ -20,6 +25,7 @@ public class Ventana extends JFrame {
     EditarTarifa tarifas_editar;
     CrearTarifa tarifas_crear;
     EliminarTarifa tarifas_eliminar;
+    private int contador = 0;
     
     
     public Ventana(){
@@ -28,8 +34,12 @@ public class Ventana extends JFrame {
         this.setSize(700,522);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        mostrarLogin();
+        
+        
+        pantallaCarga();
+        if(contador == 4 ) {
+        	mostrarLogin();	
+        }
         
         repaint();
         revalidate();
@@ -39,4 +49,30 @@ public class Ventana extends JFrame {
         login = new Login(this); 
         login.agregar();
     }
+    
+    public void pantallaCarga() {
+    	
+    	Carga carga = new Carga();
+	    add(carga);
+	    Tiempo(carga);
+    }
+    
+    public void Tiempo(JPanel panelCarga) {
+  		
+  		Timer timer = new Timer();
+  		TimerTask tarea = new TimerTask() {
+  			@Override
+  			public void run() {
+  				contador++;
+  				if(contador == 4) {
+  					mostrarLogin();
+  					panelCarga.setVisible(false);
+                    repaint();
+  					timer.cancel();	
+  				}
+  				System.out.println(contador);
+  			}
+  		};
+  		timer.schedule(tarea,0,1000);
+  	}
 }
