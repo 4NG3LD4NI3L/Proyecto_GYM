@@ -37,7 +37,7 @@ public class Ventana extends JFrame {
         
         
         pantallaCarga();
-        if(contador == 4 ) {
+        if(contador == 2 ) {
         	mostrarLogin();	
         }
         
@@ -64,7 +64,7 @@ public class Ventana extends JFrame {
   			@Override
   			public void run() {
   				contador++;
-  				if(contador == 4) {
+  				if(contador == 2) {
   					mostrarLogin();
   					panelCarga.setVisible(false);
                     repaint();
