@@ -24,7 +24,6 @@ public class Ventana extends JFrame {
     Tarifas tarifa;
     EditarTarifa tarifas_editar;
     CrearTarifa tarifas_crear;
-    EliminarTarifa tarifas_eliminar;
     private int contador = 0;
     
     
@@ -70,7 +69,6 @@ public class Ventana extends JFrame {
                     repaint();
   					timer.cancel();	
   				}
-  				System.out.println(contador);
   			}
   		};
   		timer.schedule(tarea,0,1000);

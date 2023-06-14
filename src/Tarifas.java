@@ -239,12 +239,6 @@ public class Tarifas {
         frame.revalidate();
     }
 
-    //ELIMINAR TARIFA
-    public void mostarEliminarTarifa(){// AGREGAR PARAMETROS LUEGO
-        EliminarTarifa eliminarTarifa = new EliminarTarifa(frame);
-        eliminarTarifa.mostrar();
-    }
-
     //EDITAR TARIFA
     public void editarTarifa(String id){// AGREGAR PARAMETROS LUEGO
         EditarTarifa editarTarifa = new EditarTarifa(frame, id);

@@ -106,76 +106,88 @@ public class NuevoInstructor {
 
         JLabel nombrenuevo = new JLabel("Nombre");
         nombrenuevo.setSize(79, 9);
-        nombrenuevo.setLocation(30, 33);
+        nombrenuevo.setLocation(30, 16);
         nombrenuevo.setForeground(Color.black);
         panel.add(nombrenuevo);
         
         JTextField nombreN = new JTextField();
         nombreN.setSize(300, 27);
-        nombreN.setLocation(30, 45);
+        nombreN.setLocation(30, 30);
         nombreN.setBorder(null);
         nombreN.setForeground(Color.black);
         panel.add(nombreN);
         
         JLabel apellidoNuevo = new JLabel("Apellido");
         apellidoNuevo.setSize(83, 22);
-        apellidoNuevo.setLocation(30, 70);
+        apellidoNuevo.setLocation(30, 55);
         apellidoNuevo.setForeground(Color.black);
         panel.add(apellidoNuevo);
 
         JTextField Apellido = new JTextField();
         Apellido.setSize(300, 27);
-        Apellido.setLocation(30, 90);
+        Apellido.setLocation(30, 75);
         Apellido.setBorder(null);
         panel.add(Apellido);
         
         JLabel edadNuevo = new JLabel("Edad");
         edadNuevo.setSize(83, 22);
-        edadNuevo.setLocation(30, 115);
+        edadNuevo.setLocation(30, 100);
         edadNuevo.setForeground(Color.black);
         panel.add(edadNuevo);
 
         JTextField edad = new JTextField();
         edad.setSize(300, 27);
-        edad.setLocation(30, 135);
+        edad.setLocation(30, 120);
         edad.setBorder(null);
         panel.add(edad);
         
         JLabel correoNuevo = new JLabel("Correo");
         correoNuevo.setSize(83, 22);
-        correoNuevo.setLocation(30, 160);
+        correoNuevo.setLocation(30, 145);
         correoNuevo.setForeground(Color.black);
         panel.add(correoNuevo);
         
         JTextField CorreoN = new JTextField();
         CorreoN.setSize(300, 27);
-        CorreoN.setLocation(30, 180);
+        CorreoN.setLocation(30, 165);
         CorreoN.setBorder(null);
         panel.add(CorreoN);
 
         JLabel telefonoNuevo = new JLabel("Telefono");
         telefonoNuevo.setSize(83, 22);
-        telefonoNuevo.setLocation(30, 205);//25
+        telefonoNuevo.setLocation(30, 190);
         telefonoNuevo.setForeground(Color.black);
         panel.add(telefonoNuevo);
 
         JTextField telefonoN = new JTextField();
         telefonoN.setSize(300, 27);
-        telefonoN.setLocation(30, 225);
+        telefonoN.setLocation(30, 210);
         telefonoN.setBorder(null);
         panel.add(telefonoN);
 
         JLabel telefonoNuevoEme = new JLabel("Telefono en caso de emergencia");
         telefonoNuevoEme.setSize(260, 22);
-        telefonoNuevoEme.setLocation(30, 250);//25
+        telefonoNuevoEme.setLocation(30, 235);
         telefonoNuevoEme.setForeground(Color.black);
         panel.add(telefonoNuevoEme);
 
         JTextField telefonoNewEme = new JTextField();
         telefonoNewEme.setSize(300, 27);
-        telefonoNewEme.setLocation(30, 270);
+        telefonoNewEme.setLocation(30, 255);
         telefonoNewEme.setBorder(null);
         panel.add(telefonoNewEme);
+        
+        JLabel sueldoInstructor = new JLabel("Sueldo del instructor");
+        sueldoInstructor.setSize(260, 22);
+        sueldoInstructor.setLocation(30, 280);//25
+        sueldoInstructor.setForeground(Color.black);
+        panel.add(sueldoInstructor);
+
+        JTextField sueldoInstructorT = new JTextField();
+        sueldoInstructorT.setSize(300, 27);
+        sueldoInstructorT.setLocation(30, 300);
+        sueldoInstructorT.setBorder(null);
+        panel.add(sueldoInstructorT);
 
         ///////////////////
         //////////////////
@@ -258,21 +270,25 @@ confirmarN.addActionListener(new ActionListener() {
 						
 						if (edad.getText().matches("[0-9]+") && telefonoN.getText().matches("[0-9]+") && telefonoNewEme.getText().matches("[0-9]+")) {
 							
-							try {
-								bd.crearNuevoInstructor(nombreN.getText(), Apellido.getText(), CorreoN.getText(), telefonoN.getText(), telefonoNewEme.getText(), "07-06-2023", 0, Integer.parseInt(edad.getText()),fotoN.getText());
-							} catch (NumberFormatException e1) {
-								e1.printStackTrace();
-							} catch (SQLException e1) {
-								e1.printStackTrace();
-							}
-							JOptionPane.showMessageDialog(null,"Instructor inscrito correctamente","Proceso finalizado",JOptionPane.INFORMATION_MESSAGE);
-							
-							frame.remove(fondo);
-
-							mostrarPanelInstructor();
-
-			                frame.repaint();
-			                frame.revalidate();
+							if(sueldoInstructorT.getText().matches("[0-9]+")) {
+								
+								try {
+									bd.crearNuevoInstructor(nombreN.getText(), Apellido.getText(), CorreoN.getText(), telefonoN.getText(), telefonoNewEme.getText(),Integer.parseInt(sueldoInstructorT.getText()), "07-06-2023", 0, Integer.parseInt(edad.getText()),fotoN.getText());
+								} catch (NumberFormatException e1) {
+									e1.printStackTrace();
+								} catch (SQLException e1) {
+									e1.printStackTrace();
+								}
+								JOptionPane.showMessageDialog(null,"Instructor inscrito correctamente","Proceso finalizado",JOptionPane.INFORMATION_MESSAGE);
+								
+								frame.remove(fondo);
+								
+								mostrarPanelInstructor();
+								
+								frame.repaint();
+								frame.revalidate();
+							}else
+								JOptionPane.showMessageDialog(null,"Caracteres no permitidos en el sueldo del instructor","Error al crear cliente",JOptionPane.WARNING_MESSAGE);
 						}else {
 							JOptionPane.showMessageDialog(null,"Solo puedes ingresar numeros en: Edad, Telefono y Telefono de emergencia","Error al crear cliente",JOptionPane.WARNING_MESSAGE);
 						}

@@ -237,10 +237,10 @@ public class BaseDatos {
 		}
 	}
 	
-	public void crearNuevoInstructor(String nombre,String apellido,String correo,String telefono,String telefonoEmer,String fecha,int asistencia,int edad,String fotoN) throws SQLException {
+	public void crearNuevoInstructor(String nombre,String apellido,String correo,String telefono,String telefonoEmer,int sueldo,String fecha,int asistencia,int edad,String fotoN) throws SQLException {
 		try {
-			String insertarDatos = "INSERT INTO instructor (nombre_in, apellido_in, edad_in, correo_in , telefono_in , telefono_eme_in) VALUES \r\n"
-					+ "(?,?,?,?,?,?);" ;
+			String insertarDatos = "INSERT INTO instructor (nombre_in, apellido_in, edad_in, correo_in , telefono_in , telefono_eme_in, sueldo_in) VALUES \r\n"
+					+ "(?,?,?,?,?,?,?);" ;
 			ps = (PreparedStatement) conn.prepareStatement(insertarDatos);
 			
 			ps.setString(1, nombre);
@@ -249,9 +249,9 @@ public class BaseDatos {
 			ps.setString(4, correo);
 			ps.setString(5, telefono);
 			ps.setString(6, telefonoEmer);
+			ps.setInt(7, sueldo);
 			
 			ps.executeUpdate();
-			System.out.println("Se subieron los registros");
 			
 		} catch (SQLException e) {
 			System.err.println("Error BD: "+e.getMessage());
@@ -314,6 +314,8 @@ public class BaseDatos {
 			datosInstructor[3] = rs.getString("correo_in");
 			datosInstructor[4] = rs.getString("telefono_in");
 			datosInstructor[5] = rs.getString("telefono_eme_in");
+			datosInstructor[6] = rs.getString("sueldo_in");
+			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
