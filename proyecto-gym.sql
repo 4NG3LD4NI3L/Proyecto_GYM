@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2023 at 06:18 AM
+-- Generation Time: Jun 14, 2023 at 11:42 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -107,18 +107,19 @@ CREATE TABLE `instructor` (
   `edad_in` int(3) NOT NULL,
   `correo_in` varchar(50) NOT NULL,
   `telefono_in` varchar(10) NOT NULL DEFAULT '',
-  `telefono_eme_in` varchar(10) NOT NULL DEFAULT ''
+  `telefono_eme_in` varchar(10) NOT NULL DEFAULT '',
+  `sueldo_in` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `instructor`
 --
 
-INSERT INTO `instructor` (`id_instructor`, `nombre_in`, `apellido_in`, `edad_in`, `correo_in`, `telefono_in`, `telefono_eme_in`) VALUES
-(1, 'Maria', 'Chavez', 20, 'chama89@gmail.com', '6129991548', '6244579014'),
-(2, 'Jose Carlos', 'Aveiro Lopez', 30, 'jcarlosLZ@gmail.com', '6245204103', '6241598524'),
-(3, 'Alberto Juan', 'Sedillo Alcatraz', 41, 'xXentrenadorXx@gmail.com', '9604568795', '6128527410'),
-(4, 'Sherlyn', 'Cruz Rodrigrez', 26, '3str3lla@gmail.com', '4568529519', '2579786547');
+INSERT INTO `instructor` (`id_instructor`, `nombre_in`, `apellido_in`, `edad_in`, `correo_in`, `telefono_in`, `telefono_eme_in`, `sueldo_in`) VALUES
+(1, 'Maria', 'Chavez', 20, 'chama89@gmail.com', '6129991548', '6244579014', 0),
+(2, 'Jose Carlos', 'Aveiro Lopez', 30, 'jcarlosLZ@gmail.com', '6245204103', '6241598524', 0),
+(3, 'Alberto Juan', 'Sedillo Alcatraz', 41, 'xXentrenadorXx@gmail.com', '9604568795', '6128527410', 0),
+(4, 'Sherlyn', 'Cruz Rodrigrez', 26, '3str3lla@gmail.com', '4568529519', '2579786547', 0);
 
 -- --------------------------------------------------------
 
@@ -195,13 +196,13 @@ ALTER TABLE `clientes`
 -- AUTO_INCREMENT for table `instructor`
 --
 ALTER TABLE `instructor`
-  MODIFY `id_instructor` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_instructor` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tarifas`
 --
 ALTER TABLE `tarifas`
-  MODIFY `id_tarifa` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_tarifa` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
