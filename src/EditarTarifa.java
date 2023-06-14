@@ -1,14 +1,17 @@
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -18,13 +21,22 @@ public class EditarTarifa {
 	private JPanel fondo;
 	private JPanel panel;
 	private JPanel arriba;
-	 private String duracion;
-	 private String id;
+	private String duracion;
+	private String id;
+	private BaseDatos bd;
 
-	public EditarTarifa(JFrame frame) {
+	public EditarTarifa(JFrame frame, String id_tarifa) {
 		this.frame = frame;
+		this.id=id_tarifa;
 		JLabel fondoI = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondoI.setSize(691, 487);
+        
+        try {
+			bd = new BaseDatos();
+		} catch (SQLException e) {
+			System.err.println("BaseDatos fallo en la clase EditarTarifa, ERROR: "+e.getMessage());
+		}
+    	String[] datosTarifa = bd.obtenerTodoDeLaTarifa(Integer.parseInt(id));
 		
 		fondo = new JPanel();
         fondo.setLayout(null);
@@ -87,58 +99,40 @@ public class EditarTarifa {
         
         RoundedPanel panel = new RoundedPanel(15);
         panel.setLayout(null);
-        panel.setSize(280, 320);
-        panel.setLocation(205, 120);
+        panel.setSize(400, 220);
+        panel.setLocation(145, 200);
         panel.setBackground(new Color(0,0,0,85));
         fondo.add(panel);
         
-        JLabel duracion = new JLabel("Duración");
-        duracion.setSize(100, 20);
-        duracion.setLocation(15, 10);
+        JLabel duracion = new JLabel("Ingrese la nueva duración");
+        duracion.setSize(240, 25);
+        duracion.setLocation(75, 10);
         duracion.setFont(new Font("",Font.BOLD,18));
         panel.add(duracion);
         
-        JTextField duraciont = new JTextField("  1 Mes");
+        JTextField duraciont = new JTextField(datosTarifa[0]);
         duraciont.setSize(250, 25);
-        duraciont.setLocation(15, 40);
+        duraciont.setLocation(75, 40);
         duraciont.setBorder(null);
         duraciont.setBackground(Color.LIGHT_GRAY);
         panel.add(duraciont);
         
-        JLabel precio = new JLabel("Precio");
-        precio.setSize(100, 20);
-        precio.setLocation(15, 75);
+        JLabel precio = new JLabel("Ingrese el nuevo precio");
+        precio.setSize(240, 25);
+        precio.setLocation(75, 75);
         precio.setFont(new Font("",Font.BOLD,18));
         panel.add(precio);
         
-        JTextField preciot = new JTextField("  300");
+        JTextField preciot = new JTextField(datosTarifa[1]);
         preciot.setSize(250, 25);
-        preciot.setLocation(15, 105);
+        preciot.setLocation(75, 105);
         preciot.setBorder(null);
         preciot.setBackground(Color.LIGHT_GRAY);
         panel.add(preciot);
         
-        ImageIcon foto = new ImageIcon("Resources/editPlan.png");
-        JLabel fill = new JLabel();
-        fill.setIcon(new ImageIcon(foto.getImage().getScaledInstance(110, 110, Image.SCALE_SMOOTH)));
-        fill.setLocation(85, 135);
-        fill.setSize(110, 110);
-        panel.add(fill);
-        
-        JButton cambiar_foto = new JButton("Cambiar foto");
-        ShapedButtonUI roundUI_4 = new ShapedButtonUI();
-        roundUI_4.setShape(ButtonShape.ROUND, cambiar_foto,Color.white);
-        cambiar_foto.setUI(roundUI_4);
-        cambiar_foto.setFocusPainted(false);
-        cambiar_foto.setFont(new Font("Arial",Font.BOLD,12));
-        cambiar_foto.setSize(110, 20);
-        cambiar_foto.setLocation(90,250);
-        cambiar_foto.setPreferredSize(new Dimension(87,34));
-        panel.add(cambiar_foto);
-        
         JButton confirmar = new JButton("Confirmar");
         confirmar.setSize(120, 30);
-        confirmar.setLocation(145, 275);
+        confirmar.setLocation(205, 170);
         ShapedButtonUI roundUI = new ShapedButtonUI();
         roundUI.setShape(ButtonShape.ROUND, confirmar,new Color(0,0,0,170));
         confirmar.setUI(roundUI);
@@ -148,7 +142,7 @@ public class EditarTarifa {
         
         JButton cancelar = new JButton("Cancelar");
         cancelar.setSize(120, 30);
-        cancelar.setLocation(15, 275);
+        cancelar.setLocation(75, 170);
         ShapedButtonUI roundUI_dos = new ShapedButtonUI();
         roundUI_dos.setShape(ButtonShape.ROUND, cancelar,new Color(0,0,0,170));
         cancelar.setUI(roundUI_dos);
@@ -188,6 +182,41 @@ public class EditarTarifa {
                 frame.revalidate();
             }
         });
+        
+        confirmar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+            	if(duraciont.getText().length()>0) {
+                	if(preciot.getText().length()>0) {
+                		if(preciot.getText().matches("[0-9]+")) {
+                			if(duraciont.getText().matches("^[a-zA-ZñÑ0-9 ]*$")) {
+                				try {
+                					bd.actualizarTarifa(Integer.parseInt(id), duraciont.getText(), preciot.getText());
+                					JOptionPane.showMessageDialog(null,"Tarifa modificada correctamente","Operación exitosa",JOptionPane.INFORMATION_MESSAGE);
+                					frame.remove(fondo);
+                	                mostrarPanelTarifas();
+                	                frame.repaint();
+                	                frame.revalidate();
+                				} catch (NumberFormatException e1) {
+                					// TODO Auto-generated catch block
+                					e1.printStackTrace();
+                				} catch (SQLException e1) {
+                					// TODO Auto-generated catch block
+                					e1.printStackTrace();
+                				}
+                        	}
+                			else
+                				JOptionPane.showMessageDialog(null,"Valores distintos a los permitidos en la duración","ERROR",JOptionPane.ERROR_MESSAGE);
+                    	}
+                		else
+            				JOptionPane.showMessageDialog(null,"Valores distintos a los permitidos en el precio de la tarifa","ERROR",JOptionPane.ERROR_MESSAGE);
+                	}
+                	else
+        				JOptionPane.showMessageDialog(null,"Texto inexistente en el precio de la tarifa","ERROR",JOptionPane.ERROR_MESSAGE);
+                }
+                else
+    				JOptionPane.showMessageDialog(null,"Texto inexistente en la duración","ERROR",JOptionPane.ERROR_MESSAGE);   
+            }
+        });
 
         
         frame.repaint();
@@ -211,7 +240,7 @@ public class EditarTarifa {
 
     //Tarifas
     public void mostrarPanelTarifas(){
-        Tarifas tarifa = new Tarifas(frame,duracion,id);
+        Tarifas tarifa = new Tarifas(frame);
          tarifa.mostrar();
          frame.repaint();
          frame.revalidate();

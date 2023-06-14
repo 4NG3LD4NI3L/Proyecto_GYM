@@ -1,3 +1,4 @@
+
 import java.awt.Color;
 import java.awt.Font;
 
@@ -66,26 +67,11 @@ public class Tarifas {
         separador.setForeground(Color.white);
         arriba.add(separador);
 
-        JButton clientes = new JButton("Clientes");
-        clientes.setSize(100, 23);
-        clientes.setBackground(new Color(61,61,61));
-        clientes.setLocation(105, 60);
-        clientes.setFont(new Font("", Font.BOLD, 15));
-        clientes.setForeground(Color.white);
-        clientes.setBorderPainted(false);
-        arriba.add(clientes);
 
-        JLabel separador2 = new JLabel("/");
-        separador2.setLocation(207, 67);
-        separador2.setSize(10, 10);
-        separador2.setFont(new Font("", Font.BOLD, 15));
-        separador2.setForeground(Color.white);
-        arriba.add(separador2);
-        
-        JButton datos = new JButton("Datos Clientes");
-        datos.setSize(140, 23);
+        JButton datos = new JButton("Tarifas");
+        datos.setSize(100, 23);
         datos.setBackground(new Color(61,61,61));
-        datos.setLocation(212, 60);
+        datos.setLocation(105, 60);
         datos.setFont(new Font("", Font.BOLD, 15));
         datos.setForeground(Color.yellow);
         datos.setBorderPainted(false);
@@ -122,30 +108,25 @@ public class Tarifas {
         }
         panel.add(tarifas_comboBox);
         
-        JButton botonEditarC = new JButton("Editar Cliente");
-        botonEditarC.setSize(160, 40);
-        botonEditarC.setLocation(420, 60);
-        botonEditarC.setBackground(Color.decode("#55A763"));
-        panel.add(botonEditarC);
+        JButton botonCrearT = new JButton("Crear Tarifa");
+        botonCrearT.setSize(165, 40);
+        botonCrearT.setLocation(420, 100);
+        botonCrearT.setBackground(Color.decode("#55A763"));
+        panel.add(botonCrearT);
+        
+        JButton botonEditarT = new JButton("Editar Tarifa");
+        botonEditarT.setSize(165, 40);
+        botonEditarT.setLocation(420,170);
+        botonEditarT.setBackground(Color.decode("#55A763"));
+        panel.add(botonEditarT);
 
-        JButton botonEliminarC = new JButton("Eliminar Cliente");
-        botonEliminarC.setSize(160, 40);
-        botonEliminarC.setLocation(420, 120);
-        botonEliminarC.setBackground(Color.decode("#FF4343"));
-        panel.add(botonEliminarC);
-
-        JButton botonDescargarC = new JButton("Descagar Historial");
-        botonDescargarC.setSize(160, 40);
-        botonDescargarC.setLocation(420, 180);
-        botonDescargarC.setBackground(Color.decode("#FFFFFF"));
-        panel.add(botonDescargarC);
-
-        JButton botonCredencialC = new JButton("Descagar Credencial");
-        botonCredencialC.setSize(160, 40);
-        botonCredencialC.setLocation(420, 240);
-        botonCredencialC.setBackground(Color.decode("#FFFFFF"));
-        panel.add(botonCredencialC);
-
+        JButton botonEliminarT = new JButton("Eliminar Tarifa");
+        botonEliminarT.setSize(165, 40);
+        botonEliminarT.setLocation(420, 240);
+        botonEliminarT.setBackground(Color.decode("#FF4343"));
+        panel.add(botonEliminarT);
+        
+        
         JPanel panel2 = new JPanel();
         panel2.setLayout(null);
         panel2.setSize(370, 250);
@@ -163,16 +144,16 @@ public class Tarifas {
 			System.err.println("Error al mostrar la tabla: "+e);
 		}
 		
-        RoundedPanel up = new RoundedPanel(15);
+        JPanel up = new JPanel();
         up.setSize(370, 30);
         up.setLayout(null);
         up.setBackground(Color.yellow);
         panel2.add(up);
 
-        JLabel historialC = new JLabel("Historial del cliente");
+        JLabel historialC = new JLabel("Lista de tarifas");
         historialC.setFont(new Font("",Font.BOLD,20));
         historialC.setSize(200, 30);
-        historialC.setLocation(95, 0);
+        historialC.setLocation(115, 0);
         up.add(historialC);
 
 
@@ -186,53 +167,39 @@ public class Tarifas {
                 frame.revalidate();
             }
         });
+        
+        botonCrearT.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+            	frame.remove(fondo);
 
-        clientes.addActionListener(new ActionListener() {
+            	mostrarPanelCrearTarifas();
+                
+                frame.repaint();
+                frame.revalidate();
+            }
+        });
+
+
+        botonEliminarT.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+            	String opcionSeleccionada = (String) tarifas_comboBox.getSelectedItem();
+                String[] datos = opcionSeleccionada.split(" ");
+                bd.eliminarTarifa(Integer.parseInt(datos[1]));
+                frame.remove(fondo);
+                mostrarPanelTarifas();
+                JOptionPane.showMessageDialog(null,"Tarifa eliminada correctamente","Operación exitosa",JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+        botonEditarT.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { 
                 frame.remove(fondo);
-
-                mostrarPanelCliente();
-
-                frame.repaint();
-                frame.revalidate();
-            }
-        });
-
-        botonEliminarC.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) { 
-                frame.remove(fondo);
-
-                mostarEliminarCliente();
                 
-                frame.repaint();
-                frame.revalidate();
-            }
-        });
-
-        botonEditarC.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) { 
-                frame.remove(fondo);
-
-                EditarCliente();
+                String opcionSeleccionada = (String) tarifas_comboBox.getSelectedItem();
+                String[] datos = opcionSeleccionada.split(" ");
                 
-                frame.repaint();
-                frame.revalidate();
-            }
-        });
-
-        botonCredencialC.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) { 
+                editarTarifa(datos[1]);
                 
-                JOptionPane.showMessageDialog(null,"Se descargo Correctamente la credencial");
-                frame.repaint();
-                frame.revalidate();
-            }
-        });
-
-        botonDescargarC.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) { 
-                
-                JOptionPane.showMessageDialog(null,"Se descargo Correctamente el documento");
                 frame.repaint();
                 frame.revalidate();
             }
@@ -249,31 +216,38 @@ public class Tarifas {
 		frame.revalidate();
     }
 
-    //Menu
+    //MENU
     public void mostrarMenu(){
         Menu menu = new Menu(frame);
         menu.mostrar();
         frame.repaint();
         frame.revalidate();
     }
+    
+    public void mostrarPanelTarifas(){
+        Tarifas tarifa = new Tarifas(frame);
+         tarifa.mostrar();
+         frame.repaint();
+         frame.revalidate();
+     }
 
-    //Cliente
-    public void mostrarPanelCliente(){
-        Clientes clientes = new Clientes(frame); 
-        clientes.mostrar();
+    //TARIFA
+    public void mostrarPanelCrearTarifas(){
+        CrearTarifa cTarifas = new CrearTarifa(frame); 
+        cTarifas.mostrar();
         frame.repaint();
         frame.revalidate();
     }
 
-    //ELIMINAR CLIENTE
-    public void mostarEliminarCliente(){// AGREGAR PARAMETROS LUEGO
-        EliminarCliente eliminarCliente = new EliminarCliente(frame,duracion,id_tarifa);
-        eliminarCliente.mostrar();
+    //ELIMINAR TARIFA
+    public void mostarEliminarTarifa(){// AGREGAR PARAMETROS LUEGO
+        EliminarTarifa eliminarTarifa = new EliminarTarifa(frame);
+        eliminarTarifa.mostrar();
     }
 
-    //Editar cliente
-    public void EditarCliente(){// AGREGAR PARAMETROS LUEGO
-        EditarCliente editCliente = new EditarCliente(frame,duracion,id_tarifa);
-        editCliente.mostrar();
+    //EDITAR TARIFA
+    public void editarTarifa(String id){// AGREGAR PARAMETROS LUEGO
+        EditarTarifa editarTarifa = new EditarTarifa(frame, id);
+        editarTarifa.mostrar();
     }
-}
+ }

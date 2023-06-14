@@ -50,7 +50,7 @@ public class BaseDatos {
 
 		while (rs.next()) {
 			//System.out.println(rs.getString("nombre_cli"));
-			nombres.add(Integer.toString(rs.getInt("id_tarifa")) +" : " + rs.getString("plan_tr"));
+			nombres.add("Tarifa " + Integer.toString(rs.getInt("id_tarifa")) + " : " + rs.getString("plan_tr"));
 		}
 		//conn.close();
 		return nombres;
@@ -191,10 +191,6 @@ public class BaseDatos {
 			datosNew[1] = rs.getString("costo_tr");
 			dtm.addRow(datosNew);
 		}
-		
-		
-		conn.close();
-		
 		return dtm;
 	}
 	
@@ -215,6 +211,24 @@ public class BaseDatos {
 			
 			ps.executeUpdate();
 			System.out.println("Se subieron los registros");
+			
+		} catch (SQLException e) {
+			System.err.println("Error BD: "+e.getMessage());
+		}finally {
+			conn.close();
+		}
+	}
+	
+	public void crearNuevaTarifa(String duracion, String costo_tr) throws SQLException {
+		try {
+			String insertarDatos = "INSERT INTO tarifas (plan_tr, costo_tr) VALUES \r\n"
+					+ "(?,?);" ;
+			ps = (PreparedStatement) conn.prepareStatement(insertarDatos);
+			
+			ps.setString(1, duracion);
+			ps.setString(2, costo_tr);
+			
+			ps.executeUpdate();
 			
 		} catch (SQLException e) {
 			System.err.println("Error BD: "+e.getMessage());
@@ -269,6 +283,24 @@ public class BaseDatos {
     	return datosCli;
     }
     
+    public String[] obtenerTodoDeLaTarifa(int id) {
+    	String[] datosTarifa = new String[3];
+    	
+    	try {
+			ResultSet rs = s.executeQuery("SELECT * FROM tarifas WHERE id_tarifa = "+Integer.toString(id)+";");
+			rs.next();
+			
+			datosTarifa[0] = rs.getString("plan_tr");
+			datosTarifa[1] = rs.getString("costo_tr");
+			datosTarifa[2] = rs.getString("id_tarifa");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	
+    	return datosTarifa;
+    }
+    
     public String[] obtenerTodoDelinstructor(int id) {
     	String[] datosInstructor = new String[8];
     	
@@ -311,6 +343,22 @@ public class BaseDatos {
 		conn.close();
 	}
     
+    public void actualizarTarifa(int id,String duracion, String costo_tr) throws SQLException {
+		try {
+			String insertarDatos = "UPDATE tarifas SET plan_tr = ?, costo_tr = ? WHERE id_tarifa = "+id;
+			ps = (PreparedStatement) conn.prepareStatement(insertarDatos);
+			
+			ps.setString(1, duracion);
+			ps.setString(2, costo_tr);
+			
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.err.println("Error BD en la funcion actualizarCliente: "+e.getMessage());
+		}
+		conn.close();
+	}
+    
     public void actualizarInstructor(int id,String nombre,String apellidos,String edad,String correo,String telefono,String telefonoEmer,String fotoN) throws SQLException {
 		try {
 			String insertarDatos = "UPDATE instructor SET nombre_in = ?, apellido_in = ?,edad_in = ?, correo_in = ?, telefono_in = ?, telefono_eme_in = ? WHERE id_instructor = "+id;
@@ -340,6 +388,17 @@ public class BaseDatos {
 			
 			ps.executeUpdate();
 			conn.close();
+		} catch (SQLException e) {
+			System.err.println("Error BaseDatos en la funcion EliminarCliente: "+e.getMessage());
+		}
+    }
+    public void eliminarTarifa(int id) {
+    	
+		try {
+			String insertarDatos = "DELETE FROM tarifas WHERE id_tarifa = "+id+";";
+			ps = (PreparedStatement) conn.prepareStatement(insertarDatos);
+			ps.executeUpdate();
+			//conn.close();
 		} catch (SQLException e) {
 			System.err.println("Error BaseDatos en la funcion EliminarCliente: "+e.getMessage());
 		}
