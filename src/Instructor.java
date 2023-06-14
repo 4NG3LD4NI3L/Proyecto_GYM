@@ -113,7 +113,7 @@ public class Instructor {
 
         JButton regresar = new JButton("Regresar");
         regresar.setSize(87, 34);
-        regresar.setLocation(150, 90);
+        regresar.setLocation(121, 90);
         regresar.setBackground(Color.decode("#ff4343"));
         regresar.setBorderPainted(false);
        
@@ -130,11 +130,9 @@ public class Instructor {
         panel.add(buscar);
 
         JButton nuevoCliente = new JButton("Nuevo Instructor");
-        nuevoCliente.setSize(123, 27);
-        nuevoCliente.setLocation(250, 90);
-        ShapedButtonUI roundUI_dos = new ShapedButtonUI();
-        roundUI_dos.setShape(ButtonShape.ROUND, nuevoCliente,Color.decode("#01ff57"));
-        nuevoCliente.setUI(roundUI_dos);
+        nuevoCliente.setSize(150, 34);
+        nuevoCliente.setLocation(221, 90);
+        nuevoCliente.setBackground(Color.decode("#01ff57"));
         nuevoCliente.setPreferredSize(new Dimension(87,34));
         panel.add(nuevoCliente);
         
