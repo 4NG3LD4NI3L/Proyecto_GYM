@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2023 at 12:27 AM
+-- Generation Time: Jun 14, 2023 at 06:18 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -129,16 +129,17 @@ INSERT INTO `instructor` (`id_instructor`, `nombre_in`, `apellido_in`, `edad_in`
 CREATE TABLE `tarifas` (
   `plan_tr` varchar(50) NOT NULL,
   `costo_tr` int(4) NOT NULL,
-  `id_tarifa` int(3) NOT NULL,
-  `instructor_tr` varchar(50) NOT NULL
+  `id_tarifa` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tarifas`
 --
 
-INSERT INTO `tarifas` (`plan_tr`, `costo_tr`, `id_tarifa`, `instructor_tr`) VALUES
-('xCombat', 300, 0, '');
+INSERT INTO `tarifas` (`plan_tr`, `costo_tr`, `id_tarifa`) VALUES
+('6 meses', 1600, 7),
+('1 Mes', 300, 10),
+('1 Año', 3300, 11);
 
 --
 -- Indexes for dumped tables
@@ -178,8 +179,7 @@ ALTER TABLE `instructor`
 -- Indexes for table `tarifas`
 --
 ALTER TABLE `tarifas`
-  ADD PRIMARY KEY (`id_tarifa`),
-  ADD KEY `clase_FK` (`plan_tr`);
+  ADD PRIMARY KEY (`id_tarifa`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -196,6 +196,12 @@ ALTER TABLE `clientes`
 --
 ALTER TABLE `instructor`
   MODIFY `id_instructor` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `tarifas`
+--
+ALTER TABLE `tarifas`
+  MODIFY `id_tarifa` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
@@ -215,12 +221,6 @@ ALTER TABLE `inscripciones_a_clases`
   ADD CONSTRAINT `id_cliente_FK` FOREIGN KEY (`id_cliente_inscrito`) REFERENCES `clientes` (`id_cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `nombre_cliente_FK` FOREIGN KEY (`nombre_cliente_inscrito`) REFERENCES `clientes` (`nombre_cli`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `nombre_instructor_FK` FOREIGN KEY (`instructor_nombre`) REFERENCES `instructor` (`nombre_in`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `tarifas`
---
-ALTER TABLE `tarifas`
-  ADD CONSTRAINT `clase_FK` FOREIGN KEY (`plan_tr`) REFERENCES `clases` (`nombre_cla`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
