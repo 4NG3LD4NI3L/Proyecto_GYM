@@ -3,12 +3,15 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -17,10 +20,17 @@ public class ClasesDatosInscribir extends JPanel {
 	private JFrame frame;
 	private ClasesDatos clase_datos;
 	private String nombre_clase;
+	private BaseDatos bd;
 	
 	public ClasesDatosInscribir(JFrame ventana,String nombre) {
 		this.frame=ventana;
 		this.nombre_clase=nombre;
+		try {
+			bd = new BaseDatos();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondo1.setSize(691, 487);
@@ -99,10 +109,10 @@ public class ClasesDatosInscribir extends JPanel {
         panel.setBackground(new Color(0,0,0,100));
         this.add(panel);
 
-        JLabel titulo = new JLabel("Inscribir un nuevo cliente a la clase: Zumba");
+        JLabel titulo = new JLabel("Inscribir un cliente a la clase: "+nombre_clase);
         titulo.setSize(400, 20);
         titulo.setLocation(28, 20);
-        titulo.setFont(new Font("Arial",Font.BOLD,17));
+        titulo.setFont(new Font("Arial",Font.BOLD,16));
         titulo.setForeground(Color.white);
         panel.add(titulo);
         
@@ -113,34 +123,40 @@ public class ClasesDatosInscribir extends JPanel {
         etiqueID.setForeground(Color.white);
         panel.add(etiqueID);
         
-        JTextField ingreID = new JTextField();
-        ingreID.setSize(338, 25);
-        ingreID.setLocation(28, 80);
-        ingreID.setFont(new Font("Arial",Font.PLAIN,17));
-        ingreID.setForeground(Color.white);
-        ingreID.setBackground(new Color(0,0,0));
-        ingreID.setBorder(null);
-        panel.add(ingreID);
+        ArrayList<String> clientesBD = new ArrayList<>();
+        try {
+			clientesBD = bd.obtenerNombresClientesParaClases();
+		} catch (SQLException e) {
+			System.err.println("Error al capturar los clientes: "+e.getMessage());
+		}
+        JComboBox<String> clasesDisponible_comboBox = new JComboBox<>();
+        clasesDisponible_comboBox.setSize(338, 25);
+        clasesDisponible_comboBox.setLocation(28, 80);
+        clasesDisponible_comboBox.setOpaque(true);
+        clasesDisponible_comboBox.setBackground(Color.white);
+        clasesDisponible_comboBox.setForeground(Color.black);
+        clasesDisponible_comboBox.setFocusable(false);
+        if (!clientesBD.isEmpty()) {
+        	for (int i=0;i<clientesBD.size();i++) {
+        		clasesDisponible_comboBox.addItem(clientesBD.get(i));
+        	}
+        }else {
+        	clasesDisponible_comboBox.addItem("-1 <No hay clientes registrados>");
+        }
+        panel.add(clasesDisponible_comboBox);
 
         JButton regresar = new JButton("Regresar");
-        ShapedButtonUI roundUI_3 = new ShapedButtonUI();
-        roundUI_3.setShape(ButtonShape.ROUND, regresar,Color.decode("#ff4343"));
-        regresar.setUI(roundUI_3);
+        regresar.setBackground(Color.decode("#ff4343"));
         regresar.setFocusPainted(false);
         regresar.setFont(new Font("Arial",Font.BOLD,12));
         regresar.setSize(123, 34);
         regresar.setLocation(69, 130);
-        regresar.setPreferredSize(new Dimension(87,34));
         panel.add(regresar);
 
-
         JButton inscribirCliente = new JButton("Inscribir");
-        ShapedButtonUI roundUI_2 = new ShapedButtonUI();
-        roundUI_2.setShape(ButtonShape.ROUND, inscribirCliente,Color.decode("#01ff57"));
+        inscribirCliente.setBackground(Color.decode("#01ff57"));
         inscribirCliente.setSize(123, 34);
         inscribirCliente.setLocation(200, 130);
-        inscribirCliente.setUI(roundUI_2);
-        inscribirCliente.setPreferredSize(new Dimension(123,34));
         inscribirCliente.setFocusPainted(false);
         panel.add(inscribirCliente);
 
@@ -202,6 +218,16 @@ public class ClasesDatosInscribir extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) { 
+				
+				String opcionSeleccionada = (String) clasesDisponible_comboBox.getSelectedItem();
+            	String[] datos = opcionSeleccionada.split(" ");
+            	
+            	if (bd.inscribirCliente(nombre_clase,datos[0],datos[1])) {
+            		JOptionPane.showMessageDialog(null,"Cliente registrado con exito","Proceso completado",JOptionPane.INFORMATION_MESSAGE);
+            	}else {
+            		JOptionPane.showMessageDialog(null,"El cliente ya esta inscrito a la clase de "+nombre_clase,"Proceso no completado",JOptionPane.ERROR_MESSAGE);
+            	}
+				
 				frame.requestFocus();
 				frame.repaint();
 				frame.revalidate();

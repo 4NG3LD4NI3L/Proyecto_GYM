@@ -20,7 +20,7 @@ public class BaseDatos {
 	Statement s;
 	
 	public BaseDatos() throws SQLException {
-		conn = DriverManager.getConnection(url + bd, "root","72914630");
+		conn = DriverManager.getConnection(url + bd, "root","");
 		s = (Statement) conn.createStatement();
 	}
 	
@@ -492,11 +492,182 @@ public class BaseDatos {
 			
 			dtm.addRow(datosNew);
 		}
-		
-		
 		conn.close();
 		
 		return dtm;
+	}
+    
+    public boolean existeNombreClase(String nombre_clase) {
+    	boolean encontrado = true;
+    	ResultSet rs;
+		try {
+			rs = s.executeQuery("SELECT * FROM clases");
+			
+			while (rs.next()) {
+			
+				if (nombre_clase.equals(rs.getString("nombre_cla"))) {
+					encontrado = false;
+				}
+			
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return encontrado;
+    }
+    
+    public boolean instructorDesocupado(String nombre_instructor) {
+    	boolean encontrado = true;
+    	ResultSet rs;
+		try {
+			rs = s.executeQuery("SELECT * FROM clases");
+			
+			while (rs.next()) {
+			
+				if (nombre_instructor.equals(rs.getString("instructor_designado_cla"))) {
+					encontrado = false;
+				}
+			
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return encontrado;
+    }
+    
+    public ArrayList obtenerInstructor() throws SQLException {
+		ResultSet rs = s.executeQuery("SELECT * FROM instructor");
+		ArrayList<String> nombres = new ArrayList<>();
+
+		while (rs.next()) {
+			nombres.add(rs.getString("nombre_in"));
+		}
+		return nombres;
+	}
+    
+    public void crearNuevaClase(String nombre,String nombre_instructor,String hora_empieza,String hora_acaba,String dias) throws SQLException {
+		try {
+			String insertarDatos = "INSERT INTO clases (nombre_cla, instructor_designado_cla, horario_cla, dias_cla) VALUES \r\n"
+					+ "(?,?,?,?);" ;
+			ps = (PreparedStatement) conn.prepareStatement(insertarDatos);
+			
+			ps.setString(1, nombre);
+			ps.setString(2, nombre_instructor);
+			ps.setString(3, hora_empieza+"-"+hora_acaba);
+			ps.setString(4, dias);
+			
+			ps.executeUpdate();
+			System.out.println("Se subieron los registros");
+			
+		} catch (SQLException e) {
+			System.err.println("Error BD: "+e.getMessage());
+		}finally {
+			conn.close();
+		}
+	}
+    
+    public String[] obtenerTodoDeUnaClase(String nombre_clase) {
+    	String[] datosClase = new String[3];
+    	
+    	try {
+			ResultSet rs = s.executeQuery("SELECT * FROM clases WHERE nombre_cla = '"+nombre_clase+"';");
+			rs.next();
+			
+			datosClase[0] = rs.getString("instructor_designado_cla");
+			datosClase[1] = rs.getString("horario_cla");
+			datosClase[2] = rs.getString("dias_cla");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	
+    	return datosClase;
+    }
+    
+    public void actualizarClase(String nombre,String nombre_instructor,String hora_empieza,String hora_acaba,String dias) throws SQLException {
+		try {
+			String insertarDatos = "UPDATE clases SET nombre_cla = ?, instructor_designado_cla = ?, horario_cla = ?, dias_cla = ? WHERE nombre_cla = '"+nombre+"';";
+			ps = (PreparedStatement) conn.prepareStatement(insertarDatos);
+			
+			ps.setString(1, nombre);
+			ps.setString(2, nombre_instructor);
+			ps.setString(3, hora_empieza+"-"+hora_acaba);
+			ps.setString(4, dias);
+			
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.err.println("Error BD en la funcion actualizarCliente: "+e.getMessage());
+		}
+		conn.close();
+	}
+    
+    public ArrayList obtenerNombresClientesParaClases() throws SQLException {//REGRESA LOS TODOS LOS NOMBRES EN UNA LISTA
+		ResultSet rs = s.executeQuery("SELECT * FROM clientes");
+		ArrayList<String> nombres = new ArrayList<>();
+
+		while (rs.next()) {
+			//System.out.println(rs.getString("nombre_cli"));
+			nombres.add(Integer.toString(rs.getInt("id_cliente"))+" "+rs.getString("nombre_cli"));
+		}
+		return nombres;
+	}
+    
+    public boolean inscribirCliente(String nombre_clase,String id,String nombre_cliente) {
+    	boolean encontrado = true;
+    	ResultSet rs;
+		try {
+			rs = s.executeQuery("SELECT * FROM 	inscripciones_a_clases WHERE clase = '"+nombre_clase+"';");
+			
+			while (rs.next()) {
+			
+				if (Integer.parseInt(id) == rs.getInt("id_cliente_inscrito")) {
+					encontrado = false;
+				}
+			
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			if (encontrado) 
+				inscribirCliente_buscarNombreCliente(nombre_clase, id, nombre_cliente);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return encontrado;
+    }
+    
+    public void inscribirCliente_buscarNombreCliente(String nombre_clase,String id,String nombre_cliente) throws SQLException {
+    	ResultSet rs;
+		rs = s.executeQuery("SELECT * FROM clases WHERE nombre_cla = '"+nombre_clase+"';");
+		rs.next();
+    	
+		inscribirCliente_agregarBD(nombre_clase, rs.getString("instructor_designado_cla"), id, nombre_cliente);
+		
+	}
+    
+    public void inscribirCliente_agregarBD(String nombre_clase,String nombre_instructor,String id,String nombre_cliente) throws SQLException {
+		try {
+			String insertarDatos = "INSERT INTO inscripciones_a_clases (clase, instructor_nombre, id_cliente_inscrito, nombre_cliente_inscrito) VALUES \r\n"
+					+ "(?,?,?,?);" ;
+			ps = (PreparedStatement) conn.prepareStatement(insertarDatos);
+			
+			ps.setString(1, nombre_clase);
+			ps.setString(2, nombre_instructor);
+			ps.setInt(3, Integer.parseInt(id));
+			ps.setString(4, nombre_cliente);
+			
+			ps.executeUpdate();
+			System.out.println("Se subieron los registros");
+			
+		} catch (SQLException e) {
+			System.err.println("Error BD: "+e.getMessage());
+		}finally {
+			conn.close();
+		}
 	}
 	
 }

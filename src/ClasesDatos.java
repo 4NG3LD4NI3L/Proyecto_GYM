@@ -161,7 +161,7 @@ public class ClasesDatos extends JPanel {
         this.add(panel);
         
         JLabel etiqueClase = new JLabel("Clase: "+nombre_clase);
-        etiqueClase.setSize(369, 20);
+        etiqueClase.setSize(520, 20);
         etiqueClase.setLocation(11, 10);
         etiqueClase.setForeground(Color.black);
         etiqueClase.setBackground(Color.yellow);
@@ -192,32 +192,26 @@ public class ClasesDatos extends JPanel {
 		panel.add(clientes_datos);
 
         JButton regresar = new JButton("Regresar");
-        ShapedButtonUI roundUI_3 = new ShapedButtonUI();
-        roundUI_3.setShape(ButtonShape.ROUND, regresar,Color.decode("#ff4343"));
-        regresar.setUI(roundUI_3);
+        regresar.setBackground(Color.decode("#ff4343"));
         regresar.setFocusPainted(false);
         regresar.setFont(new Font("Arial",Font.BOLD,12));
         regresar.setSize(87, 34);
-        regresar.setLocation(230, 290);
+        regresar.setLocation(15, 290);
         regresar.setPreferredSize(new Dimension(87,34));
         panel.add(regresar);
 
         JButton buscar = new JButton("Editar");
-        ShapedButtonUI roundUI = new ShapedButtonUI();
-        buscar.setSize(123, 32);
-        buscar.setLocation(400, 30);
-        roundUI.setShape(ButtonShape.ROUND, buscar,new Color(255,144,21));
-        buscar.setUI(roundUI);
+        buscar.setSize(123, 34);
+        buscar.setLocation(250, 290);
+        buscar.setBackground(new Color(255,144,21));
         buscar.setPreferredSize(new Dimension(123,34));
         buscar.setFocusPainted(false);
         panel.add(buscar);	
 
         JButton nuevoCliente = new JButton("Inscribir cliente");
-        ShapedButtonUI roundUI_2 = new ShapedButtonUI();
-        roundUI_2.setShape(ButtonShape.ROUND, nuevoCliente,Color.decode("#01ff57"));
+        nuevoCliente.setBackground(Color.decode("#01ff57"));
         nuevoCliente.setSize(123, 34);
-        nuevoCliente.setLocation(400, 90);
-        nuevoCliente.setUI(roundUI_2);
+        nuevoCliente.setLocation(400, 290);
         nuevoCliente.setPreferredSize(new Dimension(123,34));
         nuevoCliente.setFocusPainted(false);
         panel.add(nuevoCliente);
@@ -309,13 +303,13 @@ public class ClasesDatos extends JPanel {
     }
 	
 	public void tabladeDatos() throws IOException {
-		panelScroll.setSize(370,39);
+		panelScroll.setSize(520,39);
 		panelScroll.setLocation(10,30);
-		panelScroll_horario.setSize(370,40);
+		panelScroll_horario.setSize(520,40);
 		panelScroll_horario.setLocation(10,66);
-		panelScroll_tituloCliente.setSize(370,20);
+		panelScroll_tituloCliente.setSize(520,20);
 		panelScroll_tituloCliente.setLocation(10,100);
-		panelScroll_clientes.setSize(370,160);
+		panelScroll_clientes.setSize(520,160);
 		panelScroll_clientes.setLocation(10,120);
 		
 		String[] datosNew = {"Horario"};

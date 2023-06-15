@@ -99,8 +99,6 @@ public class Clases extends JPanel {
         clasesDisponible_comboBox.setSize(250, 30);
         clasesDisponible_comboBox.setLocation(110, 30);
         clasesDisponible_comboBox.setOpaque(true);
-        clasesDisponible_comboBox.setBackground(Color.BLACK);
-        clasesDisponible_comboBox.setForeground(Color.white);
         clasesDisponible_comboBox.setFocusable(false);
         if (!clases_nombreBD.isEmpty()) {
         	for (int i=0;i<clases_nombreBD.size();i++) {
@@ -112,9 +110,7 @@ public class Clases extends JPanel {
         panel.add(clasesDisponible_comboBox);
 
         JButton regresar = new JButton("Regresar");
-        ShapedButtonUI roundUI_3 = new ShapedButtonUI();
-        roundUI_3.setShape(ButtonShape.ROUND, regresar,Color.decode("#ff4343"));
-        regresar.setUI(roundUI_3);
+        regresar.setBackground(Color.decode("#ff4343"));
         regresar.setFocusPainted(false);
         regresar.setFont(new Font("Arial",Font.BOLD,12));
         regresar.setSize(87, 34);
@@ -123,21 +119,17 @@ public class Clases extends JPanel {
         panel.add(regresar);
 
         JButton buscar = new JButton("Buscar");
-        ShapedButtonUI roundUI = new ShapedButtonUI();
+        buscar.setBackground(new Color(255,144,21));
         buscar.setSize(87, 32);
         buscar.setLocation(380, 30);
-        roundUI.setShape(ButtonShape.ROUND, buscar,new Color(255,144,21));
-        buscar.setUI(roundUI);
         buscar.setPreferredSize(new Dimension(87,34));
         buscar.setFocusPainted(false);
         panel.add(buscar);	
 
         JButton nuevoCliente = new JButton("Nueva Clase");
-        ShapedButtonUI roundUI_2 = new ShapedButtonUI();
-        roundUI_2.setShape(ButtonShape.ROUND, nuevoCliente,Color.decode("#01ff57"));
+        nuevoCliente.setBackground(Color.decode("#01ff57"));
         nuevoCliente.setSize(123, 34);
         nuevoCliente.setLocation(250, 90);
-        nuevoCliente.setUI(roundUI_2);
         nuevoCliente.setPreferredSize(new Dimension(123,34));
         nuevoCliente.setFocusPainted(false);
         panel.add(nuevoCliente);

@@ -3,6 +3,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -10,6 +12,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -18,10 +21,18 @@ public class ClasesDatosEditar extends JPanel {
 	private JFrame frame;
 	private ClasesDatos clase_datos;
 	private String clases_nombre;
+	private BaseDatos bd;
 	
 	public ClasesDatosEditar(JFrame ventana,String nombre) {
 		this.frame=ventana;
 		clases_nombre=nombre;
+		try {
+			bd = new BaseDatos();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		String[] datos_Clase = new String[3];
+		datos_Clase = bd.obtenerTodoDeUnaClase(clases_nombre);
 		
 		JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondo1.setSize(691, 487);
@@ -100,20 +111,21 @@ public class ClasesDatosEditar extends JPanel {
         panel.setBackground(new Color(0,0,0,100));
         this.add(panel);
         
-        JLabel etiqueNuevaClase = new JLabel("Nuevo nombre de la clase");
-        etiqueNuevaClase.setSize(200, 16);
+        JLabel etiqueNuevaClase = new JLabel("Nombre de la clase (No editable)");
+        etiqueNuevaClase.setSize(250, 16);
         etiqueNuevaClase.setLocation(15, 15);
         etiqueNuevaClase.setFont(new Font("Arial",Font.BOLD,16));
         etiqueNuevaClase.setForeground(Color.white);
         panel.add(etiqueNuevaClase);
         
-        JTextField ingreNuevaClase = new JTextField("Ciclo");
+        JTextField ingreNuevaClase = new JTextField(clases_nombre);
         ingreNuevaClase.setSize(250, 25);
         ingreNuevaClase.setLocation(15, 35);
-        ingreNuevaClase.setFont(new Font("Arial",Font.PLAIN,17));
-        ingreNuevaClase.setForeground(Color.white);
-        ingreNuevaClase.setBackground(new Color(0,0,0));
+        ingreNuevaClase.setFont(new Font("Arial",Font.BOLD,17));
         ingreNuevaClase.setBorder(null);
+        ingreNuevaClase.setEditable(false);
+        ingreNuevaClase.setOpaque(false);
+        ingreNuevaClase.setForeground(Color.white);
         panel.add(ingreNuevaClase);
         
         JLabel etiqueInstructor = new JLabel("Instructor");
@@ -127,12 +139,22 @@ public class ClasesDatosEditar extends JPanel {
         instructoresDisponible_comboBox.setSize(250, 30);
         instructoresDisponible_comboBox.setLocation(15, 90);
         instructoresDisponible_comboBox.setOpaque(true);
-        instructoresDisponible_comboBox.setBackground(new Color(0,0,0));
-        instructoresDisponible_comboBox.setForeground(Color.white);
         instructoresDisponible_comboBox.setFocusable(false);
-        instructoresDisponible_comboBox.addItem("Seleccionar un Instructor");
-        instructoresDisponible_comboBox.addItem("Yahir Hernandez");
-        instructoresDisponible_comboBox.addItem("Alberto Cota");
+        try {
+        	ArrayList<String> nombres = bd.obtenerInstructor();
+        	
+        	if (!nombres.isEmpty()) {
+        		for (int i=0;i<nombres.size();i++) {
+        			instructoresDisponible_comboBox.addItem(nombres.get(i));
+        		}
+        	}else {
+        		instructoresDisponible_comboBox.addItem("No hay instructores en la base de datos");
+        	}
+        	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+        	
         panel.add(instructoresDisponible_comboBox);
         
         JLabel etiqueHorario = new JLabel("Horario");
@@ -146,26 +168,20 @@ public class ClasesDatosEditar extends JPanel {
         horarios_comboBox.setSize(250, 30);
         horarios_comboBox.setLocation(15, 144);
         horarios_comboBox.setOpaque(true);
-        horarios_comboBox.setBackground(new Color(0,0,0));
-        horarios_comboBox.setForeground(Color.white);
         horarios_comboBox.setFocusable(false);
-        horarios_comboBox.addItem("Seleccionar un horario");
-        horarios_comboBox.addItem("9:00 AM");
-        horarios_comboBox.addItem("10:00 AM");
-        horarios_comboBox.addItem("11:00 AM");
+        for (int i=5;i<=20;i++) {
+        	horarios_comboBox.addItem(Integer.toString(i));
+        }
         panel.add(horarios_comboBox);
         
         JComboBox<String> horarios_2_comboBox = new JComboBox<>();
         horarios_2_comboBox.setSize(250, 30);
         horarios_2_comboBox.setLocation(15, 174);
         horarios_2_comboBox.setOpaque(true);
-        horarios_2_comboBox.setBackground(new Color(0,0,0));
-        horarios_2_comboBox.setForeground(Color.white);
         horarios_2_comboBox.setFocusable(false);
-        horarios_2_comboBox.addItem("Seleccionar un horario");
-        horarios_2_comboBox.addItem("9:00 PM");
-        horarios_2_comboBox.addItem("10:00 PM");
-        horarios_2_comboBox.addItem("11:00 PM");
+        for (int i=6;i<=20;i++) {
+        	horarios_2_comboBox.addItem(Integer.toString(i));
+        }
         panel.add(horarios_2_comboBox);
         
         JLabel etiqueDias = new JLabel("Días de clase");
@@ -179,62 +195,46 @@ public class ClasesDatosEditar extends JPanel {
         checkLunes.setSize(250, 25);
         checkLunes.setLocation(316, 30);
         checkLunes.setOpaque(true);
-        checkLunes.setBackground(Color.black);
-        checkLunes.setForeground(Color.white);
         panel.add(checkLunes);
         
         JCheckBox checkMartes = new JCheckBox("Martes");
         checkMartes.setSize(250, 25);
         checkMartes.setLocation(316, 55);
         checkMartes.setOpaque(true);
-        checkMartes.setBackground(Color.black);
-        checkMartes.setForeground(Color.white);
         panel.add(checkMartes);
         
         JCheckBox checkMiercoles = new JCheckBox("Miercoles");
         checkMiercoles.setSize(250, 25);
         checkMiercoles.setLocation(316, 80);
         checkMiercoles.setOpaque(true);
-        checkMiercoles.setBackground(Color.black);
-        checkMiercoles.setForeground(Color.white);
         panel.add(checkMiercoles);
         
         JCheckBox checkJueves = new JCheckBox("Jueves");
         checkJueves.setSize(250, 25);
         checkJueves.setLocation(316, 105);
         checkJueves.setOpaque(true);
-        checkJueves.setBackground(Color.black);
-        checkJueves.setForeground(Color.white);
         panel.add(checkJueves);
         
         JCheckBox checkViernes = new JCheckBox("Viernes");
         checkViernes.setSize(250, 25);
         checkViernes.setLocation(316, 130);
         checkViernes.setOpaque(true);
-        checkViernes.setBackground(Color.black);
-        checkViernes.setForeground(Color.white);
         panel.add(checkViernes);
         
         JCheckBox checkSabado = new JCheckBox("Sábado");
         checkSabado.setSize(250, 25);
         checkSabado.setLocation(316, 155);
         checkSabado.setOpaque(true);
-        checkSabado.setBackground(Color.black);
-        checkSabado.setForeground(Color.white);
         panel.add(checkSabado);
         
         JCheckBox checkDomingo = new JCheckBox("Domingo");
         checkDomingo.setSize(250, 25);
         checkDomingo.setLocation(316, 180);
         checkDomingo.setOpaque(true);
-        checkDomingo.setBackground(Color.black);
-        checkDomingo.setForeground(Color.white);
         panel.add(checkDomingo);
         
         JButton regresar = new JButton("Cancelar");
-        ShapedButtonUI roundUI_3 = new ShapedButtonUI();
-        roundUI_3.setShape(ButtonShape.ROUND, regresar,Color.decode("#ff4343"));
-        regresar.setUI(roundUI_3);
+        regresar.setBackground(Color.decode("#ff4343"));
         regresar.setFocusPainted(false);
         regresar.setFont(new Font("Arial",Font.BOLD,12));
         regresar.setSize(123, 34);
@@ -243,24 +243,43 @@ public class ClasesDatosEditar extends JPanel {
         panel.add(regresar);
 
         JButton nuevoCliente = new JButton("Confirmar");
-        ShapedButtonUI roundUI_2 = new ShapedButtonUI();
-        roundUI_2.setShape(ButtonShape.ROUND, nuevoCliente,Color.decode("#01ff57"));
+        nuevoCliente.setBackground(Color.decode("#01ff57"));
         nuevoCliente.setSize(123, 34);
         nuevoCliente.setLocation(300, 250);
-        nuevoCliente.setUI(roundUI_2);
         nuevoCliente.setPreferredSize(new Dimension(123,34));
         nuevoCliente.setFocusPainted(false);
         panel.add(nuevoCliente);
         
-        instructoresDisponible_comboBox.setSelectedIndex(1);
-        horarios_comboBox.setSelectedIndex(1);
-        horarios_2_comboBox.setSelectedIndex(2);
+        String[] datoDias = datos_Clase[2].split(",");
         
-        checkLunes.setSelected(true);
-        checkMiercoles.setSelected(true);
-        checkJueves.setSelected(true);
-        checkSabado.setSelected(true);
-        checkDomingo.setSelected(true);
+        for (int i=0;i<datoDias.length;i++) {
+        	if (datoDias[i].equals("Lunes")) {
+        		checkLunes.setSelected(true);
+        	}
+        	if (datoDias[i].equals("Martes")) {
+        		checkMartes.setSelected(true);
+        	}
+        	if (datoDias[i].equals("Miercoles")) {
+        		checkMiercoles.setSelected(true);
+        	}
+        	if (datoDias[i].equals("Jueves")) {
+        		checkJueves.setSelected(true);
+        	}
+        	if (datoDias[i].equals("Viernes")) {
+        		checkViernes.setSelected(true);
+        	}
+        	if (datoDias[i].equals("Sabado")) {
+        		checkSabado.setSelected(true);
+        	}
+        	if (datoDias[i].equals("Domingo")) {
+        		checkDomingo.setSelected(true);
+        	}
+        }
+        
+        instructoresDisponible_comboBox.setSelectedItem(datos_Clase[0]);
+        String[] horarioDato = datos_Clase[1].split("-");
+        horarios_comboBox.setSelectedItem(horarioDato[0]);
+        horarios_2_comboBox.setSelectedItem(horarioDato[1]);
 
         menu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { 
@@ -320,6 +339,70 @@ public class ClasesDatosEditar extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) { 
+				
+				if (true) {
+					if (bd.instructorDesocupado(instructoresDisponible_comboBox.getSelectedItem().toString())) {
+						if (Integer.parseInt(horarios_comboBox.getSelectedItem().toString())<Integer.parseInt(horarios_2_comboBox.getSelectedItem().toString())) {
+							if (checkLunes.isSelected() ||
+								checkMartes.isSelected() ||
+								checkMiercoles.isSelected() ||
+								checkJueves.isSelected() ||
+								checkViernes.isSelected() ||
+								checkSabado.isSelected() ||
+								checkDomingo.isSelected()) {
+								
+								String dias = "";
+								if (checkLunes.isSelected()) {
+									dias+=checkLunes.getText()+",";
+								}
+								if (checkMartes.isSelected()) {
+									dias+=checkMartes.getText()+",";
+								}
+								if (checkMiercoles.isSelected()) {
+									dias+=checkMiercoles.getText()+",";
+								}
+								if (checkJueves.isSelected()) {
+									dias+=checkJueves.getText()+",";
+								}
+								if (checkViernes.isSelected()) {
+									dias+=checkViernes.getText()+",";
+								}
+								if (checkSabado.isSelected()) {
+									dias+=checkSabado.getText()+",";
+								}
+								if (checkDomingo.isSelected()) {
+									dias+=checkDomingo.getText();
+								}
+								
+								try {
+									bd.actualizarClase(ingreNuevaClase.getText(), instructoresDisponible_comboBox.getSelectedItem().toString(), horarios_comboBox.getSelectedItem().toString(), horarios_2_comboBox.getSelectedItem().toString(), dias);
+									JOptionPane.showMessageDialog(null,"Se actualizo la clase con exito","Proceso completado",JOptionPane.INFORMATION_MESSAGE);
+								} catch (SQLException e1) {
+									e1.printStackTrace();
+								}
+								clases_nombre = ingreNuevaClase.getText();
+								
+								clase_datos = new ClasesDatos(frame,clases_nombre);
+								cerrarEstaVentana();
+								frame.add(clase_datos);
+								
+								frame.requestFocus();
+								frame.repaint();
+								frame.revalidate();
+								
+							}else {
+								JOptionPane.showMessageDialog(null,"Debes seleccionar al menos un dia de la semana","Proceso no completado",JOptionPane.ERROR_MESSAGE);
+							}
+						}else {
+							JOptionPane.showMessageDialog(null,"El horario no esta bien seleccionado","Proceso no completado",JOptionPane.ERROR_MESSAGE);
+						}
+					}else {
+						JOptionPane.showMessageDialog(null,"El instructor seleccionado ya esta asignado a otra clase","Proceso no completado",JOptionPane.ERROR_MESSAGE);
+					}
+				}else {
+					JOptionPane.showMessageDialog(null,"El nombre de la nueva clase no fue llenado o el nombre ingresado ya existe","Proceso no completado",JOptionPane.ERROR_MESSAGE);
+				}
+				
 				frame.requestFocus();
 				frame.repaint();
 				frame.revalidate();
