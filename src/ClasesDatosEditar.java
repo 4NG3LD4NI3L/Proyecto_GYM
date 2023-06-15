@@ -55,9 +55,9 @@ public class ClasesDatosEditar extends JPanel {
         arriba.add(lofomini);
         
         JButton menu = new JButton("Menú");
-        menu.setSize(65, 23);
+        menu.setSize(70, 23);
         menu.setBackground(new Color(61,61,61));
-        menu.setLocation(20, 60);
+        menu.setLocation(15, 60);
         menu.setForeground(Color.white);
         menu.setBorderPainted(false);
         arriba.add(menu);
