@@ -3,7 +3,10 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,11 +21,13 @@ public class EditarCliente {
     private String nombre_cliente;
     private String id_cliente;
     private BaseDatos bd;
+    private Date diaActual;
 
     public EditarCliente(JFrame frame, String nombre, String id){
         this.frame = frame;
         this.nombre_cliente=nombre;
     	this.id_cliente=id;
+    	diaActual = new Date();
     	
     	try {
 			bd = new BaseDatos();
@@ -119,79 +124,103 @@ public class EditarCliente {
 
         ///////////////////
         //////////////////
-
+        int subir=-8;
         JLabel nombrenuevo = new JLabel("Nombre");
         nombrenuevo.setSize(79, 9);
-        nombrenuevo.setLocation(30, 33);
+        nombrenuevo.setLocation(30, 33+subir);
         nombrenuevo.setForeground(Color.black);
         panel.add(nombrenuevo);
         
         JTextField nombreN = new JTextField(datosCli[0]);
         nombreN.setSize(300, 27);
-        nombreN.setLocation(30, 45);
+        nombreN.setLocation(30, 45+subir);
         nombreN.setBorder(null);
         nombreN.setForeground(Color.black);
         panel.add(nombreN);
         
         JLabel apellidoNuevo = new JLabel("Apellido");
         apellidoNuevo.setSize(83, 22);
-        apellidoNuevo.setLocation(30, 70);
+        apellidoNuevo.setLocation(30, 70+subir);
         apellidoNuevo.setForeground(Color.black);
         panel.add(apellidoNuevo);
 
         JTextField apellido = new JTextField(datosCli[1]);
         apellido.setSize(300, 27);
-        apellido.setLocation(30, 90);
+        apellido.setLocation(30, 90+subir);
         apellido.setBorder(null);
         panel.add(apellido);
         
         JLabel edadNuevo = new JLabel("Edad");
         edadNuevo.setSize(83, 22);
-        edadNuevo.setLocation(30, 115);
+        edadNuevo.setLocation(30, 115+subir);
         edadNuevo.setForeground(Color.black);
         panel.add(edadNuevo);
 
         JTextField edad = new JTextField(datosCli[7]);
         edad.setSize(300, 27);
-        edad.setLocation(30, 135);
+        edad.setLocation(30, 135+subir);
         edad.setBorder(null);
         panel.add(edad);
         
         JLabel correoNuevo = new JLabel("Correo");
         correoNuevo.setSize(83, 22);
-        correoNuevo.setLocation(30, 160);
+        correoNuevo.setLocation(30, 160+subir);
         correoNuevo.setForeground(Color.black);
         panel.add(correoNuevo);
         
         JTextField correoN = new JTextField(datosCli[2]);
         correoN.setSize(300, 27);
-        correoN.setLocation(30, 180);
+        correoN.setLocation(30, 180+subir);
         correoN.setBorder(null);
         panel.add(correoN);
 
         JLabel telefonoNuevo = new JLabel("Telefono");
         telefonoNuevo.setSize(83, 22);
-        telefonoNuevo.setLocation(30, 205);//25
+        telefonoNuevo.setLocation(30, 205+subir);//25
         telefonoNuevo.setForeground(Color.black);
         panel.add(telefonoNuevo);
 
         JTextField telefonoN = new JTextField(datosCli[3]);
         telefonoN.setSize(300, 27);
-        telefonoN.setLocation(30, 225);
+        telefonoN.setLocation(30, 225+subir);
         telefonoN.setBorder(null);
         panel.add(telefonoN);
 
         JLabel telefonoNuevoEme = new JLabel("Telefono en caso de emergencia");
         telefonoNuevoEme.setSize(260, 22);
-        telefonoNuevoEme.setLocation(30, 250);//25
+        telefonoNuevoEme.setLocation(30, 250+subir);//25
         telefonoNuevoEme.setForeground(Color.black);
         panel.add(telefonoNuevoEme);
 
         JTextField telefonoNewEme = new JTextField(datosCli[4]);
         telefonoNewEme.setSize(300, 27);
-        telefonoNewEme.setLocation(30, 270);
+        telefonoNewEme.setLocation(30, 270+subir);
         telefonoNewEme.setBorder(null);
         panel.add(telefonoNewEme);
+        
+        ArrayList<String> tarifas = new ArrayList();
+        try {
+			tarifas=bd.obtenerNombresTarifas();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        JComboBox<String> tarifas_comboBox = new JComboBox<>();
+        tarifas_comboBox.setSize(300, 30);
+        tarifas_comboBox.setLocation(30, 296);
+        tarifas_comboBox.setOpaque(true);
+        tarifas_comboBox.setBackground(Color.white);
+        tarifas_comboBox.setForeground(Color.black);
+        tarifas_comboBox.setFocusable(false);
+        if (!tarifas.isEmpty()) {
+            for (int i=0;i<tarifas.size();i++) {
+            	tarifas_comboBox.addItem(tarifas.get(i));
+            }
+        }else {
+        	tarifas_comboBox.addItem("-1 <No hay tarifas registradas>");
+        }
+        panel.add(tarifas_comboBox);
 
         ///////////////////
         //////////////////
@@ -292,6 +321,8 @@ public class EditarCliente {
 							if (verifCorreo(correoN.getText())) {
 								try {
 									bd.actualizarCliente(Integer.parseInt(id_cliente), nombreN.getText(), apellido.getText(), correoN.getText(), telefonoN.getText(), telefonoNewEme.getText(), edad.getText(), "Aqui va la foto");
+									String[] tarifasDatos = tarifas_comboBox.getSelectedItem().toString().split(" ");
+									bd.crearHistorial(new SimpleDateFormat("dd-MM-yyyy").format(diaActual).toString(), id_cliente, nombreN.getText(), "0", tarifasDatos[1]);
 									bd.cerrarCONEXION();
 									nombre_cliente=nombreN.getText();
 									JOptionPane.showMessageDialog(null,"Los datos se actualizaron correctamete","Completado",JOptionPane.INFORMATION_MESSAGE);
