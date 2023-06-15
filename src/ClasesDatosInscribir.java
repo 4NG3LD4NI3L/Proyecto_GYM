@@ -224,6 +224,13 @@ public class ClasesDatosInscribir extends JPanel {
             	
             	if (bd.inscribirCliente(nombre_clase,datos[0],datos[1])) {
             		JOptionPane.showMessageDialog(null,"Cliente registrado con exito","Proceso completado",JOptionPane.INFORMATION_MESSAGE);
+            		clase_datos = new ClasesDatos(frame,nombre_clase);
+    				cerrarEstaVentana();
+    				frame.add(clase_datos);
+    				
+    				frame.requestFocus();
+    				frame.repaint();
+    				frame.revalidate();
             	}else {
             		JOptionPane.showMessageDialog(null,"El cliente ya esta inscrito a la clase de "+nombre_clase,"Proceso no completado",JOptionPane.ERROR_MESSAGE);
             	}
