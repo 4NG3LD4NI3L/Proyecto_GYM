@@ -10,18 +10,19 @@ USE `proyecto-gym`;
 
 CREATE TABLE IF NOT EXISTS `clases` (
   `nombre_cla` varchar(50) NOT NULL,
-  `instructor_designado_cla` varchar(50) NOT NULL,
+  `instructor_designado_cla` varchar(50) DEFAULT NULL,
   `horario_cla` varchar(50) NOT NULL DEFAULT '',
   `dias_cla` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`nombre_cla`) USING BTREE,
   KEY `instructor_FK` (`instructor_designado_cla`),
-  CONSTRAINT `instructor_FK` FOREIGN KEY (`instructor_designado_cla`) REFERENCES `instructor` (`nombre_in`) ON DELETE NO ACTION ON UPDATE CASCADE
+  CONSTRAINT `instructor_FK` FOREIGN KEY (`instructor_designado_cla`) REFERENCES `instructor` (`nombre_in`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 /*!40000 ALTER TABLE `clases` DISABLE KEYS */;
 INSERT INTO `clases` (`nombre_cla`, `instructor_designado_cla`, `horario_cla`, `dias_cla`) VALUES
-	('Body combat', 'Jose Carlos', '7:00 AM - 9:00 AM', 'Lunes,Martes'),
-	('xCombat', 'Maria', '8:00 AM - 11:00 AM', 'Lunes,Martes,Jueves,Sabado');
+	('Body combat', 'Jose Carlos', '7-9', 'Lunes,Martes,'),
+	('xCombat', 'Maria', '8-11', 'Lunes,Martes,Jueves,Sabado'),
+	('Yoga', 'Sherlyn', '5-8', 'Miercoles,Viernes,Domingo');
 /*!40000 ALTER TABLE `clases` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `clientes` (
@@ -42,7 +43,6 @@ CREATE TABLE IF NOT EXISTS `clientes` (
 INSERT INTO `clientes` (`id_cliente`, `nombre_cli`, `apellidos_cli`, `correo_cli`, `telefono_cli`, `telefono_eme_cli`, `fecha_inscrito_cli`, `asistencia_cli`, `edad_cli`) VALUES
 	(1, 'Alfonso', 'Cota', 'alfa123@gmail.com', '6120001010', '6240001234', '2023-06-04', 1, 25),
 	(2, 'Julian', 'Mendoza', 'mendozaARK@gmail.com', '4980159812', '0', '2023-06-04', 28, 38),
-	(4, 'Alejandro', 'Castro Montaño', 'david@gmail.com', '6122294578', '6242013140', '07-06-2023', 0, 18),
 	(6, 'Josue', 'Zamora Garcia', 'gohan117', '6126549872', '6245120258', '07-06-2023', 0, 23),
 	(9, 'Ramon', 'Fit Palomar', 'am2rica@gmail.com', '6126543210', '6244567890', '07-06-2023', 0, 45),
 	(11, 'Joel', 'Miller Jonhson', 'theLastOfus@gmail.com', '6125209634', '6127410852', '12-06-2023', 0, 52);
@@ -57,18 +57,19 @@ CREATE TABLE IF NOT EXISTS `historial_clientes` (
   `monto_h` int(5) NOT NULL DEFAULT 0,
   KEY `id_clienteFK` (`id_cliente_h`),
   KEY `nombre_clienteFK` (`nombre_cliente_h`),
-  CONSTRAINT `id_clienteFK` FOREIGN KEY (`id_cliente_h`) REFERENCES `clientes` (`id_cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `nombre_clienteFK` FOREIGN KEY (`nombre_cliente_h`) REFERENCES `clientes` (`nombre_cli`) ON DELETE NO ACTION ON UPDATE CASCADE
+  CONSTRAINT `id_clienteFK` FOREIGN KEY (`id_cliente_h`) REFERENCES `clientes` (`id_cliente`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `nombre_clienteFK` FOREIGN KEY (`nombre_cliente_h`) REFERENCES `clientes` (`nombre_cli`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 /*!40000 ALTER TABLE `historial_clientes` DISABLE KEYS */;
 INSERT INTO `historial_clientes` (`mes_h`, `id_cliente_h`, `nombre_cliente_h`, `asistencia_h`, `tarifa_h`, `monto_h`) VALUES
 	('04-06-2023', 1, 'Alfonso', 3, '1 mes', 300),
 	('04-06-2023', 2, 'Julian', 5, '1 mes', 300),
-	('07-06-2023', 4, 'Alejandro', 2, '1 mes', 300),
 	('07-06-2023', 6, 'Josue', 0, '1 mes', 300),
 	('07-06-2023', 9, 'Ramon', 9, '1 año', 3300),
-	('12-06-2023', 11, 'Joel', 13, '6 meses', 1600);
+	('12-06-2023', 11, 'Joel', 13, '6 meses', 1600),
+	('15-06-2023', 1, 'Alfonso', 0, '6 meses', 1600),
+	('15-06-2023', 11, 'Joel', 0, '1 Mes', 300);
 /*!40000 ALTER TABLE `historial_clientes` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `inscripciones_a_clases` (
@@ -80,17 +81,20 @@ CREATE TABLE IF NOT EXISTS `inscripciones_a_clases` (
   KEY `nombre_instructor_FK` (`instructor_nombre`),
   KEY `id_cliente_FK` (`id_cliente_inscrito`),
   KEY `nombre_cliente_FK` (`nombre_cliente_inscrito`),
-  CONSTRAINT `clase_nombre_FK` FOREIGN KEY (`clase`) REFERENCES `clases` (`nombre_cla`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  CONSTRAINT `id_cliente_FK` FOREIGN KEY (`id_cliente_inscrito`) REFERENCES `clientes` (`id_cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `nombre_cliente_FK` FOREIGN KEY (`nombre_cliente_inscrito`) REFERENCES `clientes` (`nombre_cli`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  CONSTRAINT `nombre_instructor_FK` FOREIGN KEY (`instructor_nombre`) REFERENCES `instructor` (`nombre_in`) ON DELETE NO ACTION ON UPDATE CASCADE
+  CONSTRAINT `clase_nombre_FK` FOREIGN KEY (`clase`) REFERENCES `clases` (`nombre_cla`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `id_cliente_FK` FOREIGN KEY (`id_cliente_inscrito`) REFERENCES `clientes` (`id_cliente`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `nombre_cliente_FK` FOREIGN KEY (`nombre_cliente_inscrito`) REFERENCES `clientes` (`nombre_cli`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `nombre_instructor_FK` FOREIGN KEY (`instructor_nombre`) REFERENCES `instructor` (`nombre_in`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 /*!40000 ALTER TABLE `inscripciones_a_clases` DISABLE KEYS */;
 INSERT INTO `inscripciones_a_clases` (`clase`, `instructor_nombre`, `id_cliente_inscrito`, `nombre_cliente_inscrito`) VALUES
 	('xCombat', 'Maria', 1, 'Alfonso'),
 	('Body combat', 'Jose Carlos', 6, 'Josue'),
-	('Body combat', 'Jose Carlos', 11, 'Joel');
+	('Body combat', 'Jose Carlos', 11, 'Joel'),
+	('xCombat', 'Maria', 6, 'Josue'),
+	('Yoga', 'Sherlyn', 9, 'Ramon'),
+	('Yoga', 'Sherlyn', 6, 'Josue');
 /*!40000 ALTER TABLE `inscripciones_a_clases` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `instructor` (
