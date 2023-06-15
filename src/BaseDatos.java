@@ -20,7 +20,7 @@ public class BaseDatos {
 	Statement s;
 	
 	public BaseDatos() throws SQLException {
-		conn = DriverManager.getConnection(url + bd, "root","");
+		conn = DriverManager.getConnection(url + bd, "root","72914630");
 		s = (Statement) conn.createStatement();
 	}
 	
@@ -119,7 +119,7 @@ public class BaseDatos {
 	}
 	
 	public DefaultTableModel buscarClientes(int id) throws SQLException {
-		String[]columnas = {"Fecha","Asistencia","Clases","Monto"};
+		String[]columnas = {"Fecha","Asistencia","Plan","Monto"};
 		DefaultTableModel dtm = new DefaultTableModel(columnas,0) {
 			public boolean isCellEditable(int row, int column) { 
 				return false;
@@ -127,20 +127,16 @@ public class BaseDatos {
 		};
 		String[] datosNew = new String[4];
 		
-		ResultSet rs = s.executeQuery("SELECT * FROM inscripciones_a_clases RIGHT JOIN clientes ON id_cliente_inscrito = id_cliente WHERE id_cliente = "+id+";");
-		rs.next();
-		datosNew[0] = rs.getString("fecha_inscrito_cli");
-		datosNew[1] = Integer.toString(rs.getInt("asistencia_cli"));
-		datosNew[2] = rs.getString("clase");
-		if(rs.getString("clase") != null) {
-			rs = s.executeQuery("SELECT * FROM tarifas WHERE clase_tr = '"+rs.getString("clase")+"';");
-			rs.next();
-			datosNew[3] = Integer.toString(rs.getInt("costo_tr"));
-		}else {
-			datosNew[3] = "0";
-		}
+		ResultSet rs = s.executeQuery("SELECT * FROM historial_clientes WHERE id_cliente_h = "+id+";");
 		
-		dtm.addRow(datosNew);
+		while(rs.next()) {
+			
+			datosNew[0] = rs.getString("mes_h");
+			datosNew[1] = Integer.toString(rs.getInt("asistencia_h"));
+			datosNew[2] = rs.getString("tarifa_h");
+			datosNew[3] = Integer.toString(rs.getInt("monto_h"));
+			dtm.addRow(datosNew);
+		}
 		
 		conn.close();
 		
@@ -337,7 +333,6 @@ public class BaseDatos {
 			ps.setString(6, edad);
 			
 			ps.executeUpdate();
-			System.out.println("Se subieron los registros");
 			
 		} catch (SQLException e) {
 			System.err.println("Error BD en la funcion actualizarCliente: "+e.getMessage());

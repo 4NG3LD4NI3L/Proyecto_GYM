@@ -293,6 +293,7 @@ public class EditarCliente {
 								try {
 									bd.actualizarCliente(Integer.parseInt(id_cliente), nombreN.getText(), apellido.getText(), correoN.getText(), telefonoN.getText(), telefonoNewEme.getText(), edad.getText(), "Aqui va la foto");
 									bd.cerrarCONEXION();
+									nombre_cliente=nombreN.getText();
 									JOptionPane.showMessageDialog(null,"Los datos se actualizaron correctamete","Completado",JOptionPane.INFORMATION_MESSAGE);
 									
 									frame.remove(fondo);

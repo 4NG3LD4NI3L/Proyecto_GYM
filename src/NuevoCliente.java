@@ -54,10 +54,8 @@ public class NuevoCliente {
         	bd = new BaseDatos();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("BASE DE DATOS NO FUNCIONA");
 		}
         diaActual = new Date();
-        System.out.println(new SimpleDateFormat("dd-MM-yyyy").format(diaActual));
         
         JLabel fondo1 = new JLabel(new ImageIcon("Resources/Fondopantallas.png"));
         fondo1.setSize(691, 487);
