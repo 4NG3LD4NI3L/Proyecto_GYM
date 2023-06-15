@@ -59,20 +59,20 @@ public class Instructor {
         arriba.add(menu);
 
         JLabel separador = new JLabel("/");
+        separador.setSize(10, 10);
         separador.setLocation(100, 67);
         separador.setFont(new Font("", Font.BOLD, 15));
-        separador.setSize(10, 10);
         separador.setForeground(Color.white);
         arriba.add(separador);
 
-        JButton clientes = new JButton("Instructor");
-        clientes.setSize(110, 23);
-        clientes.setBackground(new Color(61,61,61));
-        clientes.setLocation(110, 60);
-        clientes.setFont(new Font("", Font.BOLD, 15));
-        clientes.setForeground(Color.yellow);
-        clientes.setBorderPainted(false);
-        arriba.add(clientes);
+        JButton instr = new JButton("Instructores");
+        instr.setSize(130, 23);
+        instr.setLocation(110, 60);
+        instr.setBackground(new Color(61,61,61));
+        instr.setFont(new Font("", Font.BOLD, 15));
+        instr.setForeground(Color.yellow);
+        instr.setBorderPainted(false);
+        arriba.add(instr);
         
         RoundedPanel panel = new RoundedPanel(15);
         panel.setLayout(null);
@@ -113,25 +113,23 @@ public class Instructor {
 
         JButton regresar = new JButton("Regresar");
         regresar.setSize(87, 34);
-        regresar.setLocation(121, 90);
+        regresar.setLocation(120, 75);
         regresar.setBackground(Color.decode("#ff4343"));
         regresar.setBorderPainted(false);
-       
         regresar.setOpaque(true);
         panel.add(regresar);
 
         JButton buscar = new JButton("Buscar");
-        ShapedButtonUI roundUI = new ShapedButtonUI();//CLASE PARA REDONDEAR BOTONES
-        buscar.setSize(87, 34);
+        //ShapedButtonUI roundUI = new ShapedButtonUI();//CLASE PARA REDONDEAR BOTONES
+        buscar.setSize(87, 30);
         buscar.setLocation(380, 30);
-        roundUI.setShape(ButtonShape.ROUND, buscar,new Color(255,144,21));//AQUI SE AGREGA: (LA FORMA DESEADA, EL NOMBRE DEL BOTON, EL COLOR)
-        buscar.setUI(roundUI);//
+        buscar.setBackground(new Color(255,144,21));
         buscar.setPreferredSize(new Dimension(87,34));//
         panel.add(buscar);
 
         JButton nuevoCliente = new JButton("Nuevo Instructor");
         nuevoCliente.setSize(150, 34);
-        nuevoCliente.setLocation(221, 90);
+        nuevoCliente.setLocation(220, 75);
         nuevoCliente.setBackground(Color.decode("#01ff57"));
         nuevoCliente.setPreferredSize(new Dimension(87,34));
         panel.add(nuevoCliente);

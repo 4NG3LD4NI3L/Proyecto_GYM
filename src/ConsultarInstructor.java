@@ -75,25 +75,25 @@ public class ConsultarInstructor {
 	        arriba.add(separador);
 
 	        JButton instr = new JButton("Instructores");
-	        instr.setSize(120, 23);
+	        instr.setSize(130, 23);
+	        instr.setLocation(110, 60);
 	        instr.setBackground(new Color(61,61,61));
-	        instr.setLocation(95, 60);
 	        instr.setFont(new Font("", Font.BOLD, 15));
 	        instr.setForeground(Color.white);
 	        instr.setBorderPainted(false);
 	        arriba.add(instr);
 
 	        JLabel separador2 = new JLabel("/");
-	        separador2.setLocation(221, 67);
+	        separador2.setLocation(245, 67);
 	        separador2.setSize(10, 10);
 	        separador2.setFont(new Font("", Font.BOLD, 15));
 	        separador2.setForeground(Color.white);
 	        arriba.add(separador2);
 	        
-	        JButton datos = new JButton("Datos Instructores");
-	        datos.setSize(170, 23);
+	        JButton datos = new JButton("Datos Instructor");
+	        datos.setSize(190, 23);
+	        datos.setLocation(250, 60);
 	        datos.setBackground(new Color(61,61,61));
-	        datos.setLocation(222, 60);
 	        datos.setFont(new Font("", Font.BOLD, 15));
 	        datos.setForeground(Color.yellow);
 	        datos.setBorderPainted(false);
@@ -179,7 +179,7 @@ public class ConsultarInstructor {
 				System.err.println("Error al mostrar la tabla: "+e);
 			}
 
-	        RoundedPanel up = new RoundedPanel(15);
+	        JPanel up = new JPanel();
 	        up.setSize(370, 30);
 	        up.setLayout(null);
 	        up.setBackground(Color.yellow);

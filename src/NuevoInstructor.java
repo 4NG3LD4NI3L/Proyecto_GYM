@@ -69,26 +69,26 @@ public class NuevoInstructor {
         separador.setForeground(Color.white);
         arriba.add(separador);
 
-        JButton instr = new JButton("Instructor");
-        instr.setSize(120, 23);
+        JButton instr = new JButton("Instructores");
+        instr.setSize(130, 23);
+        instr.setLocation(110, 60);
         instr.setBackground(new Color(61,61,61));
-        instr.setLocation(95, 60);
         instr.setFont(new Font("", Font.BOLD, 15));
         instr.setForeground(Color.white);
         instr.setBorderPainted(false);
         arriba.add(instr);
 
         JLabel separador2 = new JLabel("/");
-        separador2.setLocation(227, 67);
+        separador2.setLocation(245, 67);
         separador2.setSize(10, 10);
         separador2.setFont(new Font("", Font.BOLD, 15));
         separador2.setForeground(Color.white);
         arriba.add(separador2);
         
         JButton datos = new JButton("Nuevo Instructor");
-        datos.setSize(160, 23);
+        datos.setSize(190, 23);
+        datos.setLocation(250, 60);
         datos.setBackground(new Color(61,61,61));
-        datos.setLocation(222, 60);
         datos.setFont(new Font("", Font.BOLD, 15));
         datos.setForeground(Color.yellow);
         datos.setBorderPainted(false);
@@ -194,7 +194,7 @@ public class NuevoInstructor {
 
         JButton confirmarN = new JButton("Confirmar");
         confirmarN.setSize(127, 37);
-        confirmarN.setLocation(440, 233);
+        confirmarN.setLocation(440, 213);
         confirmarN.setBackground(Color.decode("#292929"));
         confirmarN.setForeground(Color.decode("#14fc0e"));
         confirmarN.setBorderPainted(false);
@@ -202,13 +202,12 @@ public class NuevoInstructor {
 
         JButton cancelar = new JButton("Cancelar");
         cancelar.setSize(127, 37);
-        cancelar.setLocation(440, 280);
+        cancelar.setLocation(440, 260);
         cancelar.setBackground(Color.decode("#292929"));
         cancelar.setForeground(Color.decode("#ff0000"));
         cancelar.setBorderPainted(false);
         panel.add(cancelar);
 
-        
         JButton ingresarFoto = new JButton("Ingresa una foto");
         ingresarFoto.setSize(126, 16);
         ingresarFoto.setLocation(440, 180);
