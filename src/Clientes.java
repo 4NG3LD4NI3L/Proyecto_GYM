@@ -110,7 +110,7 @@ public class Clientes {
 
         JButton regresar = new JButton("Regresar");
         regresar.setSize(87, 34);
-        regresar.setLocation(150, 90);
+        regresar.setLocation(150, 80);
         regresar.setBackground(Color.decode("#ff4343"));
         regresar.setBorderPainted(false);
        
@@ -118,21 +118,15 @@ public class Clientes {
         panel.add(regresar);
 
         JButton buscar = new JButton("Buscar");
-        ShapedButtonUI roundUI = new ShapedButtonUI();//CLASE PARA REDONDEAR BOTONES
         buscar.setSize(87, 34);
         buscar.setLocation(380, 30);
-        roundUI.setShape(ButtonShape.ROUND, buscar,new Color(255,144,21));//AQUI SE AGREGA: (LA FORMA DESEADA, EL NOMBRE DEL BOTON, EL COLOR)
-        buscar.setUI(roundUI);//
-        buscar.setPreferredSize(new Dimension(87,34));//
+        buscar.setBackground(new Color(255,144,21));
         panel.add(buscar);
 
         JButton nuevoCliente = new JButton("Nuevo Cliente");
-        nuevoCliente.setSize(123, 27);
-        nuevoCliente.setLocation(250, 90);
-        ShapedButtonUI roundUI_dos = new ShapedButtonUI();
-        roundUI_dos.setShape(ButtonShape.ROUND, nuevoCliente,Color.decode("#01ff57"));
-        nuevoCliente.setUI(roundUI_dos);
-        nuevoCliente.setPreferredSize(new Dimension(87,34));
+        nuevoCliente.setSize(123, 34);
+        nuevoCliente.setLocation(250, 80);
+        nuevoCliente.setBackground(Color.decode("#01ff57"));
         panel.add(nuevoCliente);
 
         menu.addActionListener(new ActionListener() {

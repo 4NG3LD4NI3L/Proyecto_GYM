@@ -129,20 +129,15 @@ public class CrearTarifa {
         JButton confirmar = new JButton("Confirmar");
         confirmar.setSize(120, 30);
         confirmar.setLocation(205, 170);
-        ShapedButtonUI roundUI = new ShapedButtonUI();
-        roundUI.setShape(ButtonShape.ROUND, confirmar,new Color(0,0,0,170));
-        confirmar.setUI(roundUI);
-        confirmar.setPreferredSize(new Dimension(87,34));
+        confirmar.setBackground(new Color(0,0,0));
+        confirmar.setOpaque(true);
         confirmar.setForeground(Color.decode("#01ff57"));
         panel.add(confirmar);
         
         JButton cancelar = new JButton("Cancelar");
         cancelar.setSize(120, 30);
         cancelar.setLocation(75, 170);
-        ShapedButtonUI roundUI_dos = new ShapedButtonUI();
-        roundUI_dos.setShape(ButtonShape.ROUND, cancelar,new Color(0,0,0,170));
-        cancelar.setUI(roundUI_dos);
-        cancelar.setPreferredSize(new Dimension(87,34));
+        cancelar.setBackground(new Color(0,0,0));
         cancelar.setForeground(Color.decode("#ff4343"));
         panel.add(cancelar);
         
@@ -188,7 +183,6 @@ public class CrearTarifa {
                 				try {
             						bd.crearNuevaTarifa(duraciont.getText(), preciot.getText());
             					} catch (SQLException e1) {
-            						// TODO Auto-generated catch block
             						e1.printStackTrace();
             					}
                 				JOptionPane.showMessageDialog(null,"Tarifa ingresada correctamente","Operación exitosa",JOptionPane.INFORMATION_MESSAGE);
