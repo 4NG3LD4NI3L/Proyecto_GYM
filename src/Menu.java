@@ -7,6 +7,8 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -25,6 +27,7 @@ public class Menu{
 	 private String duracion;
 	 private String id;
 	 private BaseDatos bd;
+	 JButton cerrarSesion;
 	 
 	public Menu(JFrame frame) {
 		this.frame = frame;
@@ -77,48 +80,29 @@ public class Menu{
         sombraNomPantalla.setFont(new Font("",Font.BOLD,40));
         arriba.add(sombraNomPantalla);
         
-        JButton cerrarSesion = new JButton("Cerrar sesion");
+        cerrarSesion = new JButton(null,new ImageIcon("Resources/Cerrarsesion.png"));
         cerrarSesion.setSize(120, 30);
         cerrarSesion.setLocation(530, 30);
-        ShapedButtonUI roundUI = new ShapedButtonUI();
-        roundUI.setShape(ButtonShape.ROUND, cerrarSesion,Color.decode("#FF9015"));
-        cerrarSesion.setUI(roundUI);
         arriba.add(cerrarSesion);
         
         JButton op1 = new JButton(null,new ImageIcon("Resources/clientes.png"));
         op1.setSize(120, 120);
         op1.setLocation(65, 30);
-        ShapedButtonUI roundUI_dos = new ShapedButtonUI();
-        roundUI_dos.setShape(ButtonShape.ROUND, op1,Color.decode("#FAFF00"));
-        op1.setUI(roundUI_dos);
-        op1.setPreferredSize(new Dimension(87,34));
         panel.add(op1);
         
         JButton op2 = new JButton(null,new ImageIcon("Resources/tarifas.png"));
         op2.setSize(120, 120);
         op2.setLocation(215, 30);
-        ShapedButtonUI roundUI_tres = new ShapedButtonUI();
-        roundUI_tres.setShape(ButtonShape.ROUND, op2,Color.decode("#FAFF00"));
-        op2.setUI(roundUI_tres);
-        op2.setPreferredSize(new Dimension(87,34));
         panel.add(op2);
         
         JButton op3 = new JButton(null,new ImageIcon("Resources/clases.png"));
         op3.setSize(120, 120);
         op3.setLocation(65, 180);
-        ShapedButtonUI roundUI_cuatro = new ShapedButtonUI();
-        roundUI_cuatro.setShape(ButtonShape.ROUND, op3,Color.decode("#FAFF00"));
-        op3.setUI(roundUI_cuatro);
-        op3.setPreferredSize(new Dimension(87,34));
         panel.add(op3);
         
         JButton op4 = new JButton(null,new ImageIcon("Resources/instructores.png"));
         op4.setSize(120, 120);
         op4.setLocation(215, 180);
-        ShapedButtonUI roundUI_cinco = new ShapedButtonUI();
-        roundUI_cinco.setShape(ButtonShape.ROUND, op4,Color.decode("#FAFF00"));
-        op4.setUI(roundUI_cinco);
-        op4.setPreferredSize(new Dimension(87,34));
         panel.add(op4);
 		
         ////////
@@ -165,7 +149,7 @@ public class Menu{
                 frame.revalidate();
             }
         });
-
+        
         cerrarSesion.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { 
                 frame.remove(fondo);
