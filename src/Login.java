@@ -2,6 +2,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 import javax.swing.ImageIcon;
@@ -52,6 +56,22 @@ public class Login {
        usuario.setSize(206, 25);
        usuario.setBorder(null);
        frame.add(usuario);
+       
+       usuario.addFocusListener(new FocusAdapter() {
+           @Override
+           public void focusGained(FocusEvent e) {
+               if (usuario.getText().equals("ADMIN")) {
+            	   usuario.setText("");
+               }
+           }
+
+           @Override
+           public void focusLost(FocusEvent e) {
+               if (usuario.getText().isEmpty()) {
+            	   usuario.setText("ADMIN");
+               }
+           }
+       });
 
        JLabel textoContra = new JLabel("Contraseña");
        textoContra.setSize(89, 14);
@@ -59,11 +79,29 @@ public class Login {
        textoContra.setForeground(new Color(255,255,255));
        frame.add(textoContra);
        
-       JPasswordField contraseña = new JPasswordField();
+       JPasswordField contraseña = new JPasswordField("1234567890");
         contraseña.setSize(206,25);
         contraseña.setLocation(241, 317);
         contraseña.setBorder(null);
         frame.add(contraseña);
+        
+        contraseña.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                char[] password = contraseña.getPassword();
+                if (password.length > 0 && new String(password).equals("1234567890")) {
+                	contraseña.setText("");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                char[] password = contraseña.getPassword();
+                if (password.length == 0) {
+                	contraseña.setText("1234567890");
+                }
+            }
+        });
     
         inicio = new JButton("LOGIN");
        inicio.setSize(75, 34);
@@ -73,6 +111,7 @@ public class Login {
        inicio.setBorderPainted(false);
        frame.add(inicio);
 
+       
         inicio.addActionListener(new ActionListener(){
 
             public void actionPerformed(ActionEvent e) { 
@@ -83,11 +122,20 @@ public class Login {
                 frame.remove(logo);
                 frame.remove(contraseña);
                 frame.remove(usuario);
+                
+                String password = new String(contraseña.getPassword());
 
                 fondo.repaint();
                 fondo.revalidate();
+                
+               if(usuario.getText().equals("Admin") && password.equals("123")) {
+            	   mostrarMenu();
+               }
+               else {
+            	   JOptionPane.showMessageDialog(null,"Usuario y/o contraseña incorrectos","ERROR",JOptionPane.ERROR_MESSAGE);
+            	   mostrarLogin();
+               }
 
-                mostrarMenu();
                 frame.repaint();
             }
        });
@@ -107,6 +155,13 @@ public class Login {
     public void mostrarMenu(){
         Menu menu = new Menu(frame);
         menu.mostrar();
+        frame.repaint();
+        frame.revalidate();
+    }
+    
+    public void mostrarLogin(){
+        Login login = new Login(frame); 
+        login.agregar();
         frame.repaint();
         frame.revalidate();
     }
